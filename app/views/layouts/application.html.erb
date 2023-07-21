@@ -1,16 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Plato</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Drifter</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
 
-  <body>
+<body>
+<div class="container">
+  <header class="d-flex align-items-center p-2 mb-2 border-bottom">
+    <%= link_to image_tag('car.png'), root_url %> <span class="fs-4 p-3">Drifter</span>
+    <div class="p-3">
+      <%= link_to "New resource", new_resource_path %>
+    </div>
+  </header>
+  <main>
     <%= yield %>
-  </body>
+  </main>
+  <footer>
+    <%= link_to "Resources", resources_url %>
+    <%= link_to "Locations", locations_url %>
+    <%= link_to "Resource types", resource_types_url %>
+
+    -
+
+    made by Compax with ❤️
+  </footer>
+</div>
+</body>
 </html>
