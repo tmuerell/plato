@@ -36,7 +36,12 @@
     </nav>
   </header>
   <main>
-    <%= notice %>
+    <% flash.each do |type, msg| %>
+      <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
+        <%= msg %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
     <%= yield %>
   </main>
   <footer>

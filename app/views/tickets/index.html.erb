@@ -1,14 +1,12 @@
-<p id="notice"><%= notice %></p>
-
 <h2>Tickets</h2>
 
 <table class="table table-striped">
   <thead>
   <tr>
-    <th>ID</th>
-    <th>Title</th>
-    <th>Status</th>
-    <th>Priority</th>
+    <th><%= Ticket.human_attribute_name(:id) %></th>
+    <th><%= Ticket.human_attribute_name(:title) %></th>
+    <th><%= Ticket.human_attribute_name(:status) %></th>
+    <th><%= Ticket.human_attribute_name(:priority) %></th>
   </tr>
   </thead>
 
