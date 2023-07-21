@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h2>Tickets</h2>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Priority</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tickets.each do |ticket| %>
+    <tr>
+      <td><%= link_to ticket.identifier, ticket %></td>
+      <td><%= ticket.title %></td>
+      <td><%= status_label(ticket) %></td>
+      <td><%= priority_label(ticket) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Ticket', new_ticket_path %>

@@ -1,0 +1,77 @@
+de:
+  views:
+    pagination:
+      first: "&laquo; Erste"
+      last: "Letzte &raquo;"
+      previous: "&lsaquo; Vorige"
+      next: "Nächste &rsaquo;"
+      truncate: "&hellip;"
+    helpers:
+      page_entries_info:
+        one_page:
+          display_entries:
+            zero: "No %{entry_name} found"
+            one: "Displaying <b>1</b> %{entry_name}"
+            other: "Displaying <b>all %{count}</b> %{entry_name}"
+        more_pages:
+          display_entries: "Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
+  tags:
+    index:
+      title: "Tags"
+    edit:
+      title: "Tag bearbeiten"
+    new:
+      title: "Tag erstellen"
+  activerecord:
+    models:
+      tag:
+        one: Tag
+        other: Tags
+      project:
+        one: Projekt
+        other: Projekte
+
+    attributes:
+      tag:
+        name: Name
+        color: Farbe
+      ticket:
+        title: Titel
+        content: Inhalt
+        project: Projekt
+        priority: Priorität
+        customer_project: Kundenprojekt
+
+  enumerize:
+    project:
+      status:
+        new: Neu
+        in_progress: In Bearbeitung
+        blocked: Blockiert
+        done: Erledigt
+      priority:
+        normal: Normal
+        high: Hoch
+
+  actions:
+    new: 'Neu'
+    back: 'Zurück'
+    show: 'Anzeigen'
+    create: "Erstellen"
+    update: "Speichern"
+    edit: "Bearbeiten"
+    delete: "Löschen"
+    unwatch: "Nicht mehr beobachten"
+    watch: "Beobachten"
+    convert_to_issue: "In Issue umwandeln"
+    copy: "Kopieren"
+  are_you_sure: "Sind Sie sicher?"
+
+  simple_form:
+    hints:
+      tag:
+        name: Das ist der Name
+  tickets:
+    new:
+      title: "Neues Ticket"
+  create_ticket: "Neues Ticket"

@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  tickets:
+    new:
+      title: "New ticket"
+  create_ticket: "New ticket"

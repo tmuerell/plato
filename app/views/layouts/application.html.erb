@@ -12,14 +12,37 @@
 
 <body>
 <div class="container">
-  <header class="d-flex align-items-center p-2 mb-2 border-bottom">
-    <span>Plato</span>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <%= link_to 'Plato', root_url, class: 'navbar-brand' %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <%= link_to 'Home', root_url, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Tickets', tickets_url, class: 'nav-link' %>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-outline-success' %>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </header>
   <main>
+    <%= notice %>
     <%= yield %>
   </main>
   <footer>
-
+    <%= link_to "Projects", projects_url %>
+    <%= link_to "Tags", tags_url %>
+    <%= link_to "Customer Projects", customer_projects_url %>
     -
 
     made by the developers with ❤️

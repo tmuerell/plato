@@ -1,0 +1,9 @@
+<div id="<%= dom_id comment %>">
+  <p class="p-0 text-muted">
+    Created: <%=l comment.created_at %>
+  </p>
+  <p>
+    <%= simple_format(comment.content) %>
+  </p>
+  <hr />
+</div>

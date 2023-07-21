@@ -1,0 +1,50 @@
+<div id="<%= dom_id ticket %>">
+  <div class="row">
+    <div class="col-9">
+      <div class="m-2">
+        <span class="fs-6 text-muted"><%= ticket.identifier %></span>
+        <h4><%= ticket.title %></h4>
+
+        <p>
+          <%= simple_format ticket.content %>
+        </p>
+
+        <hr/>
+
+        <%= render @ticket.comments %>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="m-2 p-2" style="background-color: #f9f9f9; border-radius: 3px; border: 1px solid #f0f0f0;">
+        <div class="btn-group btn-group-sm">
+          <% if ticket.status.new? %>
+            <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :in_progress } }), method: :patch, class: 'btn btn-outline-primary' %>
+          <% end %>
+          <% if ticket.status.in_progress? %>
+            <%= link_to "Block", ticket_url(@ticket, { ticket: { status: :blocked } }), method: :patch, class: 'btn btn-outline-warning' %>
+            <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :close } }), method: :patch, class: 'btn btn-outline-success' %>
+          <% end %>
+          <% if ticket.status.blocked? %>
+            <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :blocked } }), method: :patch, class: 'btn btn-outline-warning' %>
+            <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :close } }), method: :patch, class: 'btn btn-outline-success' %>
+          <% end %>
+          <%= link_to t('edit'), edit_ticket_path(@ticket), class: 'btn btn-outline-secondary' %><br/>
+        </div>
+        <p>
+          <%= status_label(ticket) %>
+          <%= priority_label(ticket) %>
+        </p>
+
+        <p>
+          <strong>Kunden-Projekt:</strong>
+          <%= ticket.customer_project.name %>
+        </p>
+
+        <div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

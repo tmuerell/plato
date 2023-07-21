@@ -12,3 +12,31 @@
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+    <div class="m-2">
+      <table class="table table-condensed table-striped">
+        <thead>
+        <tr>
+          <th>Kundenprojekt</th>
+          <th>Anzahl Tickets</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% for cp in CustomerProject.all %>
+          <tr>
+            <td><%= cp.name %></td>
+            <td><%= cp.tickets.count %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col">
+    <div class="p-2 m-2" style="background-color: #eee; color: #666; border: 1px solid #666; border-radius: 5px; height: 3rem;">
+      Some another graph
+    </div>
+  </div>
+</div>
+
