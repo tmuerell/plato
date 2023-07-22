@@ -75,3 +75,6 @@ gem 'simple_form'
 gem 'bootstrap'
 gem 'enumerize'
 gem "dockerfile-rails", ">= 1.5", :group => :development
+gem "devise", "~> 4.9"
+
+gem "cancancan", "~> 3.5"

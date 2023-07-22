@@ -1,24 +1,10 @@
-# README
+# Plato - Easy ticket tracking
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## What it does
 
-Things you may want to cover:
+## What it isn't
 
-* Ruby version
+## Environment variables
 
-* System dependencies
+* PLATO_MAIL_SENDER - Specifies the mail sender
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
