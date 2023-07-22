@@ -5,7 +5,7 @@
 
   <div class="form-inputs">
     <%= f.input :content %>
-    <%= f.association :ticket %>
+    <%= f.hidden_field :ticket_id, value: local_assigns[:ticket] %>
   </div>
 
   <div class="form-actions">

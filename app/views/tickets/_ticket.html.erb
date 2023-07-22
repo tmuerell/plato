@@ -11,7 +11,14 @@
 
         <hr/>
 
-        <%= render @ticket.comments %>
+        <h5>Kommentare</h5>
+        <%= turbo_stream_from 'comments' %>
+        <%= turbo_frame_tag 'comments' do %>
+          <%= render @ticket.comments %>
+        <% end %>
+        <%= turbo_frame_tag 'new_comment' do %>
+          <%= link_to 'Neuer Kommentar', new_comment_path(ticket_id: @ticket) %>
+        <% end %>
       </div>
     </div>
     <div class="col-3">
