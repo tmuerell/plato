@@ -7,6 +7,7 @@
     <th><%= Ticket.human_attribute_name(:title) %></th>
     <th><%= Ticket.human_attribute_name(:status) %></th>
     <th><%= Ticket.human_attribute_name(:priority) %></th>
+    <th><%= Ticket.human_attribute_name(:assignee) %></th>
   </tr>
   </thead>
 
@@ -17,6 +18,13 @@
       <td><%= ticket.title %></td>
       <td><%= status_label(ticket) %></td>
       <td><%= priority_label(ticket) %></td>
+      <td>
+        <% if ticket.assignee.present? %>
+          <%= ticket.assignee.email %>
+        <% else %>
+          ---
+        <% end %>
+      </td>
     </tr>
   <% end %>
   </tbody>
