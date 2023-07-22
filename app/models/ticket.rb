@@ -22,7 +22,6 @@ class Ticket < ApplicationRecord
 
   def set_sequential_no
     self.status = :new
-    self.project = Project.first # TODO: Remove me
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
   end
 end
