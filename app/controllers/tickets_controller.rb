@@ -22,6 +22,7 @@ class TicketsController < ApplicationController
   # POST /tickets or /tickets.json
   def create
     @ticket = Ticket.new(ticket_params)
+    @ticket.creator = current_user
 
     respond_to do |format|
       if @ticket.save
@@ -65,6 +66,6 @@ class TicketsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def ticket_params
-      params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id)
+      params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id)
     end
 end

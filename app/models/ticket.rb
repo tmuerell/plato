@@ -3,6 +3,8 @@ class Ticket < ApplicationRecord
 
   belongs_to :project
   belongs_to :customer_project
+  belongs_to :creator, class_name: "User"
+  belongs_to :assignee, class_name: "User", optional: true
   has_many :comments
 
   before_create :set_sequential_no

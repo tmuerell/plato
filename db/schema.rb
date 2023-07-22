@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_22_042729) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_060435) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "ticket_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "creator_id", null: false
+    t.index ["creator_id"], name: "index_comments_on_creator_id"
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
   end
 
@@ -52,6 +54,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_042729) do
     t.integer "customer_project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "creator_id", null: false
+    t.integer "assignee_id"
+    t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
+    t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
     t.index ["project_id"], name: "index_tickets_on_project_id"
   end
@@ -76,7 +82,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_042729) do
   end
 
   add_foreign_key "comments", "tickets"
+  add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "tags", "projects"
   add_foreign_key "tickets", "customer_projects"
   add_foreign_key "tickets", "projects"
+  add_foreign_key "tickets", "users", column: "assignee_id"
+  add_foreign_key "tickets", "users", column: "creator_id"
 end

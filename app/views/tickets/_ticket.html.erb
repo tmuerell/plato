@@ -40,6 +40,20 @@
           <%= ticket.customer_project.name %>
         </p>
 
+        <p>
+          <strong>Creator:</strong>
+          <%= ticket.creator.email %>
+        </p>
+
+        <p>
+          <strong>Assignee:</strong>
+          <% if ticket.assignee.present? %>
+            <%= ticket.assignee.email %>
+          <% else %>
+            None
+          <% end %>
+        </p>
+
         <div>
 
         </div>
