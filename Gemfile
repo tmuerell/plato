@@ -76,5 +76,9 @@ gem 'bootstrap'
 gem 'enumerize'
 gem "dockerfile-rails", ">= 1.5", :group => :development
 gem "devise", "~> 4.9"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-keycloak"
 
 gem "cancancan", "~> 3.5"
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'json-jwt', "~> 1.16.3"
