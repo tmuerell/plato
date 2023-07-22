@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /projects or /projects.json
   def index
@@ -55,6 +55,14 @@ class ProjectsController < ApplicationController
       format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def select
+    u = current_user
+    u.current_project = @project
+    u.save!
+
+    redirect_back(fallback_location: root_url)
   end
 
   private

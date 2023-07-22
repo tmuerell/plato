@@ -42,13 +42,13 @@
 
         <p>
           <strong>Creator:</strong>
-          <%= ticket.creator.email %>
+          <%= ticket.creator.name %>
         </p>
 
         <p>
           <strong>Assignee:</strong>
           <% if ticket.assignee.present? %>
-            <%= ticket.assignee.email %>
+            <%= ticket.assignee.name %>
           <% else %>
             None
           <% end %>
