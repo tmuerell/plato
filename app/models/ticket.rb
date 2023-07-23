@@ -1,6 +1,8 @@
 class Ticket < ApplicationRecord
   extend Enumerize
 
+  has_paper_trail
+
   belongs_to :project
   belongs_to :customer_project
   belongs_to :creator, class_name: "User"

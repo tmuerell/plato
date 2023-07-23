@@ -83,3 +83,5 @@ gem "omniauth-keycloak"
 gem "cancancan", "~> 3.5"
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'json-jwt', "~> 1.16.3"
+gem 'paper_trail'
+gem "redcarpet"

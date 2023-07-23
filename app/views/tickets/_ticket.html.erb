@@ -6,7 +6,7 @@
         <h4><%= ticket.title %></h4>
 
         <p>
-          <%= simple_format ticket.content %>
+          <%= markdown(ticket.content) %>
         </p>
 
         <hr/>
@@ -49,13 +49,13 @@
 
         <p>
           <strong>Creator:</strong>
-          <%= ticket.creator.email %>
+          <%= ticket.creator.name %>
         </p>
 
         <p>
           <strong>Assignee:</strong>
           <% if ticket.assignee.present? %>
-            <%= ticket.assignee.email %>
+            <%= ticket.assignee.name %>
           <% else %>
             None
           <% end %>

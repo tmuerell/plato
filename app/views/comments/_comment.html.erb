@@ -1,7 +1,7 @@
 <%= turbo_frame_tag dom_id(comment) do %>
-  <div id="<%= dom_id comment %>" class="comment">
+<div id="<%= dom_id comment %>" class="comment">
   <p class="p-0 comment-info">
-    <%=l comment.created_at %> by <%= comment.creator.email %> |
+    <%=l comment.created_at %> by <%= comment.creator.name %> |
     <%= link_to t('edit'), edit_comment_path(comment) %>
   </p>
   <p>
