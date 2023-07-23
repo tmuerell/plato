@@ -1,12 +1,12 @@
 <%= turbo_frame_tag dom_id(comment) do %>
-  <div id="<%= dom_id comment %>">
-  <p class="p-0 text-muted">
-    Created: <%=l comment.created_at %> by <%= comment.creator.email %>
+  <div id="<%= dom_id comment %>" class="comment">
+  <p class="p-0 comment-info">
+    <%=l comment.created_at %> by <%= comment.creator.email %> |
+    <%= link_to t('edit'), edit_comment_path(comment) %>
   </p>
   <p>
     <%= simple_format(comment.content) %>
   </p>
-  <%= link_to 'Bearbeiten', [:edit, comment] %>
   <hr />
 </div>
 <% end %>
