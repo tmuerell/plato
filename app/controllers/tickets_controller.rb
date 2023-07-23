@@ -23,7 +23,7 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(ticket_params)
     @ticket.creator = current_user
-    @ticket.project = Project.first
+    @ticket.project = current_project
 
     respond_to do |format|
       if @ticket.save

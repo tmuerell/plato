@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_22_060435) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_22_184956) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "ticket_id", null: false
@@ -77,6 +77,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_060435) do
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
+    t.string "firstname"
+    t.string "lastname"
+    t.text "roles"
+    t.integer "current_project_id"
+    t.index ["current_project_id"], name: "index_users_on_current_project_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -88,4 +93,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_060435) do
   add_foreign_key "tickets", "projects"
   add_foreign_key "tickets", "users", column: "assignee_id"
   add_foreign_key "tickets", "users", column: "creator_id"
+  add_foreign_key "users", "projects", column: "current_project_id"
 end

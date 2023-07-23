@@ -8,7 +8,11 @@ Rails.application.routes.draw do
   resources :tickets
   resources :customer_projects
   resources :tags
-  resources :projects
+  resources :projects do
+    member do
+      post :select
+    end
+  end
   get 'dashboard/index'
 
   root "dashboard#index"
