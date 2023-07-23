@@ -11,8 +11,8 @@
 </head>
 
 <body>
-<div class="container">
-  <header>
+<header>
+  <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <%= link_to 'Plato', root_url, class: 'navbar-brand' %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
             <div class="container-fluid">
     <span class="navbar-text">
 Current project:
-            <% if current_project.present? %>
+      <% if current_project.present? %>
               <%= current_project.name %>
             <% else %>
               Select current project
@@ -49,8 +49,10 @@ Current project:
         </ul>
       </div>
     </nav>
-  </header>
-  <main>
+  </div>
+</header>
+<main>
+  <div class="container">
     <% flash.each do |type, msg| %>
       <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
         <%= msg %>
@@ -58,8 +60,10 @@ Current project:
       </div>
     <% end %>
     <%= yield %>
-  </main>
-  <footer>
+  </div>
+</main>
+<footer>
+  <div class="container-fluid">
     Logged in as: <%= current_user.firstname %> <%= current_user.lastname %> <%= link_to t('logout'), destroy_user_session_path, 'data-turbo-method' => :delete %> |
     <%= link_to "Projects", projects_url %>
     <%= link_to "Tags", tags_url %>
@@ -67,7 +71,8 @@ Current project:
     -
 
     made by the developers with ❤️
-  </footer>
+  </div>
+</footer>
 </div>
 </body>
 </html>
