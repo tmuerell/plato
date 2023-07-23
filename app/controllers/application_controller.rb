@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :set_paper_trail_whodunnit
   protect_from_forgery
   before_action :authenticate_user!
   layout :layout_by_resource

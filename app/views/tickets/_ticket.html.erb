@@ -6,7 +6,7 @@
         <h4><%= ticket.title %></h4>
 
         <p>
-          <%= simple_format ticket.content %>
+          <%= markdown(ticket.content) %>
         </p>
 
         <hr/>
