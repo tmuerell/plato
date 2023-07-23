@@ -4,5 +4,5 @@ class Comment < ApplicationRecord
   belongs_to :ticket
   belongs_to :creator, class_name: "User"
 
-  after_create_commit { broadcast_append_to 'comments' }
+  after_create_commit { broadcast_append_to dom_id(self.ticket, :comments) }
 end
