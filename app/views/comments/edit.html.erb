@@ -1,6 +1,8 @@
 <h1>Editing comment</h1>
 
-<%= render "form", comment: @comment %>
+<%= turbo_frame_tag dom_id(@comment) do %>
+  <%= render "form", comment: @comment %>
+<% end %>
 
 <br>
 
