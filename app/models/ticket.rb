@@ -8,6 +8,8 @@ class Ticket < ApplicationRecord
   belongs_to :creator, class_name: "User"
   belongs_to :assignee, class_name: "User", optional: true
   has_many :comments
+  has_many :taggings, as: :taggable, dependent: :destroy
+  has_many :tags, through: :taggings
 
   before_create :set_sequential_no
 

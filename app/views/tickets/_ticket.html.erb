@@ -23,25 +23,36 @@
     </div>
     <div class="col-3">
       <div class="m-2 p-2" style="background-color: #f9f9f9; border-radius: 3px; border: 1px solid #f0f0f0;">
-        <div class="btn-group btn-group-sm">
-          <% if ticket.status.new? %>
-            <%= button_to "Start", ticket_url(@ticket, { ticket: { status: :in_progress } }), method: :patch, class: 'btn btn-sm btn-outline-primary' %>
-          <% end %>
-          <% if ticket.status.in_progress? %>
-            <%= button_to "Block", ticket_url(@ticket, { ticket: { status: :blocked } }), method: :patch, class: 'btn btn-sm btn-outline-warning' %>
-            <%= button_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), method: :patch, class: 'btn btn-sm btn-outline-success' %>
-          <% end %>
-          <% if ticket.status.blocked? %>
-            <%= button_to "Start", ticket_url(@ticket, { ticket: { status: :blocked } }), method: :patch, class: 'btn btn-sm btn-outline-warning' %>
-            <%= button_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), method: :patch, class: 'btn btn-sm btn-outline-success' %>
-          <% end %>
-          <%= link_to t('edit'), edit_ticket_path(@ticket), class: 'btn btn-outline-secondary' %><br/>
-        </div>
         <p>
           <%= status_label(ticket) %>
           <%= priority_label(ticket) %>
         </p>
 
+        <p>
+          <% for tag in ticket.tags %>
+            <span class="badge rounded-pill bg-secondary"><%= tag.name %></span>
+          <% end %>
+        </p>
+
+        <div class="btn-group btn-group-vertical btn-group-sm" style="width: 100%;">
+          <% if can?(:update, @ticket) %>
+            <% if ticket.status.new? %>
+              <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :in_progress } }), class: 'btn btn-sm btn-outline-primary', 'data-turbo-method' => :patch %>
+            <% end %>
+            <% if ticket.status.in_progress? %>
+              <%= link_to "Block", ticket_url(@ticket, { ticket: { status: :blocked } }), class: 'btn btn-sm btn-outline-warning', 'data-turbo-method' => :patch %>
+              <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), class: 'btn btn-sm btn-outline-success', 'data-turbo-method' => :patch %>
+            <% end %>
+            <% if ticket.status.blocked? %>
+              <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :blocked } }), class: 'btn btn-sm btn-outline-warning', 'data-turbo-method' => :patch %>
+              <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), class: 'btn btn-sm btn-outline-success', 'data-turbo-method' => :patch %>
+            <% end %>
+            <%= link_to t('edit'), edit_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
+            <% if @ticket.assignee != current_user %>
+              <%= link_to t('assign_to_me'), mine_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
+            <% end %>
+          <% end %>
+        </div>
         <p>
           <strong>Kunden-Projekt:</strong>
           <%= ticket.customer_project.name %>
@@ -60,6 +71,7 @@
             None
           <% end %>
         </p>
+
 
         <div>
 

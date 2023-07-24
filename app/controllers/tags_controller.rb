@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  before_action :set_tag, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /tags or /tags.json
   def index
