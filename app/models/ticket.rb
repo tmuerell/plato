@@ -21,7 +21,7 @@ class Ticket < ApplicationRecord
   after_create :send_notifications
 
   def identifier
-    "%s-%06x" % [ project.shortname, sequential_id ]
+    "%s-%06x" % [project.shortname, sequential_id]
   end
 
   private
@@ -33,6 +33,8 @@ class Ticket < ApplicationRecord
 
   def send_notifications
     TicketsMailer.created(self, self.creator).deliver
-    TicketsMailer.created(self, self.assignee).deliver if self.assignee.present?
+    if self.assignee.present? && self.assignee != self.creator
+      TicketsMailer.created(self, self.assignee).deliver
+    end
   end
 end
