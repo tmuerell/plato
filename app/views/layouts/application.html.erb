@@ -13,7 +13,7 @@
 <body>
 <header>
   <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
       <%= link_to 'Plato', root_url, class: 'navbar-brand' %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,15 +38,25 @@ Current project:
       <% if current_project.present? %>
               <%= current_project.name %>
             <% else %>
-              Select current project
+              <%= link_to "Select current project", projects_url %>
             <% end %>
             </span>
             </div>
           </li>
-          <li class="nav-item">
-            <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-outline-success btn-sm' %>
-          </li>
         </ul>
+        <% if Ticket.where(status: :new).count > 0 %>
+          <div class="pr-4">
+            <%= link_to inbox_tickets_url, class: 'btn btn-primary btn-sm' do %>
+                Inbox
+                <span class="badge bg-secondary"><%= Ticket.where(status: :new).count %></span>
+            <% end %>
+          </div>
+        <% end %>
+        <% if can?(:create, Ticket) %>
+          <div class="d-flex">
+            <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
+          </div>
+        <% end %>
       </div>
     </nav>
   </div>

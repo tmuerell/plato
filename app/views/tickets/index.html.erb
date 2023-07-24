@@ -20,7 +20,7 @@
       <td><%= priority_label(ticket) %></td>
       <td>
         <% if ticket.assignee.present? %>
-          <%= ticket.assignee.email %>
+          <%= ticket.assignee.name %>
         <% else %>
           ---
         <% end %>

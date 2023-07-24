@@ -1,5 +1,5 @@
 class CustomerProjectsController < ApplicationController
-  before_action :set_customer_project, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /customer_projects or /customer_projects.json
   def index

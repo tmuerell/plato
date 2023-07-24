@@ -7,5 +7,13 @@ class Ability
     if (user.roles || []).include?("Admin")
       can :manage, :all
     end
+    # TODO: Refine me
+    if (user.roles || []).include?("User")
+      can [:create, :read, :update], Ticket, creator_id: user.id
+      can :update, Ticket, assignee_id: user.id
+    end
+    can [:read, :select], Project
+    can :read, Ticket
+    can :read, Comment
   end
 end

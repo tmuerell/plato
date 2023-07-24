@@ -1,0 +1,15 @@
+<h2>Inbox</h2>
+
+<% @tickets.each do |ticket| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= ticket.title %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= ticket.identifier %></h6>
+      <p class="card-text"><%= ticket.content %></p>
+      <a href="#" class="card-link">Put to backlog</a>
+      <a href="#" class="card-link">Critical box</a>
+      <a href="#" class="card-link">For review</a>
+      <a href="#" class="card-link">Move to Platformteam</a>
+    </div>
+  </div>
+<% end %>

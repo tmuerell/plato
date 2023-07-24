@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_22_195801) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_24_054014) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "ticket_id", null: false
@@ -33,6 +33,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_195801) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["shortname"], name: "index_projects_on_shortname", unique: true
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer "taggable_id"
+    t.string "taggable_type"
+    t.integer "user_id"
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["user_id"], name: "index_taggings_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -98,6 +109,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_22_195801) do
 
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users", column: "creator_id"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "users"
   add_foreign_key "tags", "projects"
   add_foreign_key "tickets", "customer_projects"
   add_foreign_key "tickets", "projects"
