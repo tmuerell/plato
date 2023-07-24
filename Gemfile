@@ -52,11 +52,16 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'rubocop', require: false
+  gem 'factory_bot_rails'
+  gem 'dotenv-rails'
+  gem 'rspec-rails', '~> 6.0.0'
+  gem 'capybara'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "dockerfile-rails", ">= 1.5"
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -75,13 +80,11 @@ end
 gem 'simple_form'
 gem 'bootstrap'
 gem 'enumerize'
-gem "dockerfile-rails", ">= 1.5", :group => :development
 gem "devise", "~> 4.9"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-keycloak"
 
 gem "cancancan", "~> 3.5"
-gem 'dotenv-rails', groups: [:development, :test]
 gem 'json-jwt', "~> 1.16.3"
 gem 'paper_trail'
 gem "redcarpet"
