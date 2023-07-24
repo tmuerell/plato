@@ -18,10 +18,23 @@ footer {
   }
 }
 
-p.login-links {
-  font-size: 80%;
+@mixin gray-links {
   a {
     text-decoration: none;
     color: #999;
+  }
+}
+
+p.login-links {
+  font-size: 80%;
+  @include gray-links;
+}
+
+.comment {
+  .comment-info {
+    color: $text-muted;
+    font-size: 80%;
+
+    @include gray-links;
   }
 }
