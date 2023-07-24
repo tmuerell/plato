@@ -1,0 +1,17 @@
+<mjml>
+  <mj-body background-color="#eeeeee">
+    <mj-section>
+      <mj-column background-color="white">
+
+        <mj-text font-size="20px" color="#e2001a" align="center" font-family="helvetica">plato</mj-text>
+
+        <mj-divider border-color="#e2001a"></mj-divider>
+
+        <%= yield %>
+
+        <mj-divider border-color="#e2001a"></mj-divider>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

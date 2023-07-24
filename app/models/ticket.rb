@@ -18,6 +18,8 @@ class Ticket < ApplicationRecord
   enumerize :status, in: [:new, :in_progress, :blocked, :done]
   enumerize :priority, in: [:normal, :high]
 
+  after_create :send_notifications
+
   def identifier
     "%s-%06x" % [ project.shortname, sequential_id ]
   end
@@ -27,5 +29,10 @@ class Ticket < ApplicationRecord
   def set_sequential_no
     self.status = :new
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
+  end
+
+  def send_notifications
+    TicketsMailer.created(self, self.creator).deliver
+    TicketsMailer.created(self, self.assignee).deliver if self.assignee.present?
   end
 end
