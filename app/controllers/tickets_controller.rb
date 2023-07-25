@@ -21,7 +21,7 @@ class TicketsController < ApplicationController
   # GET /tickets/board/1 or /tickets/board/1.json
   def board
     @board = Tag.find(params[:id])
-    @tickets = Ticket.includes(:tags).where('tags.id' => params[:id])
+    @tickets = Ticket.includes(:tags).where(tags: { id: params[:id] })
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -83,8 +83,8 @@ class TicketsController < ApplicationController
     end
   end
 
-  def move_to_board
-    tag = Tag.find(params[:id])
+  def move
+    tag = Tag.find(params[:board_id])
     @ticket.tags << tag
     @ticket.save
     redirect_to @ticket

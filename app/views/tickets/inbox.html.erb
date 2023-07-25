@@ -10,7 +10,7 @@
       <a href="#" class="card-link">Critical box</a>
       <a href="#" class="card-link">For review</a>
       <% @boards.each do |board| %>
-        <%= link_to t('move_to_board', board_name: board.name), move_to_board_ticket_path(@ticket, id: board.id), 'data-turbo-method' => :post %>
+        <%= link_to t('move_to_board', board_name: board.name), move_ticket_path(ticket, board_id: board.id), 'data-turbo-method' => :post %>
       <% end %>
     </div>
   </div>

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
     member do
       post :mine
-      post '/board/:id/move', to: 'tickets#move_to_board', as: 'move_to_board'
+      post :move
     end
   end
   resources :customer_projects
