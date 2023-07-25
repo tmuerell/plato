@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :tickets do
     collection do
       get :inbox
-      get '/board/:id', to: 'tickets#board'
+      get '/board/:id', to: 'tickets#board', as: :board
     end
     member do
       post :mine

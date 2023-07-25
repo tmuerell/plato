@@ -1,12 +1,20 @@
 <h2><%= @board.name %> Board</h2>
 
-<% @tickets.each do |ticket| %>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title"><%= ticket.title %></h5>
-      <h6 class="card-subtitle mb-2 text-muted"><%= ticket.identifier %></h6>
-      <p class="card-text"><%= ticket.content %></p>
-      <a href="#" class="card-link">Back to Inbox</a>
+<div class="row">
+<% for s in Ticket.status.values %>
+  <div class="col kanban-col">
+    <div class="header">
+      <%= s.text %>
     </div>
+    <% for ti in @tickets.where(status: s) %>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= ti.title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= ti.identifier %></h6>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 <% end %>
+</div>

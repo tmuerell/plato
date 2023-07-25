@@ -25,6 +25,16 @@ footer {
   }
 }
 
+.kanban-col {
+  background-color: #eeeeee;
+  .header {
+    text-align: center;
+    padding: 2px;
+    background-color: #ccc;
+  }
+}
+
+
 p.login-links {
   font-size: 80%;
   @include gray-links;
