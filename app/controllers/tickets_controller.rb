@@ -15,6 +15,13 @@ class TicketsController < ApplicationController
       @tickets = @tickets.where(project: current_project)
     end
     @tickets = @tickets.where(status: :new)
+    @boards = Tag.where(is_board: true)
+  end
+
+  # GET /tickets/board/1 or /tickets/board/1.json
+  def board
+    @board = Tag.find(params[:id])
+    @tickets = Ticket.includes(:tags).where('tags.id' => params[:id])
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -74,6 +81,13 @@ class TicketsController < ApplicationController
       format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def move_to_board
+    tag = Tag.find(params[:id])
+    @ticket.tags << tag
+    @ticket.save
+    redirect_to @ticket
   end
 
   private

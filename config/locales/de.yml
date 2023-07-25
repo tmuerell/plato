@@ -77,3 +77,4 @@ de:
   create_ticket: "Neues Ticket"
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
+  move_to_board: "Nach %{board_name} verschieben"

@@ -8,9 +8,11 @@ Rails.application.routes.draw do
   resources :tickets do
     collection do
       get :inbox
+      get '/board/:id', to: 'tickets#board'
     end
     member do
       post :mine
+      post '/board/:id/move', to: 'tickets#move_to_board', as: 'move_to_board'
     end
   end
   resources :customer_projects

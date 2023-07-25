@@ -1,0 +1,12 @@
+<h2><%= @board.name %> Board</h2>
+
+<% @tickets.each do |ticket| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= ticket.title %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= ticket.identifier %></h6>
+      <p class="card-text"><%= ticket.content %></p>
+      <a href="#" class="card-link">Back to Inbox</a>
+    </div>
+  </div>
+<% end %>
