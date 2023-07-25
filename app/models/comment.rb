@@ -10,6 +10,8 @@ class Comment < ApplicationRecord
 
   def send_notifications
     TicketsMailer.commented(self.ticket, self.ticket.creator).deliver
-    TicketsMailer.commented(self.ticket, self.ticket.assignee).deliver if self.ticket.assignee.present?
+    if self.ticket.assignee.present? && self.ticket.assignee != self.ticket.creator
+      TicketsMailer.commented(self.ticket, self.ticket.assignee).deliver
+    end
   end
 end
