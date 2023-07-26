@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_045612) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_210457) do
+  create_table "api_tokens", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "token"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_api_tokens_on_token", unique: true
+    t.index ["user_id"], name: "index_api_tokens_on_user_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "ticket_id", null: false
@@ -108,6 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_045612) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "api_tokens", "users"
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "taggings", "tags"
