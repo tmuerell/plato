@@ -77,3 +77,9 @@ de:
   create_ticket: "Neues Ticket"
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
+
+  tickets_mailer:
+    created:
+      subject: A ticket was created
+    commented:
+      subject: A ticket was commented on

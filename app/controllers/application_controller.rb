@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
   end
 
   def layout_by_resource
+    return "turbo_rails/frame" if turbo_frame_request?
+
     if devise_controller?
       "nosession"
     else
