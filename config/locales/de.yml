@@ -78,3 +78,9 @@ de:
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
   move_to_board: "Nach %{board_name} verschieben"
+
+  tickets_mailer:
+    created:
+      subject: A ticket was created
+    commented:
+      subject: A ticket was commented on

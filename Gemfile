@@ -88,3 +88,4 @@ gem "cancancan", "~> 3.5"
 gem 'json-jwt', "~> 1.16.3"
 gem 'paper_trail'
 gem "redcarpet"
+gem 'mjml-rails'

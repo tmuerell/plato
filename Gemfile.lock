@@ -160,6 +160,7 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.2)
     minitest (5.16.3)
+    mjml-rails (4.9.0)
     msgpack (1.6.0)
     multi_xml (0.6.0)
     net-imap (0.3.1)
@@ -365,6 +366,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   json-jwt (~> 1.16.3)
+  mjml-rails
   omniauth-keycloak
   omniauth-rails_csrf_protection
   paper_trail

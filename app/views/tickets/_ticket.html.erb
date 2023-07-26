@@ -15,9 +15,9 @@
         <%= turbo_stream_from dom_id(ticket, :comments) %>
         <%= turbo_frame_tag dom_id(ticket, :comments) do %>
           <%= render @ticket.comments %>
-        <% end %>
-        <%= turbo_frame_tag 'new_comment' do %>
-          <%= link_to 'Neuer Kommentar', new_comment_path(ticket_id: @ticket) %>
+          <%= turbo_frame_tag 'new_comment' do %>
+            <%= link_to 'Neuer Kommentar', new_comment_path(ticket_id: @ticket) %>
+          <% end %>
         <% end %>
       </div>
     </div>
