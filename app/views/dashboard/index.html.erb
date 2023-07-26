@@ -34,8 +34,11 @@
     </div>
   </div>
   <div class="col">
-    <div class="p-2 m-2" style="background-color: #eee; color: #666; border: 1px solid #666; border-radius: 5px; height: 3rem;">
-      Some another graph
+    <div class="p-2 m-2" style="">
+      <h5>Boards</h5>
+      <% for t in Tag.where(is_board: true) %>
+        <%= link_to t.name, board_path(t) %>
+      <% end %>
     </div>
   </div>
 </div>

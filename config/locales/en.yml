@@ -37,6 +37,8 @@ en:
   create_ticket: "New ticket"
   edit: "Edit"
   assign_to_me: "Assign to me"
+  move_to_board: "Move to %{board_name}"
+
   tickets_mailer:
     created:
       subject: A ticket was created

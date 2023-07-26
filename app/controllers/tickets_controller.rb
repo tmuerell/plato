@@ -14,7 +14,8 @@ class TicketsController < ApplicationController
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
-    @tickets = @tickets.where(status: :new)
+    @tickets = @tickets.where(status: :new).reject(&:on_board?)
+    @boards = Tag.where(is_board: true)
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -74,6 +75,16 @@ class TicketsController < ApplicationController
       format.html { redirect_to tickets_url, notice: "Ticket was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def move
+    tag = Tag.find(params[:board_id])
+    if !tag.is_board
+        render_error_page(status: 403, text: 'Forbidden')
+    end
+    @ticket.tags << tag
+    @ticket.save
+    redirect_to @ticket
   end
 
   private

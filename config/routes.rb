@@ -5,12 +5,14 @@ Rails.application.routes.draw do
     devise_for :users
   end
   resources :comments
+  resources :boards
   resources :tickets do
     collection do
       get :inbox
     end
     member do
       post :mine
+      post :move
     end
   end
   resources :customer_projects

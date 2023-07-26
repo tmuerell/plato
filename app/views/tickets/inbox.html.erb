@@ -9,7 +9,9 @@
       <a href="#" class="card-link">Put to backlog</a>
       <a href="#" class="card-link">Critical box</a>
       <a href="#" class="card-link">For review</a>
-      <a href="#" class="card-link">Move to Platformteam</a>
+      <% @boards.each do |board| %>
+        <%= link_to t('move_to_board', board_name: board.name), move_ticket_path(ticket, board_id: board.id), 'data-turbo-method' => :post %>
+      <% end %>
     </div>
   </div>
 <% end %>

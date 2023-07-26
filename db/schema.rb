@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_24_054014) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_045612) do
   create_table "comments", force: :cascade do |t|
     t.text "content"
     t.integer "ticket_id", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_24_054014) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_board", default: false, null: false
     t.index ["project_id"], name: "index_tags_on_project_id"
   end
 
