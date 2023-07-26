@@ -18,12 +18,6 @@ class TicketsController < ApplicationController
     @boards = Tag.where(is_board: true)
   end
 
-  # GET /tickets/board/1 or /tickets/board/1.json
-  def board
-    @board = Tag.find(params[:id])
-    @tickets = Ticket.includes(:tags).where(tags: { id: params[:id] })
-  end
-
   # GET /tickets/1 or /tickets/1.json
   def show
   end

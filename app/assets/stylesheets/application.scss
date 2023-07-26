@@ -48,3 +48,8 @@ p.login-links {
     @include gray-links;
   }
 }
+
+.badge a {
+    color: white;
+    text-decoration: none;
+}

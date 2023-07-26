@@ -5,10 +5,10 @@ Rails.application.routes.draw do
     devise_for :users
   end
   resources :comments
+  resources :boards
   resources :tickets do
     collection do
       get :inbox
-      get '/board/:id', to: 'tickets#board', as: :board
     end
     member do
       post :mine
