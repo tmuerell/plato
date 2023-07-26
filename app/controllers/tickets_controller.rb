@@ -79,6 +79,9 @@ class TicketsController < ApplicationController
 
   def move
     tag = Tag.find(params[:board_id])
+    if !tag.is_board
+        render_error_page(status: 403, text: 'Forbidden')
+    end
     @ticket.tags << tag
     @ticket.save
     redirect_to @ticket

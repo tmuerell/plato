@@ -37,7 +37,7 @@
     <div class="p-2 m-2" style="">
       <h5>Boards</h5>
       <% for t in Tag.where(is_board: true) %>
-        <%= link_to t.name, board_tickets_url(id: t.id) %>
+        <%= link_to t.name, board_path(t) %>
       <% end %>
     </div>
   </div>
