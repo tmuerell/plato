@@ -22,6 +22,10 @@ class Ticket < ApplicationRecord
     "%s-%06x" % [ project.shortname, sequential_id ]
   end
 
+  def on_board?
+    self.tags.any? { |tag| tag.is_board }
+  end
+
   private
 
   def set_sequential_no

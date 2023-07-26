@@ -14,7 +14,7 @@ class TicketsController < ApplicationController
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
-    @tickets = @tickets.where(status: :new)
+    @tickets = @tickets.where(status: :new).reject(&:on_board?)
     @boards = Tag.where(is_board: true)
   end
 
