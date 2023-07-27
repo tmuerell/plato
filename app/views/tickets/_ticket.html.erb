@@ -57,6 +57,9 @@
             <% if @ticket.assignee != current_user %>
               <%= link_to t('assign_to_me'), mine_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
+            <% if can?(:approve, ticket) && ticket.needs_approval? && !ticket.approved? %>
+              <%= link_to t('approve'), approve_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
+            <% end %>
           <% end %>
         </div>
         <p>
@@ -77,6 +80,13 @@
             None
           <% end %>
         </p>
+
+        <% if @ticket.approved? %>
+          <p>
+            <strong><%= t('approved_by') %>:</strong>
+            <%= ticket.ticket_user_relationships.find_by(relationship: :approval).user.name %>
+          </p>
+        <% end %>
 
 
         <div>

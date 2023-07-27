@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       post :import
     end
     member do
+      post :approve
       post :mine
       post :move
     end

@@ -10,6 +10,7 @@ class Ticket < ApplicationRecord
   has_many :comments
   has_many :taggings, as: :taggable, dependent: :destroy
   has_many :tags, through: :taggings
+  has_many :ticket_user_relationships
 
   before_create :set_sequential_no
 
@@ -24,8 +25,18 @@ class Ticket < ApplicationRecord
     "%s-%06x" % [project.shortname, sequential_id]
   end
 
+  def needs_approval?
+    # TODO: solve this with SQL
+    tags.any?(&:approval?) && !approved?
+  end
+
+  def approved?
+    ticket_user_relationships.any? { |r| r.relationship == :approval }
+  end
+
   def on_board?
-    self.tags.any? { |tag| tag.is_board }
+    # TODO: solve this with SQL
+    tags.any?(&:is_board?)
   end
 
   private
