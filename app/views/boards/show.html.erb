@@ -9,7 +9,7 @@
     <% for ti in @tickets.where(status: s) %>
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title"><%= ti.title %></h5>
+          <h5 class="card-title"><%= link_to ti.title, ti %></h5>
           <h6 class="card-subtitle mb-2 text-muted"><%= ti.identifier %></h6>
         </div>
       </div>

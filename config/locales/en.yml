@@ -38,6 +38,8 @@ en:
   edit: "Edit"
   assign_to_me: "Assign to me"
   move_to_board: "Move to %{board_name}"
+  approve: "Approve"
+  approved_by: "Approved by"
 
   tickets_mailer:
     created:

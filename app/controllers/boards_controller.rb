@@ -3,6 +3,10 @@ class BoardsController < ApplicationController
   def show
     @board = Tag.find(params[:id])
     @tickets = Ticket.includes(:tags).where(tags: { id: params[:id] })
-  end
 
+    # TODO: reject alreade approved with a where clause
+    # if @board.approval?
+    #   @tickets = @tickets.reject(&:approved?)
+    # end
+  end
 end

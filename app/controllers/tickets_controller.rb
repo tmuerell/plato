@@ -61,6 +61,13 @@ class TicketsController < ApplicationController
     end
   end
 
+  def approve
+    r = TicketUserRelationship.create(ticket: @ticket, user: current_user, relationship: :approval)
+    r.save!
+
+    redirect_to @ticket
+  end
+
   def mine
     @ticket.assignee = current_user
     @ticket.save
@@ -79,15 +86,21 @@ class TicketsController < ApplicationController
 
   def move
     tag = Tag.find(params[:board_id])
+
     if !tag.is_board
-        render_error_page(status: 403, text: 'Forbidden')
+      render_error_page(status: 403, text: 'Forbidden')
     end
-    @ticket.tags << tag
-    @ticket.save
+
+    if !@ticket.tags.include? tag
+      @ticket.tags << tag
+      @ticket.save
+    end
+
     redirect_to @ticket
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_ticket
       @ticket = Ticket.find(params[:id])

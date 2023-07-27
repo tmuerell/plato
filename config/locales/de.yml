@@ -78,6 +78,8 @@ de:
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
   move_to_board: "Nach %{board_name} verschieben"
+  approve: "Freigeben"
+  approved_by: "Freigeben von"
 
   tickets_mailer:
     created:

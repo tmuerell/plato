@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get :inbox
     end
     member do
+      post :approve
       post :mine
       post :move
     end
