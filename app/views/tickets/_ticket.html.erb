@@ -5,9 +5,11 @@
         <span class="fs-6 text-muted"><%= ticket.identifier %></span>
         <h4><%= ticket.title %></h4>
 
-        <p>
-          <%= markdown(ticket.content) %>
-        </p>
+        <% if ticket.content.present? %>
+          <p>
+            <%= markdown(ticket.content) %>
+          </p>
+        <% end %>
 
         <hr/>
 
@@ -32,8 +34,8 @@
           <% for tag in ticket.tags %>
             <% if tag.is_board %>
               <span class="badge rounded-pill bg-secondary"><a href="#"><%= link_to tag.name, board_path(tag) %></a></span>
-        <% else %>
-            <span class="badge rounded-pill bg-secondary"><%= tag.name %></span>
+            <% else %>
+              <span class="badge rounded-pill bg-secondary"><%= tag.name %></span>
             <% end %>
           <% end %>
         </p>

@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource except: :import
 
   # GET /tickets or /tickets.json
   def index
@@ -80,21 +80,72 @@ class TicketsController < ApplicationController
   def move
     tag = Tag.find(params[:board_id])
     if !tag.is_board
-        render_error_page(status: 403, text: 'Forbidden')
+      render_error_page(status: 403, text: 'Forbidden')
     end
     @ticket.tags << tag
     @ticket.save
     redirect_to @ticket
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ticket
-      @ticket = Ticket.find(params[:id])
+  def import
+    external_id = params[:key]
+    t = Ticket.find_by_external_id(external_id)
+    cp = CustomerProject.find_or_create_by(name: params[:fields][:customfield_12750][:value])
+    priority = if params[:fields][:priority][:name] == 'High'
+                 :high
+               else
+                 :normal
+               end
+    status = if params[:fields][:status][:name] == 'Open'
+               :new
+             elsif params[:fields][:status][:name] == 'In Progress'
+               :in_progress
+             else
+               :new
+             end
+    if t
+      t.update(content: params[:fields][:description],
+               assignee: find_user(params[:fields][:assignee]),
+               title: params[:fields][:summary],
+               priority: priority,
+               customer_project: cp,
+               status: status)
+    else
+      t = Ticket.create!(external_id: external_id,
+                         content: params[:fields][:description],
+                         creator: find_user(params[:fields][:creator]),
+                         assignee: find_user(params[:fields][:assignee]),
+                         title: params[:fields][:summary],
+                         project: Project.first,
+                         priority: priority,
+                         customer_project: cp,
+                         status: status)
+      if params[:fields][:comment] && params[:fields][:comment][:comments]
+        params[:fields][:comment][:comments].each do |c|
+          Comment.create!(content: c[:body], creator: find_user(c[:author]), created_at: c[:created], ticket: t)
+        end
+      end
     end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def ticket_params
-      params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :tag_ids => [])
+  protected
+
+  def find_user(det)
+    return nil unless det.present?
+    User.find_or_create_by(email: det[:emailAddress]) do |user|
+      user.password = Devise.friendly_token[0, 20]
     end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ticket
+    @ticket = Ticket.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def ticket_params
+    params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, :tag_ids => [])
+  end
 end

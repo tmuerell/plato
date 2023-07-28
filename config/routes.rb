@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :tickets do
     collection do
       get :inbox
+      post :import
     end
     member do
       post :mine

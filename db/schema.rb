@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_210457) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_213821) do
   create_table "api_tokens", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "token"
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_210457) do
     t.datetime "updated_at", null: false
     t.integer "creator_id", null: false
     t.integer "assignee_id"
+    t.string "external_id"
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
