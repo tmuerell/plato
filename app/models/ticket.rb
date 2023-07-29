@@ -26,8 +26,11 @@ class Ticket < ApplicationRecord
   end
 
   def needs_approval?
-    # TODO: solve this with SQL
-    tags.any?(&:approval?) && !approved?
+    Ticket.left_outer_joins(:tags)
+          .joins('LEFT OUTER JOIN "ticket_user_relationships" ON "ticket_user_relationships"."ticket_id" = "tickets"."id" AND "ticket_user_relationships"."relationship" = "approval"')
+          .where('tags.name IN (?)', Tag.approval_tag_names)
+          .where('tickets.id = ? AND ticket_user_relationships.id IS NULL', id)
+          .exists?
   end
 
   def approved?
@@ -35,8 +38,7 @@ class Ticket < ApplicationRecord
   end
 
   def on_board?
-    # TODO: solve this with SQL
-    tags.any?(&:is_board?)
+    Ticket.joins(:tags).where('tickets.id = ? AND tags.is_board = true', id).exists?
   end
 
   private
