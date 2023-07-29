@@ -6,11 +6,13 @@
       <h5 class="card-title"><%= ticket.title %></h5>
       <h6 class="card-subtitle mb-2 text-muted"><%= ticket.identifier %></h6>
       <p class="card-text"><%= ticket.content %></p>
-      <a href="#" class="card-link">Put to backlog</a>
+      <% @areas.each do |area| %>
+        <%= link_to t('move_to_area', area_name: area.name), tag_ticket_path(ticket, tag_id: area.id), 'data-turbo-method' => :post %>
+      <% end %>
       <a href="#" class="card-link">Critical box</a>
       <a href="#" class="card-link">For review</a>
       <% @boards.each do |board| %>
-        <%= link_to t('move_to_board', board_name: board.name), move_ticket_path(ticket, board_id: board.id), 'data-turbo-method' => :post %>
+        <%= link_to t('move_to_board', board_name: board.name), tag_ticket_path(ticket, tag_id: board.id), 'data-turbo-method' => :post %>
       <% end %>
     </div>
   </div>
