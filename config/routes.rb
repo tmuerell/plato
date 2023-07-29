@@ -9,10 +9,12 @@ Rails.application.routes.draw do
   resources :tickets do
     collection do
       get :inbox
+      get :backlog
     end
     member do
+      post :approve
       post :mine
-      post :move
+      post :tag
     end
   end
   resources :customer_projects

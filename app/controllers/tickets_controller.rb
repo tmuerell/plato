@@ -14,8 +14,17 @@ class TicketsController < ApplicationController
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
-    @tickets = @tickets.where(status: :new).reject(&:on_board?)
+    @tickets = @tickets.where(status: :new).select(&:inbox?)
     @boards = Tag.where(is_board: true)
+    @areas = Tag.where(is_area: true)
+  end
+
+  def backlog
+    @tickets = Ticket.all
+    if current_project
+      @tickets = @tickets.where(project: current_project)
+    end
+    @tickets = @tickets.where("EXISTS ( select 1 from taggings ts join tags t on ts.tag_id = t.id and ts.taggable_id = tickets.id and t.is_area = true)")
   end
 
   # GET /tickets/1 or /tickets/1.json
@@ -61,6 +70,13 @@ class TicketsController < ApplicationController
     end
   end
 
+  def approve
+    r = TicketUserRelationship.create(ticket: @ticket, user: current_user, relationship: :approval)
+    r.save!
+
+    redirect_to @ticket
+  end
+
   def mine
     @ticket.assignee = current_user
     @ticket.save
@@ -77,17 +93,19 @@ class TicketsController < ApplicationController
     end
   end
 
-  def move
-    tag = Tag.find(params[:board_id])
-    if !tag.is_board
-        render_error_page(status: 403, text: 'Forbidden')
+  def tag
+    tag = Tag.find(params[:tag_id])
+
+    unless @ticket.tags.include? tag
+      @ticket.tags << tag
+      @ticket.save
     end
-    @ticket.tags << tag
-    @ticket.save
+
     redirect_to @ticket
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_ticket
       @ticket = Ticket.find(params[:id])

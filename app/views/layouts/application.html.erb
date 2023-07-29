@@ -29,6 +29,9 @@
           <li class="nav-item">
             <%= link_to 'Tickets', tickets_url, class: 'nav-link' %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'Backlog', backlog_tickets_path, class: 'nav-link' %>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -48,7 +51,7 @@ Current project:
           <div class="pr-4">
             <%= link_to inbox_tickets_url, class: 'btn btn-primary btn-sm' do %>
                 Inbox
-                <span class="badge bg-secondary"><%= Ticket.where(status: :new).reject(&:on_board?).count %></span>
+                <span class="badge bg-secondary"><%= Ticket.where(status: :new).select(&:inbox?).count %></span>
             <% end %>
           </div>
         <% end %>

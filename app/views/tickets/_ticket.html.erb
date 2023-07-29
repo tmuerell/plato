@@ -48,12 +48,15 @@
               <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), class: 'btn btn-sm btn-outline-success', 'data-turbo-method' => :patch %>
             <% end %>
             <% if ticket.status.blocked? %>
-              <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :blocked } }), class: 'btn btn-sm btn-outline-warning', 'data-turbo-method' => :patch %>
+              <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :in_progress } }), class: 'btn btn-sm btn-outline-warning', 'data-turbo-method' => :patch %>
               <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), class: 'btn btn-sm btn-outline-success', 'data-turbo-method' => :patch %>
             <% end %>
             <%= link_to t('edit'), edit_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
             <% if @ticket.assignee != current_user %>
               <%= link_to t('assign_to_me'), mine_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
+            <% end %>
+            <% if can?(:approve, ticket) && ticket.needs_approval? && !ticket.approved? %>
+              <%= link_to t('approve'), approve_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
           <% end %>
         </div>
@@ -75,6 +78,13 @@
             None
           <% end %>
         </p>
+
+        <% if @ticket.approved? %>
+          <p>
+            <strong><%= t('approved_by') %>:</strong>
+            <%= ticket.ticket_user_relationships.find_by(relationship: :approval).user.name %>
+          </p>
+        <% end %>
 
 
         <div>
