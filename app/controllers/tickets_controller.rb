@@ -104,56 +104,6 @@ class TicketsController < ApplicationController
     redirect_to @ticket
   end
 
-  def import
-    external_id = params[:key]
-    t = Ticket.find_by_external_id(external_id)
-    cp = CustomerProject.find_or_create_by(name: params[:fields][:customfield_12750][:value])
-    priority = if params[:fields][:priority][:name] == 'High'
-                 :high
-               else
-                 :normal
-               end
-    status = if params[:fields][:status][:name] == 'Open'
-               :new
-             elsif params[:fields][:status][:name] == 'In Progress'
-               :in_progress
-             else
-               :new
-             end
-    if t
-      t.update(content: params[:fields][:description],
-               assignee: find_user(params[:fields][:assignee]),
-               title: params[:fields][:summary],
-               priority: priority,
-               customer_project: cp,
-               status: status)
-    else
-      t = Ticket.create!(external_id: external_id,
-                         content: params[:fields][:description],
-                         creator: find_user(params[:fields][:creator]),
-                         assignee: find_user(params[:fields][:assignee]),
-                         title: params[:fields][:summary],
-                         project: Project.first,
-                         priority: priority,
-                         customer_project: cp,
-                         status: status)
-      if params[:fields][:comment] && params[:fields][:comment][:comments]
-        params[:fields][:comment][:comments].each do |c|
-          Comment.create!(content: c[:body], creator: find_user(c[:author]), created_at: c[:created], ticket: t)
-        end
-      end
-    end
-  end
-
-  protected
-
-  def find_user(det)
-    return nil unless det.present?
-    User.find_or_create_by(email: det[:emailAddress]) do |user|
-      user.password = Devise.friendly_token[0, 20]
-    end
-  end
-
   private
 
     # Use callbacks to share common setup or constraints between actions.
@@ -161,8 +111,8 @@ class TicketsController < ApplicationController
       @ticket = Ticket.find(params[:id])
     end
 
-  # Only allow a list of trusted parameters through.
-  def ticket_params
-    params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, :tag_ids => [])
-  end
+    # Only allow a list of trusted parameters through.
+    def ticket_params
+      params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, tag_ids: [], files: [])
+    end
 end

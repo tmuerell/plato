@@ -88,6 +88,14 @@
           </p>
         <% end %>
 
+        <% if @ticket.files.attached? %>
+          <p>
+            <strong>Attachments:</strong>
+          </p>
+          <% for f in @ticket.files %>
+            <%= link_to f.inspect, rails_blob_path(f, disposition: :attachment) %>
+          <% end %>
+        <% end %>
 
         <div>
 
