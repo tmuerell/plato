@@ -32,8 +32,8 @@
           <% for tag in ticket.tags %>
             <% if tag.is_board %>
               <span class="badge rounded-pill bg-secondary"><a href="#"><%= link_to tag.name, board_path(tag) %></a></span>
-        <% else %>
-            <span class="badge rounded-pill bg-secondary"><%= tag.name %></span>
+            <% else %>
+              <span class="badge rounded-pill bg-secondary"><%= tag.name %></span>
             <% end %>
           <% end %>
         </p>
@@ -86,6 +86,14 @@
           </p>
         <% end %>
 
+        <% if @ticket.files.attached? %>
+          <p>
+            <strong>Attachments:</strong>
+          </p>
+          <% for f in @ticket.files %>
+            <%= link_to f.inspect, rails_blob_path(f, disposition: :attachment) %>
+          <% end %>
+        <% end %>
 
         <div>
 

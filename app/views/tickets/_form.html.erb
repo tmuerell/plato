@@ -11,6 +11,12 @@
     <%= f.association :customer_project %>
   </div>
 
+  <% @ticket.files.each do |image| %>
+    <%= f.hidden_field :files, multiple: true, value: image.signed_id %>
+  <% end %>
+
+  <%= f.file_field :files, multiple: true %>
+
   <div class="form-actions">
     <%= f.button :submit %>
   </div>
