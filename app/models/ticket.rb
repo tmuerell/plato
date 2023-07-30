@@ -11,6 +11,7 @@ class Ticket < ApplicationRecord
   has_many :taggings, as: :taggable, dependent: :destroy
   has_many :tags, through: :taggings
   has_many :ticket_user_relationships
+  has_many_attached :files
 
   before_create :set_sequential_no
 
