@@ -91,7 +91,7 @@
             <strong>Attachments:</strong>
           </p>
           <% for f in @ticket.files %>
-            <%= link_to f.inspect, rails_blob_path(f, disposition: :attachment) %>
+            <%= link_to f.name, rails_blob_path(f, disposition: :attachment) %>
           <% end %>
         <% end %>
 
