@@ -1,4 +1,3 @@
-<%= turbo_frame_tag dom_id(comment) do %>
 <div id="<%= dom_id comment %>" class="comment">
   <p class="p-0 comment-info">
     <%=l comment.created_at %> by <%= comment.creator.name %> |
@@ -9,4 +8,3 @@
   </p>
   <hr />
 </div>
-<% end %>
