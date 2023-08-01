@@ -82,6 +82,8 @@ gem 'enumerize'
 gem "devise", "~> 4.9"
 gem "omniauth-rails_csrf_protection"
 gem "omniauth-keycloak"
+gem "kaminari"
+gem 'bootstrap5-kaminari-views'
 
 gem "cancancan", "~> 3.5"
 gem 'json-jwt', "~> 1.16.3"
