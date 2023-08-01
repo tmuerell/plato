@@ -30,6 +30,4 @@
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Ticket', new_ticket_path %>
+<%= paginate @tickets, theme: 'bootstrap-5' %>
