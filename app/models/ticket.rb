@@ -19,7 +19,7 @@ class Ticket < ApplicationRecord
 
   enumerize :status, in: [:new, :in_progress, :blocked, :done]
   enumerize :priority, in: [:normal, :high]
-
+  scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
   after_create :send_notifications
 
   def identifier
@@ -32,6 +32,18 @@ class Ticket < ApplicationRecord
           .where('tags.name IN (?)', Tag.approval_tag_names)
           .where('tickets.id = ? AND ticket_user_relationships.id IS NULL', id)
           .exists?
+  end
+
+  def valid_transitions(_user)
+    if status.new?
+      [ :in_progress ]
+    elsif status.in_progress?
+      [ :blocked, :done ]
+    elsif status.blocked?
+      [ :in_progress, :done ]
+    else
+      []
+    end
   end
 
   def approved?
