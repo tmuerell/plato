@@ -32,6 +32,8 @@ footer {
   }
 }
 
+@include gray-links;
+
 .kanban-col {
   background-color: #eeeeee;
   .header {

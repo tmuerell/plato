@@ -1,15 +1,15 @@
-<h2>Backlog</h2>
+<% for board in Tag.where(is_board: true) %>
+  <% tickets = Ticket.with_tag(board).where(status: [:new, :in_progress, :blocked]) %>
+  <% if tickets.count > 0 %>
+    <h4 class="mt-3"><%= board.name %></h4>
+    <% tickets.each do |ticket| %>
+      <%= render 'item', ticket: ticket %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h4 class="mt-3">Backlog</h4>
 
 <% @tickets.each do |ticket| %>
-  <div class="row">
-    <div class="col-1">
-      <%= link_to ticket.identifier, ticket %>
-    </div>
-    <div class="col-9">
-      <%= ticket.title %>
-    </div>
-    <div class="col-2">
-      <%= ticket.status_text %>
-    </div>
-  </div>
+  <%= render 'item', ticket: ticket %>
 <% end %>

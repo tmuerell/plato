@@ -62,7 +62,7 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update(ticket_params)
-        format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully updated." }
+        format.html { redirect_back_or_to ticket_url(@ticket) }
         format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit, status: :unprocessable_entity }
