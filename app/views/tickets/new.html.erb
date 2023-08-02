@@ -3,7 +3,22 @@
   <div class="col-6">
     <h3><%=t '.title' %></h3>
 
-    <%= render "form", ticket: @ticket %>
+    <%= simple_form_for(@ticket) do |f| %>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+      <div class="form-inputs">
+        <%= f.association :customer_project %>
+        <%= f.input :title, as: :string %>
+        <%= f.input :content, input_html: { rows: 10 } %>
+        <%= f.input :priority %>
+      </div>
+      <%= f.file_field :files, multiple: true %>
+
+      <div class="form-actions">
+        <%= f.button :submit %>
+      </div>
+    <% end %>
   </div>
   <div class="col-3">&nbsp;</div>
 </div>
