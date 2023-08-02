@@ -94,7 +94,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['PLATO_SMTP_ADDRESS'] || 'localhost',
-    port: ENV['PLATO_SMTP_PORT'] || 25,
+    address: ENV.fetch('PLATO_SMTP_ADDRESS') { 'localhost' },
+    port: ENV.fetch('PLATO_SMTP_PORT') { 25 },
   }
 end
