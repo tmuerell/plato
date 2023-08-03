@@ -26,5 +26,11 @@ Rails.application.routes.draw do
   end
   get 'dashboard/index', to: 'dashboard#index'
 
+  ### APIs
+  post 'import/ticket', to: 'import#ticket'
+  post 'import/customer_project', to: 'import#customer_project'
+  post 'import/user', to: 'import#user'
+  post 'import/comment', to: 'import#comment'
+
   root "dashboard#index"
 end
