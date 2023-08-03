@@ -63,7 +63,13 @@ class TicketsController < ApplicationController
   def update
     respond_to do |format|
       if @ticket.update(ticket_params)
-        format.html { redirect_back_or_to ticket_url(@ticket) }
+        format.html {
+          if request.referrer =~ /\/\d+\/edit/
+            redirect_to @ticket
+          else
+            redirect_back_or_to ticket_url(@ticket)
+          end
+        }
         format.json { render :show, status: :ok, location: @ticket }
       else
         format.html { render :edit, status: :unprocessable_entity }
