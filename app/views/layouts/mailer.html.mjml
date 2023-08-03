@@ -3,13 +3,13 @@
     <mj-section>
       <mj-column background-color="white">
 
-        <mj-text font-size="20px" color="#e2001a" align="center" font-family="helvetica">plato</mj-text>
+        <mj-text font-size="20px" color="#1C274C" align="center" font-family="helvetica">plato</mj-text>
 
-        <mj-divider border-color="#e2001a"></mj-divider>
+        <mj-divider border-color="#1C274C"></mj-divider>
 
         <%= yield %>
 
-        <mj-divider border-color="#e2001a"></mj-divider>
+        <mj-divider border-color="#1C274C"></mj-divider>
 
       </mj-column>
     </mj-section>

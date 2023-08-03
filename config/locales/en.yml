@@ -34,10 +34,11 @@ en:
   tickets:
     new:
       title: "New ticket"
+      attach_files: "Attach files"
   create_ticket: "New ticket"
   edit: "Edit"
   assign_to_me: "Assign to me"
-  move_to_board: "Move to %{board_name}"
+  move_to_board: "📋 %{board_name}"
   approve: "Approve"
   approved_by: "Approved by"
 
@@ -46,4 +47,6 @@ en:
       subject: A ticket was created
     commented:
       subject: A ticket was commented on
-  move_to_area: "Area %{area_name}"
+    assigned:
+      subject: A ticket was assigned to you
+  move_to_area: "📗 %{area_name}"

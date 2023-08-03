@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :project do
-    name { "ONE" }
-    shortname { "Internal" }
+    name { "Internal" }
+    sequence(:shortname) { |n| "INT-#{n}" }
   end
 end

@@ -20,7 +20,7 @@ class Ticket < ApplicationRecord
   enumerize :status, in: [:new, :in_progress, :blocked, :done]
   enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
-  after_create :send_notifications
+  after_commit :send_notifications
 
   def identifier
     "%s-%06x" % [project.shortname, sequential_id]
@@ -62,9 +62,14 @@ class Ticket < ApplicationRecord
   end
 
   def send_notifications
-    TicketsMailer.created(self, self.creator).deliver
-    if self.assignee.present? && self.assignee != self.creator
-      TicketsMailer.created(self, self.assignee).deliver
+    if self.previously_new_record?
+      TicketsMailer.created(self, self.creator).deliver
+      if self.assignee.present? && self.assignee != self.creator
+        TicketsMailer.created(self, self.assignee).deliver
+      end
+    end
+    if self.saved_change_to_assignee_id
+      TicketsMailer.assigned(self, self.assignee).deliver
     end
   end
 end

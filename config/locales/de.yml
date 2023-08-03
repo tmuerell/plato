@@ -74,10 +74,11 @@ de:
   tickets:
     new:
       title: "Neues Ticket"
+      attach_files: "Dateien anhängen"
   create_ticket: "Neues Ticket"
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
-  move_to_board: "Nach %{board_name} verschieben"
+  move_to_board: "📋 %{board_name}"
   approve: "Freigeben"
   approved_by: "Freigeben von"
 
@@ -86,4 +87,12 @@ de:
       subject: A ticket was created
     commented:
       subject: A ticket was commented on
-  move_to_area: "Bereich %{area_name}"
+    assigned:
+      subject: A ticket was assigned to you
+  move_to_area: "📗 %{area_name}"
+
+  helpers:
+    submit:
+      create: "%{model} erstellen"
+      submit: "%{model} speichern"
+      update: "%{model} speichern"

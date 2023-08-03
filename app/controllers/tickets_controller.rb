@@ -35,6 +35,7 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
+    @ticket.priority = :normal
   end
 
   # GET /tickets/1/edit
@@ -102,7 +103,7 @@ class TicketsController < ApplicationController
       @ticket.save
     end
 
-    redirect_to @ticket
+    redirect_back_or_to @ticket
   end
 
   private
