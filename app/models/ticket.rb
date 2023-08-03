@@ -50,6 +50,10 @@ class Ticket < ApplicationRecord
     ticket_user_relationships.any? { |r| r.relationship == :approval }
   end
 
+  def flagged?
+    self.tags.select { |t| t.name == 'Flag'}.first
+  end
+
   def inbox?
     !Ticket.joins(:tags).where('tickets.id = ? AND (tags.is_board = true OR tags.is_area = true)', id).exists?
   end
