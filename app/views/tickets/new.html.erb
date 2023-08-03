@@ -13,7 +13,11 @@
         <%= f.input :content, input_html: { rows: 10 } %>
         <%= f.input :priority %>
       </div>
-      <%= f.file_field :files, multiple: true %>
+
+      <div class="mb-3">
+        <label for="formFile" class="form-label"><%=t '.attach_files' %></label>
+        <%= f.file_field :files, multiple: true, class: 'form-control' %>
+      </div>
 
       <div class="form-actions">
         <%= f.button :submit %>
