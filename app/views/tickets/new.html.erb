@@ -8,10 +8,10 @@
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
       <div class="form-inputs">
-        <%= f.association :customer_project %>
+        <%= f.association :customer_project, input_html: { class: 'js-choice'} %>
         <%= f.input :title, as: :string %>
         <%= f.input :content, input_html: { rows: 10 } %>
-        <%= f.input :priority %>
+        <%= f.input :priority, input_html: { class: 'js-choice'} %>
       </div>
 
       <div class="mb-3">

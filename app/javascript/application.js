@@ -3,9 +3,15 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "popper"
 import "bootstrap"
-import { HighlightJS } from "highlight.js"
+import {HighlightJS} from "highlight.js"
+import Choices from "choices.js"
 
 document.addEventListener('turbo:load', (event) => {
-    console.log("High")
+    const highlightedItems = document.querySelectorAll(".js-choice");
+    highlightedItems.forEach(function (userItem) {
+        new Choices(userItem, {
+            removeItemButton: true,
+        });
+    });
     HighlightJS.highlightAll()
 });
