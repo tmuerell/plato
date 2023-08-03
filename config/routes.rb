@@ -24,7 +24,7 @@ Rails.application.routes.draw do
       post :select
     end
   end
-  get 'dashboard/index'
+  get 'dashboard/index', to: 'dashboard#index'
 
   root "dashboard#index"
 end
