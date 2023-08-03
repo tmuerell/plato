@@ -15,7 +15,7 @@ RSpec.feature "TicketCreations", type: :feature do
     fill_in 'Titel', with: 'Das ist ein lustiges Ticket'
     select 'High', from: 'Priorität'
     select @customer_project.name, from: 'Kundenprojekt'
-    click_on "Create Ticket"
+    click_on "Ticket erstellen"
 
     expect(page).to have_content 'Ticket was successfully created'
   end
