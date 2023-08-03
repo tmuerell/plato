@@ -35,6 +35,8 @@ en:
     new:
       title: "New ticket"
       attach_files: "Attach files"
+    form:
+      attach_files: "Attach files"
   create_ticket: "New ticket"
   edit: "Edit"
   assign_to_me: "Assign to me"

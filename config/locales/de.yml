@@ -75,6 +75,8 @@ de:
     new:
       title: "Neues Ticket"
       attach_files: "Dateien anhängen"
+    form:
+      attach_files: "Dateien anhängen"
   create_ticket: "Neues Ticket"
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
