@@ -16,6 +16,16 @@ class ImportController < ApplicationController
     respond_with(cp)
   end
 
+  def tag
+    authorize! :import, Ticket
+
+    t = Tag.find_or_create_by(name: params[:name], project_id: params[:project_id]) do |tag|
+      tag.is_board = params[:is_board]
+      tag.is_area = params[:is_area]
+    end
+    respond_with(t)
+  end
+
   def comment
     authorize! :import, Ticket
 

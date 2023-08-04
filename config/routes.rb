@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   ### APIs
   get 'import/ticket/:ref', to: 'import#ticket'
   post 'import/ticket', to: 'import#ticket_update'
+  post 'import/tag', to: 'import#tag'
   post 'import/customer_project', to: 'import#customer_project'
   post 'import/user', to: 'import#user'
   post 'import/comment', to: 'import#comment'
