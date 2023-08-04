@@ -130,7 +130,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_30_212903) do
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
-    t.index ["epic_id"], name: "index_tickets_on_epic_id"
     t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
