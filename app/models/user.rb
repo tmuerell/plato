@@ -3,6 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
+
+  before_create :set_default_user_groups
+
   if ENV['PLATO_OPENID_CONNECT_ENABLE'] == 'true'
     devise :omniauthable, omniauth_providers: [ENV['PLATO_OPENID_CONNECT_NAME'].to_sym]
 
@@ -27,6 +30,14 @@ class User < ApplicationRecord
       "#{firstname} #{lastname}"
     else
       email
+    end
+  end
+
+  private
+
+  def set_default_user_groups
+    unless self.roles.present?
+      self.roles = ["User"]
     end
   end
 end

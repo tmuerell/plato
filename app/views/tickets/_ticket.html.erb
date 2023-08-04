@@ -5,9 +5,11 @@
         <span class="fs-6 text-muted"><%= ticket.identifier %></span>
         <h4><%= ticket.title %></h4>
 
-        <p>
-          <%= markdown(ticket.content) %>
-        </p>
+        <% if ticket.content.present? %>
+          <p>
+            <%= markdown(ticket.content) %>
+          </p>
+        <% end %>
 
         <hr/>
 

@@ -19,7 +19,7 @@ class Ability
     end
 
     can [:read, :select], Project
-    can :read, Ticket
-    can :read, Comment
+    can [:create, :read], Ticket, creator_id: user.id
+    can [:create, :read], Comment, ticket: { creator_id: user.id }
   end
 end
