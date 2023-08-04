@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
   get 'dashboard/index', to: 'dashboard#index'
-
+  
   ### APIs
   get 'import/ticket/:ref', to: 'import#ticket'
   post 'import/ticket', to: 'import#ticket_update'

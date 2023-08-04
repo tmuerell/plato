@@ -104,7 +104,7 @@ class TicketsController < ApplicationController
   def tag
     tag = Tag.find(params[:tag_id])
 
-      unless @ticket.tags.include? tag
+    unless @ticket.tags.include? tag
       @ticket.tags << tag
       @ticket.save
     end
@@ -119,8 +119,8 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find(params[:id])
   end
 
-    # Only allow a list of trusted parameters through.
-    def ticket_params
-      params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, tag_ids: [], files: [])
-    end
+  # Only allow a list of trusted parameters through.
+  def ticket_params
+    params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, tag_ids: [], files: [])
+  end
 end
