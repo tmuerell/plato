@@ -20,7 +20,7 @@ class Ticket < ApplicationRecord
   enumerize :status, in: [:new, :in_progress, :blocked, :done]
   enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
-  after_commit :send_notifications
+  after_commit :send_notifications, if: lambda { ENV.fetch("PLATO_NOTIFICATIONS_ENABLED", "true") == "true" }
 
   def identifier
     "%s-%06x" % [project.shortname, sequential_id]
