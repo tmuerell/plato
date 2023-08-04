@@ -50,7 +50,7 @@
               <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), class: 'btn btn-sm btn-outline-success', 'data-turbo-method' => :patch %>
             <% end %>
             <% if ticket.status.blocked? %>
-              <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :blocked } }), class: 'btn btn-sm btn-outline-warning', 'data-turbo-method' => :patch %>
+              <%= link_to "Start", ticket_url(@ticket, { ticket: { status: :in_progress } }), class: 'btn btn-sm btn-outline-warning', 'data-turbo-method' => :patch %>
               <%= link_to "Close", ticket_url(@ticket, { ticket: { status: :done } }), class: 'btn btn-sm btn-outline-success', 'data-turbo-method' => :patch %>
             <% end %>
             <%= link_to t('edit'), edit_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>

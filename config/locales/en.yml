@@ -46,3 +46,4 @@ en:
       subject: A ticket was created
     commented:
       subject: A ticket was commented on
+  move_to_area: "Area %{area_name}"

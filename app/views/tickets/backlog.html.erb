@@ -1,0 +1,15 @@
+<h2>Backlog</h2>
+
+<% @tickets.each do |ticket| %>
+  <div class="row">
+    <div class="col-1">
+      <%= link_to ticket.identifier, ticket %>
+    </div>
+    <div class="col-9">
+      <%= ticket.title %>
+    </div>
+    <div class="col-2">
+      <%= ticket.status_text %>
+    </div>
+  </div>
+<% end %>

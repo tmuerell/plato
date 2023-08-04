@@ -37,8 +37,8 @@ class Ticket < ApplicationRecord
     ticket_user_relationships.any? { |r| r.relationship == :approval }
   end
 
-  def on_board?
-    Ticket.joins(:tags).where('tickets.id = ? AND tags.is_board = true', id).exists?
+  def inbox?
+    !Ticket.joins(:tags).where('tickets.id = ? AND (tags.is_board = true OR tags.is_area = true)', id).exists?
   end
 
   private
