@@ -27,6 +27,18 @@ class ImportController < ApplicationController
   def ticket
     authorize! :import, Ticket
 
+    t = Ticket.find_by_external_id(params[:ref])
+
+    unless t
+      t = Ticket.find(params[:ref])
+    end
+
+    respond_with(t)
+  end
+
+  def ticket_update
+    authorize! :import, Ticket
+
     t = Ticket.find_by_external_id(params[:external_id])
 
     if t
