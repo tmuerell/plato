@@ -10,10 +10,14 @@ class User < ApplicationRecord
     devise :omniauthable, omniauth_providers: [ENV['PLATO_OPENID_CONNECT_NAME'].to_sym]
 
     def self.from_omniauth(auth)
-      user = find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
-        user.email = auth.info.email
-        user.password = Devise.friendly_token[0, 20]
+      user = find_by(provider: auth.provider, uid: auth.uid)
+
+      user ||= find_or_create_by(email: auth.info.email) do |new_user|
+        new_user.uid = auth.uid
+        new_user.provider = auth.provider
+        new_user.password = Devise.friendly_token[0, 20]
       end
+
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
       user.roles = auth.extra.raw_info.resource_access.plato.roles
