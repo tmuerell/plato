@@ -35,6 +35,8 @@ en:
     new:
       title: "New ticket"
       attach_files: "Attach files"
+    form:
+      attach_files: "Attach files"
   create_ticket: "New ticket"
   edit: "Edit"
   assign_to_me: "Assign to me"
@@ -50,3 +52,4 @@ en:
     assigned:
       subject: A ticket was assigned to you
   move_to_area: "📗 %{area_name}"
+  logout: "Log out"

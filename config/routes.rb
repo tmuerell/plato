@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   else
     devise_for :users
   end
+  resources :user_project_roles
   resources :comments
   resources :boards
   resources :tickets do
@@ -27,6 +28,14 @@ Rails.application.routes.draw do
 
   get 'dashboard/index', to: 'dashboard#index'
   get 'dashboard/profile', to: 'dashboard#profile', as: :profile
+  
+  ### APIs
+  get 'import/ticket/:ref', to: 'import#ticket'
+  post 'import/ticket', to: 'import#ticket_update'
+  post 'import/tag', to: 'import#tag'
+  post 'import/customer_project', to: 'import#customer_project'
+  post 'import/user', to: 'import#user'
+  post 'import/comment', to: 'import#comment'
 
   root "dashboard#index"
 end

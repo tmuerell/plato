@@ -36,9 +36,20 @@
   <div class="col">
     <div class="p-2 m-2" style="">
       <h5>Boards</h5>
-      <% for t in Tag.where(is_board: true) %>
-        <%= link_to t.name, board_path(t) %>
-      <% end %>
+      <div class="row">
+        <% for t in Tag.where(is_board: true) %>
+          <div class="col-md-6">
+            <div class="card">
+              <img src="https://picsum.photos/id/<%= t.id%64+1 %>/200/100" class="card-img-top">
+
+              <div class="card-body">
+                <h5 class="card-title"><%= link_to t.name, board_path(t) %></h5>
+                <%= link_to "Show board", board_path(t), class: 'btn btn-primary' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

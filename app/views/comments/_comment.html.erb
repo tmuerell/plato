@@ -4,7 +4,7 @@
     <%= link_to t('edit'), edit_comment_path(comment) %>
   </p>
   <p>
-    <%= simple_format(comment.content) %>
+    <%= markdown(comment.content) %>
   </p>
   <hr />
 </div>

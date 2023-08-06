@@ -5,9 +5,11 @@
         <span class="fs-6 text-muted"><%= ticket.identifier %></span>
         <h4><%= ticket.title %></h4>
 
-        <p>
-          <%= markdown(ticket.content) %>
-        </p>
+        <% if ticket.content.present? %>
+          <p>
+            <%= markdown(ticket.content) %>
+          </p>
+        <% end %>
 
         <hr/>
 
@@ -83,7 +85,7 @@
             <strong>Attachments:</strong>
           </p>
           <% for f in @ticket.files %>
-            <%= link_to f.name, rails_blob_path(f, disposition: :attachment) %>
+            📄 <%= link_to f.filename, rails_blob_path(f, disposition: :attachment) %><br />
           <% end %>
         <% end %>
 

@@ -3,6 +3,8 @@
 $link-color: #6a598f;
 
 @import "bootstrap";
+@import "atom-one-light.min";
+@import "choices.min.css";
 
 .login {
   .logo {
@@ -65,4 +67,8 @@ p.login-links {
 .badge a {
     color: white;
     text-decoration: none;
+}
+
+.ticket-flag {
+  background-color: #fefeaa;
 }
