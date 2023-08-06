@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @user_project_role %>
+
+<div>
+  <%= link_to "Edit this user project role", edit_user_project_role_path(@user_project_role) %> |
+  <%= link_to "Back to user project roles", user_project_roles_path %>
+
+  <%= button_to "Destroy this user project role", @user_project_role, method: :delete %>
+</div>

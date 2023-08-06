@@ -23,6 +23,7 @@ class User < ApplicationRecord
   end
 
   belongs_to :current_project, class_name: 'Project', optional: true
+  has_many :user_project_roles
   serialize :roles, JSON
 
   def name
