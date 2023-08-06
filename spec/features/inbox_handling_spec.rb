@@ -4,7 +4,7 @@ RSpec.feature "Inbox Handling", type: :feature do
   before :each do
     @project = create(:project)
     @user1 = create(:user, roles: [ "Admin" ], current_project: @project)
-    @customer_project = create(:customer_project)
+    @customer_project = create(:customer_project, project: @project)
     @critical_board = create(:tag, name: 'Critical', is_board: true)
     @area_tag = create(:tag, name: 'Backlog', is_area: true)
     @ticket = create(:ticket, title: 'Ganz wichtig', priority: :high, customer_project: @customer_project, status: :new, project: @project)
