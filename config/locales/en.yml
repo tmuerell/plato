@@ -52,3 +52,4 @@ en:
     assigned:
       subject: A ticket was assigned to you
   move_to_area: "📗 %{area_name}"
+  logout: "Log out"
