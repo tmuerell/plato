@@ -7,6 +7,7 @@ class CustomerProjectsController < ApplicationController
 
   # GET /customer_projects/1 or /customer_projects/1.json
   def show
+    @tickets = Ticket.where('customer_project_id = ?', params[:id]).accessible_by(current_ability).page params[:page]
   end
 
   # GET /customer_projects/new

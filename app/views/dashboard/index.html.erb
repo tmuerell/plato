@@ -25,7 +25,7 @@
         <tbody>
         <% for cp in CustomerProject.accessible_by(current_ability) %>
           <tr>
-            <td><%= cp.name %></td>
+            <td><%= link_to cp.name, customer_project_path(cp) %></td>
             <td><%= cp.tickets.count %></td>
           </tr>
         <% end %>
