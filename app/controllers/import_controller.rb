@@ -1,5 +1,6 @@
 class ImportController < ApplicationController
   respond_to :json
+  skip_forgery_protection
 
   def user
     authorize! :import, Ticket
