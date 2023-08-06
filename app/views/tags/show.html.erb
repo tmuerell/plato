@@ -35,6 +35,7 @@
       <td><%= priority_label(ticket) %></td>
       <td>
         <% if ticket.assignee.present? %>
+          <%= gravatar_icon ticket.assignee %>
           <%= ticket.assignee.name %>
         <% else %>
           ---
