@@ -3,5 +3,6 @@ class DashboardController < ApplicationController
   end
 
   def profile
+    @tickets = Ticket.where(assignee: current_user).page params[:page]
   end
 end

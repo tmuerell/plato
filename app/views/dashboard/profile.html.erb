@@ -14,3 +14,47 @@
     </ul>
   </div>
 </div>
+
+<h3>Tickets</h3>
+<table class="table table-striped table-sm">
+  <thead>
+  <tr>
+    <th><%= Ticket.human_attribute_name(:id) %></th>
+    <th><%= Ticket.human_attribute_name(:title) %></th>
+    <th><%= Ticket.human_attribute_name(:status) %></th>
+    <th><%= Ticket.human_attribute_name(:priority) %></th>
+    <th><%= Ticket.human_attribute_name(:tags) %></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tickets.each do |ticket| %>
+    <tr>
+      <td>
+        <%= link_to ticket.identifier, ticket %>
+        <%= if ticket.flagged?; "🚩"; end %>
+      </td>
+      <td><%= ticket.title %></td>
+      <td><%= status_label(ticket) %></td>
+      <td><%= priority_label(ticket) %></td>
+      <td>
+        <% for tag in ticket.tags %>
+          <span class="badge rounded-pill bg-secondary">
+          <% if tag.is_board %>
+            📋 
+            <%= link_to tag.name, board_path(tag) %>
+          <% elsif tag.is_area %>
+            📗
+            <%= link_to tag.name, tag_path(tag) %>
+          <% else %>
+            <%= link_to tag.name, tag_path(tag) %>
+          <% end %>
+          </span>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @tickets, theme: 'bootstrap-5' %>

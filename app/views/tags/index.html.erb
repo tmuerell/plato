@@ -3,27 +3,33 @@
 <table class="table table-striped">
   <thead>
   <tr>
-          <th>Name</th>
-          <th>Project</th>
-          <th>Color</th>
-        <th colspan="3"></th>
+    <th>Name</th>
+    <th>Board</th>
+    <th>Area</th>
+    <th>Project</th>
+    <th>Color</th>
   </tr>
   </thead>
 
   <tbody>
   <% @tags.each do |tag| %>
-  <tr>
-          <td><%= tag.name %></td>
-          <td><%= tag.project_id %></td>
-          <td><%= tag.color %></td>
-        <td><%= link_to 'Show', tag %></td>
-    <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
-    <td><%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <tr>
+      <td><%= link_to tag.name, tag %></td>
+      <td>
+        <% if tag.is_board %>✅<% end %>
+      </td>
+      <td>
+        <% if tag.is_area %>✅<% end %>
+      </td>
+      <td><%= tag.project.name %></td>
+      <td><%= tag.color %></td>
+    </tr>
   <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Tag', new_tag_path %>
+<% if can?(:create, Tag) %>
+  <%= link_to 'New Tag', new_tag_path, class: 'btn btn-light' %>
+<% end %>

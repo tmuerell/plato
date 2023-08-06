@@ -3,11 +3,11 @@ class TagsController < ApplicationController
 
   # GET /tags or /tags.json
   def index
-    @tags = Tag.all
   end
 
   # GET /tags/1 or /tags/1.json
   def show
+    @tickets = Ticket.joins(:tags).where('tags.id = ?', params[:id]).accessible_by(current_ability).page params[:page]
   end
 
   # GET /tags/new

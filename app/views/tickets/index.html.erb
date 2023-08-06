@@ -8,6 +8,7 @@
     <th><%= Ticket.human_attribute_name(:status) %></th>
     <th><%= Ticket.human_attribute_name(:priority) %></th>
     <th><%= Ticket.human_attribute_name(:assignee) %></th>
+    <th><%= Ticket.human_attribute_name(:tags) %></th>
   </tr>
   </thead>
 
@@ -23,9 +24,25 @@
       <td><%= priority_label(ticket) %></td>
       <td>
         <% if ticket.assignee.present? %>
+          <%= gravatar_icon ticket.assignee %>
           <%= ticket.assignee.name %>
         <% else %>
           ---
+        <% end %>
+      </td>
+      <td>
+        <% for tag in ticket.tags %>
+          <span class="badge rounded-pill bg-secondary">
+          <% if tag.is_board %>
+            📋 
+            <%= link_to tag.name, board_path(tag) %>
+          <% elsif tag.is_area %>
+            📗
+            <%= link_to tag.name, tag_path(tag) %>
+          <% else %>
+            <%= link_to tag.name, tag_path(tag) %>
+          <% end %>
+          </span>
         <% end %>
       </td>
     </tr>

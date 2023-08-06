@@ -3,7 +3,6 @@ class CustomerProjectsController < ApplicationController
 
   # GET /customer_projects or /customer_projects.json
   def index
-    @customer_projects = CustomerProject.all
   end
 
   # GET /customer_projects/1 or /customer_projects/1.json
@@ -65,6 +64,6 @@ class CustomerProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def customer_project_params
-      params.require(:customer_project).permit(:name)
+      params.require(:customer_project).permit(:name, :project_id)
     end
 end

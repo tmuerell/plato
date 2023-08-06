@@ -1,5 +1,6 @@
 class ImportController < ApplicationController
   respond_to :json
+  skip_forgery_protection
 
   def user
     authorize! :import, Ticket
@@ -12,7 +13,7 @@ class ImportController < ApplicationController
   def customer_project
     authorize! :import, Ticket
 
-    cp = CustomerProject.find_or_create_by(name: params[:name])
+    cp = CustomerProject.find_or_create_by(name: params[:name], project_id: params[:project_id])
     respond_with(cp)
   end
 

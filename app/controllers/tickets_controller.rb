@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  load_and_authorize_resource except: :import
+  load_and_authorize_resource
 
   # GET /tickets or /tickets.json
   def index
@@ -10,7 +10,6 @@ class TicketsController < ApplicationController
   end
 
   def inbox
-    @tickets = Ticket.all
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
@@ -20,7 +19,6 @@ class TicketsController < ApplicationController
   end
 
   def backlog
-    @tickets = Ticket.all
     if current_project
       @tickets = @tickets.where(project: current_project)
     end

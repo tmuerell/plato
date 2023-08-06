@@ -1,17 +1,19 @@
 <div id="<%= dom_id tag %>">
-  <p>
-    <strong>Name:</strong>
-    <%= tag.name %>
-  </p>
+  <h2><%= tag.name %></h2>
 
   <p>
     <strong>Project:</strong>
-    <%= tag.project_id %>
+    <%= tag.project.name %>
   </p>
 
   <p>
     <strong>Board:</strong>
     <%= tag.is_board %>
+  </p>
+
+  <p>
+    <strong>Area:</strong>
+    <%= tag.is_area %>
   </p>
 
   <p>

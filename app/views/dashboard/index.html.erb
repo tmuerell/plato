@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-        <% for cp in CustomerProject.all %>
+        <% for cp in CustomerProject.accessible_by(current_ability) %>
           <tr>
             <td><%= cp.name %></td>
             <td><%= cp.tickets.count %></td>
