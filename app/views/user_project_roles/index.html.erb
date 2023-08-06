@@ -13,8 +13,8 @@
   <tbody>
   <% @user_project_roles.each do |user_project_role| %>
   <tr>
-          <td><%= user_project_role.user_id %></td>
-          <td><%= user_project_role.project_id %></td>
+          <td><%= user_project_role.user.name %></td>
+          <td><%= user_project_role.project.name %></td>
           <td><%= user_project_role.role %></td>
         <td><%= link_to 'Show', user_project_role %></td>
     <td><%= link_to 'Edit', edit_user_project_role_path(user_project_role) %></td>
