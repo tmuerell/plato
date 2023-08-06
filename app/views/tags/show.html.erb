@@ -7,3 +7,42 @@
 
   <%= button_to "Destroy this tag", @tag, method: :delete %>
 </div>
+
+<hr />
+
+<h3>Tickets</h3>
+
+<table class="table table-striped table-sm">
+  <thead>
+  <tr>
+    <th><%= Ticket.human_attribute_name(:id) %></th>
+    <th><%= Ticket.human_attribute_name(:title) %></th>
+    <th><%= Ticket.human_attribute_name(:status) %></th>
+    <th><%= Ticket.human_attribute_name(:priority) %></th>
+    <th><%= Ticket.human_attribute_name(:assignee) %></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @tickets.each do |ticket| %>
+    <tr>
+      <td>
+        <%= link_to ticket.identifier, ticket %>
+        <%= if ticket.flagged?; "🚩"; end %>
+      </td>
+      <td><%= ticket.title %></td>
+      <td><%= status_label(ticket) %></td>
+      <td><%= priority_label(ticket) %></td>
+      <td>
+        <% if ticket.assignee.present? %>
+          <%= ticket.assignee.name %>
+        <% else %>
+          ---
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @tickets, theme: 'bootstrap-5' %>

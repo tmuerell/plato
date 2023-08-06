@@ -8,6 +8,7 @@ class TagsController < ApplicationController
 
   # GET /tags/1 or /tags/1.json
   def show
+    @tickets = Ticket.joins(:tags).where('tags.id = ?', params[:id]).page params[:page]
   end
 
   # GET /tags/new

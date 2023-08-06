@@ -32,11 +32,17 @@
 
         <p>
           <% for tag in ticket.tags %>
+            <span class="badge rounded-pill bg-secondary">
             <% if tag.is_board %>
-              <span class="badge rounded-pill bg-secondary"><a href="#"><%= link_to tag.name, board_path(tag) %></a></span>
+              📋 
+              <%= link_to tag.name, board_path(tag) %>
+            <% elsif tag.is_area %>
+              📗
+              <%= link_to tag.name, tag_path(tag) %>
             <% else %>
-              <span class="badge rounded-pill bg-secondary"><%= tag.name %></span>
+              <%= link_to tag.name, tag_path(tag) %>
             <% end %>
+            </span>
           <% end %>
         </p>
 
