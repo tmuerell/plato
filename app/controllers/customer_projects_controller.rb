@@ -3,7 +3,6 @@ class CustomerProjectsController < ApplicationController
 
   # GET /customer_projects or /customer_projects.json
   def index
-    @customer_projects = CustomerProject.all
   end
 
   # GET /customer_projects/1 or /customer_projects/1.json

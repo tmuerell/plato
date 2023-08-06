@@ -1,14 +1,15 @@
-
 <%= render @tag %>
 
 <div>
-  <%= link_to "Edit this tag", edit_tag_path(@tag) %> |
-  <%= link_to "Back to tags", tags_path %>
-
-  <%= button_to "Destroy this tag", @tag, method: :delete %>
+  <% if can?(:update, @tag) %>
+    <%= link_to "Edit this tag", edit_tag_path(@tag), class: 'btn btn-sm btn-light' %>
+  <% end %>
+  <% if can?(:destroy, @tag) %>
+    <%= link_to "Destroy this tag", @tag, 'data-turbo-method' => :delete, class: 'btn btn-sm btn-danger' %>
+  <% end %>
 </div>
 
-<hr />
+<hr/>
 
 <h3>Tickets</h3>
 
@@ -28,7 +29,9 @@
     <tr>
       <td>
         <%= link_to ticket.identifier, ticket %>
-        <%= if ticket.flagged?; "🚩"; end %>
+        <%= if ticket.flagged?;
+              "🚩";
+            end %>
       </td>
       <td><%= ticket.title %></td>
       <td><%= status_label(ticket) %></td>
