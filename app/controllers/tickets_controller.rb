@@ -3,7 +3,6 @@ class TicketsController < ApplicationController
 
   # GET /tickets or /tickets.json
   def index
-    @tickets = Ticket.all
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
