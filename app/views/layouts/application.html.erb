@@ -45,6 +45,7 @@
           <% if can?(:create, Ticket) %>
             <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
           <% end %>
+          <%= link_to gravatar_icon(current_user, ['mx-2']), profile_url %>
         </div>
       </div>
     </nav>

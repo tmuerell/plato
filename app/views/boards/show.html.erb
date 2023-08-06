@@ -7,10 +7,19 @@
         <%= s.text %>
       </div>
       <% for ti in @tickets.where(status: s) %>
-        <div class="card<%= if ti.flagged?; " ticket-flag"; end %>">
+        <div class="card my-1<%= if ti.flagged?; " ticket-flag"; end %>">
           <div class="card-body">
-            <h6 class="card-title"><%= link_to ti.identifier, ti %></h6>
-            <h6 class="card-subtitle mb-2 text-muted"><%= ti.title %></h6>
+            <div class="d-flex justify-content-between">
+              <div>
+                <h6 class="card-title"><%= link_to ti.identifier, ti %></h6>
+                <h6 class="card-subtitle mb-2 text-muted"><%= ti.title %></h6>
+              </div>
+              <div>
+                <% if ti.assignee.present? %>
+                  <%= gravatar_icon ti.assignee %>
+                <% end %>
+              </div>
+            </div>
             <% if ti.assignee.present? %>
               <span class="text-muted"><%= ti.assignee.name %></span>
             <% end %>

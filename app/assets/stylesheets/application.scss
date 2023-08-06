@@ -36,6 +36,10 @@ footer {
 
 @include gray-links;
 
+.clipped-circle {
+  clip-path: circle();
+}
+
 .kanban-col {
   background-color: #eeeeee;
   .header {

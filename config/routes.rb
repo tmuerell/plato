@@ -25,7 +25,9 @@ Rails.application.routes.draw do
       post :select
     end
   end
+
   get 'dashboard/index', to: 'dashboard#index'
+  get 'dashboard/profile', to: 'dashboard#profile', as: :profile
   
   ### APIs
   get 'import/ticket/:ref', to: 'import#ticket'
