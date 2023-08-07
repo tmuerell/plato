@@ -1,4 +1,6 @@
-<div class="row border-bottom<%= if ticket.flagged?; " ticket-flag"; end %>">
+<div class="row border-bottom<%= if ticket.flagged?;
+                                   " ticket-flag";
+                                 end %> <%= (i || 0) % 2 == 0 ? 'even' : 'odd' %>">
   <div class="col-1">
     <%= link_to ticket.identifier, ticket %>
   </div>
@@ -6,9 +8,11 @@
     <%= ticket.title %>
   </div>
   <div class="col-2">
-    <%= ticket.tags.select(&:is_area).map { |e| e.name }.join(", ") %>
+    <% for t in ticket.tags.select(&:is_area) %>
+      <%= render_tag(t) %>
+    <% end %>
   </div>
   <div class="col-2">
-    <%= ticket.status_text %>
+    <%= status_label(ticket) %>
   </div>
 </div>

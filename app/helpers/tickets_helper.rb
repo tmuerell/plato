@@ -10,7 +10,7 @@ module TicketsHelper
   end
   def status_label(ticket)
     if ticket.status.new?
-      content_tag(:span, ticket.status_text, class: 'badge bg-secondary')
+      content_tag(:span, ticket.status_text, class: 'badge bg-light text-secondary')
     elsif ticket.status.in_progress?
       content_tag(:span, ticket.status_text, class: 'badge bg-info')
     elsif ticket.status.blocked?

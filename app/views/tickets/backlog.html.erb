@@ -10,6 +10,6 @@
 
 <h4 class="mt-3">Backlog</h4>
 
-<% @tickets.each do |ticket| %>
-  <%= render 'item', ticket: ticket %>
+<% @tickets.each_with_index do |ticket, i| %>
+  <%= render 'item', ticket: ticket, i: i %>
 <% end %>

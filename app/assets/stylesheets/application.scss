@@ -1,6 +1,7 @@
 // here your custom bootstrap variables...
 
 $link-color: #6a598f;
+$font-size-root: 14px;
 
 @import "bootstrap";
 @import "atom-one-light.min";
@@ -11,6 +12,10 @@ $link-color: #6a598f;
     width: 50%;
     height: 5rem;
   }
+}
+
+main {
+  font-size: 10pt;
 }
 
 
