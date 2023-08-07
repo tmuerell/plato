@@ -1,6 +1,6 @@
 <div class="row border-bottom<%= if ticket.flagged?;
                                    " ticket-flag";
-                                 end %> <%= (i || 0) % 2 == 0 ? 'even' : 'odd' %>">
+                                 end %>">
   <div class="col-1">
     <%= link_to ticket.identifier, ticket %>
   </div>
