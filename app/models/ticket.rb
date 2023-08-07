@@ -23,7 +23,7 @@ class Ticket < ApplicationRecord
   after_commit :send_notifications, if: lambda { ENV.fetch("PLATO_NOTIFICATIONS_ENABLED", "true") == "true" }
 
   def identifier
-    "%s-%06x" % [project.shortname, sequential_id]
+    "%s:%06x" % [project.shortname, sequential_id]
   end
 
   def needs_approval?
