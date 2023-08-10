@@ -13,14 +13,26 @@
 
         <hr/>
 
-        <h5>Kommentare</h5>
+        <h5><%= t('comments') %></h5>
         <%= turbo_stream_from dom_id(ticket, :comments) %>
         <%= turbo_frame_tag dom_id(ticket, :comments) do %>
           <%= render @ticket.comments %>
           <%= turbo_frame_tag 'new_comment' do %>
-            <%= link_to 'Neuer Kommentar', new_comment_path(ticket_id: @ticket) %>
+            <%= link_to t('new_comment'), new_comment_path(ticket_id: @ticket) %>
           <% end %>
         <% end %>
+
+        <hr/>
+
+        <h5><%= t('linked_tickets') %></h5>
+        <ul>
+          <% for r in @ticket.child_relationships %>
+            <li><%= link_to r.child.identifier, r.child %> <%= r.child.title %> (this <%= r.relationship %>)</li>
+          <% end %>
+          <% for r in @ticket.parent_relationships %>
+            <li><%= link_to r.parent.identifier, r.parent %> <%= r.parent.title %> (<%= r.relationship %>)</li>
+          <% end %>
+        </ul>
       </div>
     </div>
     <div class="col-md-3">

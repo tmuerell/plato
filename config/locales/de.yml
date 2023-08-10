@@ -83,6 +83,10 @@ de:
   move_to_board: "📋 %{board_name}"
   approve: "Freigeben"
   approved_by: "Freigeben von"
+  comments: "Kommentare"
+  new_comment: "Neuer Kommentar"
+  linked_tickets: "Verlinkte Tickets"
+  link_ticket: "Ticket verlinken"
 
   tickets_mailer:
     created:
