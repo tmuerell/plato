@@ -18,6 +18,8 @@ class Project < ApplicationRecord
   def validate_workflow
     init_state_found = false
 
+    states = workflow["states"]
+
     for key, value in states
       if value["initial"].present? && value["initial"]
         init_state_found = true
