@@ -9,15 +9,16 @@ class Project < ApplicationRecord
     workflow["states"].each { |k,v| v["initial_state"].present? && v["initital_state"] }.first[0]
   end
 
+  def states
+    workflow["states"].keys
+  end
+
   protected
 
   def validate_workflow
-    return unless workflow.present? || workflow["states"].present?
-    states = workflow["states"].keys
-
     init_state_found = false
 
-    for key, value in workflow["states"]
+    for key, value in states
       if value["initial"].present? && value["initial"]
         init_state_found = true
       end

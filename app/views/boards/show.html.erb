@@ -1,10 +1,10 @@
 <h2><%= @board.name %> Board</h2>
 
 <div class="row">
-  <% for s in Ticket.status.values %>
+  <% for s in current_project.states %>
     <div class="col kanban-col">
       <div class="header">
-        <%= s.text %>
+        <%= s %>
       </div>
       <% for ti in @tickets.where(status: s) %>
         <div class="card my-1<%= if ti.flagged?; " ticket-flag"; end %>">
