@@ -17,7 +17,6 @@ class Ticket < ApplicationRecord
 
   validates_presence_of :title, :priority
 
-  enumerize :status, in: [:new, :in_progress, :blocked, :done]
   enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
   after_commit :send_notifications, if: lambda { ENV.fetch("PLATO_NOTIFICATIONS_ENABLED", "true") == "true" }
@@ -35,15 +34,8 @@ class Ticket < ApplicationRecord
   end
 
   def valid_transitions(_user)
-    if status.new?
-      [ :in_progress ]
-    elsif status.in_progress?
-      [ :blocked, :done ]
-    elsif status.blocked?
-      [ :in_progress, :done ]
-    else
-      []
-    end
+    state = project.workflow["states"][self.status]
+    (state["transitions"] || []).map { |k,_| k}
   end
 
   def approved?
@@ -61,7 +53,7 @@ class Ticket < ApplicationRecord
   private
 
   def set_sequential_no
-    self.status = :new
+    self.status = self.project.init_state
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
   end
 
