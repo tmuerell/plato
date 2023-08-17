@@ -12,8 +12,8 @@
 
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 mb-1">
-      <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 mb-1">
+    <div class="container-fluid">
       <%= link_to image_tag('plato-logo.png'), root_url, class: 'navbar-brand' %>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -34,13 +34,15 @@
           </li>
         </ul>
         <div class="ms-auto d-flex">
-          <% if current_project.tickets.where(status: :new).count > 0 %>
-            <div class="pr-4">
-              <%= link_to inbox_tickets_url, class: 'btn btn-primary btn-sm' do %>
-                Inbox
-                <span class="badge bg-secondary"><%= current_project.tickets.where(status: :new).select(&:inbox?).count %></span>
-              <% end %>
-            </div>
+          <% if current_project.present? %>
+            <% if current_project.tickets.where(status: :new).count > 0 %>
+              <div class="pr-4">
+                <%= link_to inbox_tickets_url, class: 'btn btn-primary btn-sm' do %>
+                  Inbox
+                  <span class="badge bg-secondary"><%= current_project.tickets.where(status: :new).select(&:inbox?).count %></span>
+                <% end %>
+              </div>
+            <% end %>
           <% end %>
           <% if can?(:create, Ticket) %>
             <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
@@ -48,8 +50,8 @@
           <%= link_to gravatar_icon(current_user, ['mx-2']), profile_url %>
         </div>
       </div>
-      </div>
-    </nav>
+    </div>
+  </nav>
 </header>
 <main>
   <div class="container-fluid">

@@ -1,5 +1,9 @@
 class DashboardController < ApplicationController
   def index
+    unless current_project
+      redirect_to projects_url
+    end
+
   end
 
   def profile
