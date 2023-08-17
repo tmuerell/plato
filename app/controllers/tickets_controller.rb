@@ -109,6 +109,12 @@ class TicketsController < ApplicationController
     redirect_back_or_to @ticket
   end
 
+  def link
+    @ticket_ticket_relationship = TicketTicketRelationship.new
+    @ticket_ticket_relationship.parent_id = @ticket.id
+    @parent = @ticket
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

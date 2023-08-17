@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post :approve
       post :mine
       post :tag
+      get :link
     end
   end
   resources :customer_projects
@@ -23,6 +24,12 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       post :select
+    end
+  end
+
+  resources :ticket_ticket_relationships do
+    member do
+      post :create
     end
   end
 

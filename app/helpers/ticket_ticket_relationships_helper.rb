@@ -1,0 +1,2 @@
+module TicketTicketRelationshipsHelper
+end

@@ -60,6 +60,7 @@
             <% if can?(:approve, ticket) && ticket.needs_approval? && !ticket.approved? %>
               <%= link_to t('approve'), approve_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
+            <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
           <% end %>
         </div>
         <p>
