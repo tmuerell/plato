@@ -27,11 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :ticket_ticket_relationships do
-    member do
-      post :create
-    end
-  end
+  resources :ticket_ticket_relationships
 
   get 'dashboard/index', to: 'dashboard#index'
   get 'dashboard/profile', to: 'dashboard#profile', as: :profile
