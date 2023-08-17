@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-        <% for cp in CustomerProject.accessible_by(current_ability) %>
+        <% for cp in current_project.customer_projects.accessible_by(current_ability) %>
           <tr>
             <td><%= link_to cp.name, customer_project_path(cp) %></td>
             <td><%= cp.tickets.count %></td>
@@ -37,7 +37,7 @@
     <div class="p-2 m-2" style="">
       <h5>Boards</h5>
       <div class="row">
-        <% for t in Tag.where(is_board: true) %>
+        <% for t in current_project.tags.where(is_board: true) %>
           <div class="col-md-6">
             <div class="card">
               <img src="https://picsum.photos/id/<%= t.id%64+1 %>/200/100" class="card-img-top">

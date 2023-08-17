@@ -1,4 +1,4 @@
-<% for board in Tag.where(is_board: true) %>
+<% for board in current_project.tags.where(is_board: true) %>
   <% tickets = Ticket.with_tag(board).where(status: [:new, :in_progress, :blocked]) %>
   <% if tickets.count > 0 %>
     <h4 class="mt-3"><%= link_to board.name, board_path(board) %></h4>
