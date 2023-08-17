@@ -12,6 +12,10 @@ class Ticket < ApplicationRecord
   has_many :tags, through: :taggings
   has_many :ticket_user_relationships
   has_many_attached :files
+  has_many :child_relationships, foreign_key: :parent_id, class_name: "TicketTicketRelationship", dependent: :destroy
+  has_many :children, through: :child_relationships
+  has_many :parent_relationships, foreign_key: :child_id, class_name: "TicketTicketRelationship", dependent: :destroy
+  has_many :parents, through: :parent_relationships
 
   before_create :set_sequential_no
 
