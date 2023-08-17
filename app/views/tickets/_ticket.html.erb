@@ -22,17 +22,6 @@
           <% end %>
         <% end %>
 
-        <hr/>
-
-        <h5><%= t('linked_tickets') %></h5>
-        <ul>
-          <% for r in @ticket.child_relationships %>
-            <li><%= link_to r.child.identifier, r.child %> <%= r.child.title %> (this <%= r.relationship %>)</li>
-          <% end %>
-          <% for r in @ticket.parent_relationships %>
-            <li><%= link_to r.parent.identifier, r.parent %> <%= r.parent.title %> (<%= r.relationship %>)</li>
-          <% end %>
-        </ul>
       </div>
     </div>
     <div class="col-md-3">
@@ -98,9 +87,15 @@
           <% end %>
         <% end %>
 
-        <div>
-
-        </div>
+        <h5><%= t('linked_tickets') %></h5>
+        <ul>
+          <% for r in @ticket.child_relationships %>
+            <li><%= link_to r.child.identifier, r.child %> <%= r.child.title %> (this <%= r.relationship %>)</li>
+          <% end %>
+          <% for r in @ticket.parent_relationships %>
+            <li><%= link_to r.parent.identifier, r.parent %> <%= r.parent.title %> (<%= r.relationship %>)</li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
