@@ -34,11 +34,11 @@
           </li>
         </ul>
         <div class="ms-auto d-flex">
-          <% if Ticket.where(status: :new).count > 0 %>
+          <% if current_project.tickets.where(status: :new).count > 0 %>
             <div class="pr-4">
               <%= link_to inbox_tickets_url, class: 'btn btn-primary btn-sm' do %>
                 Inbox
-                <span class="badge bg-secondary"><%= Ticket.where(status: :new).select(&:inbox?).count %></span>
+                <span class="badge bg-secondary"><%= current_project.tickets.where(status: :new).select(&:inbox?).count %></span>
               <% end %>
             </div>
           <% end %>

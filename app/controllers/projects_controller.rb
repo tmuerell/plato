@@ -21,6 +21,7 @@ class ProjectsController < ApplicationController
   # POST /projects or /projects.json
   def create
     @project = Project.new(project_params)
+    @project.workflow = JSON.parse(@project.workflow) if @project.workflow.is_a?(String)
 
     respond_to do |format|
       if @project.save
@@ -61,7 +62,7 @@ class ProjectsController < ApplicationController
     u.current_project = @project
     u.save!
 
-    redirect_back(fallback_location: root_url)
+    redirect_to root_url
   end
 
   private
@@ -72,6 +73,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:name, :shortname)
+      params.require(:project).permit(:name, :shortname, :workflow)
     end
 end

@@ -2,6 +2,11 @@ class BoardsController < ApplicationController
   # GET /board/1 or /board/1.json
   def show
     @board = Tag.find(params[:id])
+    if @board.project != current_project
+      redirect_to root_url
+      return
+    end
+
     @tickets = Ticket.with_tag(@board)
 
     if @board.approval?

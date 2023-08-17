@@ -1,5 +1,9 @@
 class Project < ApplicationRecord
   has_many :user_project_roles
+  has_many :customer_projects
+  has_many :tags
+  has_many :tickets
+
   serialize :workflow, JSON
 
   validate :validate_workflow
