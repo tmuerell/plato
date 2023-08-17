@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post :approve
       post :mine
       post :tag
+      get :link
     end
   end
   resources :customer_projects
@@ -25,6 +26,8 @@ Rails.application.routes.draw do
       post :select
     end
   end
+
+  resources :ticket_ticket_relationships
 
   get 'dashboard/index', to: 'dashboard#index'
   get 'dashboard/profile', to: 'dashboard#profile', as: :profile

@@ -13,14 +13,15 @@
 
         <hr/>
 
-        <h5>Kommentare</h5>
+        <h5><%= t('comments') %></h5>
         <%= turbo_stream_from dom_id(ticket, :comments) %>
         <%= turbo_frame_tag dom_id(ticket, :comments) do %>
           <%= render @ticket.comments %>
           <%= turbo_frame_tag 'new_comment' do %>
-            <%= link_to 'Neuer Kommentar', new_comment_path(ticket_id: @ticket) %>
+            <%= link_to t('new_comment'), new_comment_path(ticket_id: @ticket) %>
           <% end %>
         <% end %>
+
       </div>
     </div>
     <div class="col-md-3">
@@ -48,6 +49,7 @@
             <% if can?(:approve, ticket) && ticket.needs_approval? && !ticket.approved? %>
               <%= link_to t('approve'), approve_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
+            <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
           <% end %>
         </div>
         <p>
@@ -85,9 +87,15 @@
           <% end %>
         <% end %>
 
-        <div>
-
-        </div>
+        <h5><%= t('linked_tickets') %></h5>
+        <ul>
+          <% for r in @ticket.child_relationships %>
+            <li><%= link_to r.child.identifier, r.child %> <%= r.child.title %> (this <%= r.relationship %>)</li>
+          <% end %>
+          <% for r in @ticket.parent_relationships %>
+            <li><%= link_to r.parent.identifier, r.parent %> <%= r.parent.title %> (<%= r.relationship %>)</li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>

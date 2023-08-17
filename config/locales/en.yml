@@ -43,6 +43,10 @@ en:
   move_to_board: "📋 %{board_name}"
   approve: "Approve"
   approved_by: "Approved by"
+  comments: "Comments"
+  new_comment: "New comment"
+  linked_tickets: "Linked Tickets"
+  link_ticket: "Link ticket"
 
   tickets_mailer:
     created:

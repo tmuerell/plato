@@ -67,15 +67,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
     t.index ["project_id"], name: "index_customer_projects_on_project_id"
   end
 
-  create_table "epics", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.integer "project_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_epics_on_project_id"
-  end
-
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "shortname"
@@ -107,6 +98,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
     t.index ["project_id"], name: "index_tags_on_project_id"
   end
 
+  create_table "ticket_ticket_relationships", force: :cascade do |t|
+    t.integer "parent_id", null: false
+    t.integer "child_id", null: false
+    t.string "relationship"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["child_id"], name: "index_ticket_ticket_relationships_on_child_id"
+    t.index ["parent_id"], name: "index_ticket_ticket_relationships_on_parent_id"
+  end
+
   create_table "ticket_user_relationships", force: :cascade do |t|
     t.integer "ticket_id", null: false
     t.integer "user_id", null: false
@@ -130,11 +131,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
     t.integer "creator_id", null: false
     t.integer "assignee_id"
     t.string "external_id"
-    t.integer "epic_id"
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
-    t.index ["epic_id"], name: "index_tickets_on_epic_id"
     t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
@@ -188,14 +187,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "customer_projects", "projects"
-  add_foreign_key "epics", "projects"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users"
   add_foreign_key "tags", "projects"
+  add_foreign_key "ticket_ticket_relationships", "tickets", column: "child_id"
+  add_foreign_key "ticket_ticket_relationships", "tickets", column: "parent_id"
   add_foreign_key "ticket_user_relationships", "tickets"
   add_foreign_key "ticket_user_relationships", "users"
   add_foreign_key "tickets", "customer_projects"
-  add_foreign_key "tickets", "epics"
   add_foreign_key "tickets", "projects"
   add_foreign_key "tickets", "users", column: "assignee_id"
   add_foreign_key "tickets", "users", column: "creator_id"
