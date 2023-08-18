@@ -7,7 +7,7 @@
         <%= s %>
       </div>
       <% for ti in @tickets.where(status: s) %>
-        <div class="card my-1<%= if ti.flagged?; " ticket-flag"; end %>">
+        <div class="card my-1<%= if ti.flagged?; " ticket-flag"; end %><%= " sla-#{ti.sla_status}"%>">
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
