@@ -68,8 +68,13 @@ class Ticket < ApplicationRecord
         TicketsMailer.created(self, self.assignee).deliver
       end
     end
+
     if self.saved_change_to_assignee_id
       TicketsMailer.assigned(self, self.assignee).deliver
+    end
+
+    NotificationConfig.where(project: self.project).all.each do |nc|
+      nc.handle_ticket(self)
     end
   end
 end

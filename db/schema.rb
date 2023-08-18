@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_18_210004) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -65,6 +65,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
     t.datetime "updated_at", null: false
     t.integer "project_id", null: false
     t.index ["project_id"], name: "index_customer_projects_on_project_id"
+  end
+
+  create_table "notification_configs", force: :cascade do |t|
+    t.string "delivery_type"
+    t.integer "project_id", null: false
+    t.string "filter"
+    t.string "email_recepient_to"
+    t.string "email_recepient_bcc"
+    t.string "email_subject"
+    t.string "pager_duty_service_key"
+    t.string "zulip_url"
+    t.string "zulip_username"
+    t.string "zulip_password"
+    t.string "zulip_stream"
+    t.string "zulip_topic"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_notification_configs_on_project_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -187,6 +205,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "customer_projects", "projects"
+  add_foreign_key "notification_configs", "projects"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users"
   add_foreign_key "tags", "projects"
