@@ -8,6 +8,12 @@ class Project < ApplicationRecord
 
   validate :validate_workflow
 
+  def sla_for(status)
+    return unless workflow.present? || workflow["states"].present?
+    return unless workflow["states"][status]["sla"].present?
+    workflow["states"][status]["sla"]
+  end
+
   def init_state
     return unless workflow.present? || workflow["states"].present?
     workflow["states"].each { |k,v| v["initial_state"].present? && v["initital_state"] }.first[0]

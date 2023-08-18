@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_181627) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -108,6 +108,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
     t.index ["parent_id"], name: "index_ticket_ticket_relationships_on_parent_id"
   end
 
+  create_table "ticket_transitions", force: :cascade do |t|
+    t.integer "ticket_id", null: false
+    t.string "from"
+    t.string "to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ticket_id"], name: "index_ticket_transitions_on_ticket_id"
+  end
+
   create_table "ticket_user_relationships", force: :cascade do |t|
     t.integer "ticket_id", null: false
     t.integer "user_id", null: false
@@ -131,6 +140,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
     t.integer "creator_id", null: false
     t.integer "assignee_id"
     t.string "external_id"
+    t.datetime "last_transition_at"
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
@@ -192,6 +202,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_060153) do
   add_foreign_key "tags", "projects"
   add_foreign_key "ticket_ticket_relationships", "tickets", column: "child_id"
   add_foreign_key "ticket_ticket_relationships", "tickets", column: "parent_id"
+  add_foreign_key "ticket_transitions", "tickets"
   add_foreign_key "ticket_user_relationships", "tickets"
   add_foreign_key "ticket_user_relationships", "users"
   add_foreign_key "tickets", "customer_projects"

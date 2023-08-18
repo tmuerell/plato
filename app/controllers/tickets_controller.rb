@@ -14,8 +14,8 @@ class TicketsController < ApplicationController
       @tickets = @tickets.where(project: current_project)
     end
     @tickets = @tickets.where(status: :new).select(&:inbox?)
-    @boards = Tag.where(is_board: true)
-    @areas = Tag.where(is_area: true)
+    @boards = current_project.tags.where(is_board: true)
+    @areas = current_project.tags.where(is_area: true)
   end
 
   def backlog

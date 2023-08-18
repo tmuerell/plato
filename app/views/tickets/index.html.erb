@@ -21,7 +21,10 @@
       </td>
       <td><%= ticket.title %></td>
       <td><%= status_label(ticket) %></td>
-      <td><%= priority_label(ticket) %></td>
+      <td>
+        <%= priority_label(ticket) %>
+        <%= sla_label(ticket) %>
+      </td>
       <td>
         <% if ticket.assignee.present? %>
           <%= gravatar_icon ticket.assignee %>

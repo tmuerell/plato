@@ -17,7 +17,9 @@ class Ticket < ApplicationRecord
   has_many :parent_relationships, foreign_key: :child_id, class_name: "TicketTicketRelationship", dependent: :destroy
   has_many :parents, through: :parent_relationships
 
+  before_save :update_transition_before
   before_create :set_sequential_no
+  after_save :update_transition_after
 
   validates_presence_of :title, :priority
 
@@ -27,6 +29,34 @@ class Ticket < ApplicationRecord
 
   def identifier
     "%s:%06x" % [project.shortname, sequential_id]
+  end
+
+  def sla_status
+    return :ok unless self.last_transition_at
+    sla = project.sla_for(self.status)
+    minutes = (Time.now - self.last_transition_at)/60
+
+    puts minutes
+    puts sla
+
+    return :ok unless sla.present?
+    if sla.count == 1
+      if minutes > sla[0].to_i
+        :warning
+      else
+        :ok
+      end
+    elsif sla.count > 1
+      if minutes > sla[1].to_i
+        :error
+      elsif minutes > sla[0].to_i
+        :warning
+      else
+        :ok
+      end
+    else
+      :ok
+    end
   end
 
   def needs_approval?
@@ -39,7 +69,7 @@ class Ticket < ApplicationRecord
 
   def valid_transitions(_user)
     state = project.workflow["states"][self.status]
-    (state["transitions"] || []).map { |k,_| k}
+    (state["transitions"] || []).map { |k, _| k }
   end
 
   def approved?
@@ -47,7 +77,7 @@ class Ticket < ApplicationRecord
   end
 
   def flagged?
-    self.tags.select { |t| t.name == 'Flag'}.first
+    self.tags.select { |t| t.name == 'Flag' }.first
   end
 
   def inbox?
@@ -59,6 +89,7 @@ class Ticket < ApplicationRecord
   def set_sequential_no
     self.status = self.project.init_state
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
+    self.last_transition_at = Time.now
   end
 
   def send_notifications
@@ -70,6 +101,20 @@ class Ticket < ApplicationRecord
     end
     if self.saved_change_to_assignee_id
       TicketsMailer.assigned(self, self.assignee).deliver
+    end
+  end
+
+  protected
+
+  def update_transition_before
+    if will_save_change_to_status?
+      self.last_transition_at = Time.now
+    end
+  end
+
+  def update_transition_after
+    if saved_change_to_status
+      TicketTransition.create!(ticket: self, from: self.status_before_last_save, to: self.status)
     end
   end
 end

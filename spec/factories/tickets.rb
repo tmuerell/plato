@@ -8,5 +8,6 @@ FactoryBot.define do
     association :assignee, factory: :user
     association :project
     association :customer_project
+    last_transition_at { Time.now }
   end
 end
