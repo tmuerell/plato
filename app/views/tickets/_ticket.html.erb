@@ -49,6 +49,12 @@
             <% if can?(:approve, ticket) && ticket.needs_approval? && !ticket.approved? %>
               <%= link_to t('approve'), approve_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
+            <% if !ticket.watched? current_user %>
+              <%= link_to t('watch'), watch_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
+            <% end %>
+            <% if ticket.watched? current_user %>
+              <%= link_to t('unwatch'), unwatch_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
+            <% end %>
             <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
           <% end %>
         </div>
@@ -86,6 +92,20 @@
             📄 <%= link_to f.filename, rails_blob_path(f, disposition: :attachment) %><br />
           <% end %>
         <% end %>
+
+        <div class="watchers">
+          <h5>
+            <%= t('watchers') %>
+          </h5>
+          <ul>
+            <% for watcher in @ticket.watchers %>
+              <li>
+                <%= gravatar_icon watcher %>
+                <%= watcher.name %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
 
         <h5><%= t('linked_tickets') %></h5>
         <ul>

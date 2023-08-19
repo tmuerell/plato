@@ -54,6 +54,14 @@ class Ticket < ApplicationRecord
     !Ticket.joins(:tags).where('tickets.id = ? AND (tags.is_board = true OR tags.is_area = true)', id).exists?
   end
 
+  def watched?(user)
+    Ticket.joins(:ticket_user_relationships).where('tickets.id = ? AND ticket_user_relationships.user_id = ? AND ticket_user_relationships.relationship = ?', id, user.id, :watch).exists?
+  end
+
+  def watchers
+    User.joins(:ticket_user_relationships).where('ticket_user_relationships.ticket_id = ? AND ticket_user_relationships.relationship = ?', id, :watch)
+  end
+
   private
 
   def set_sequential_no

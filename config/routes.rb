@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     member do
       post :approve
       post :mine
+      post :watch
+      post :unwatch
       post :tag
       get :link
     end
