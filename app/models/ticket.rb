@@ -70,14 +70,24 @@ class Ticket < ApplicationRecord
   end
 
   def send_notifications
-    if self.previously_new_record?
-      TicketsMailer.created(self, self.creator).deliver
-      if self.assignee.present? && self.assignee != self.creator
-        TicketsMailer.created(self, self.assignee).deliver
-      end
+    action = notification_action
+
+    EmailSender.handle_default_notifications(self, action)
+
+    NotificationConfig.where(project:).all.each do |nc|
+      nc.handle_ticket(self, action)
     end
-    if self.saved_change_to_assignee_id
-      TicketsMailer.assigned(self, self.assignee).deliver
+  end
+
+  def notification_action
+    if previously_new_record?
+      :created
+    elsif saved_change_to_assignee_id
+      :assignee_changed
+    elsif saved_change_to_status
+      :status_changed
+    else
+      :edited
     end
   end
 end
