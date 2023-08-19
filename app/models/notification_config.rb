@@ -12,9 +12,9 @@ class NotificationConfig < ApplicationRecord
     when :email
       logger.debug 'Sending email'
     when :pager_duty
-      PagerDutySender.send_ticket_notification(ticket, self)
+      PagerDutySender.handle_ticket_notification(ticket, self)
     when :zulip
-      ZulipSender.send_ticket_notification(ticket, self)
+      ZulipSender.handle_ticket_notification(ticket, self)
     end
   end
 

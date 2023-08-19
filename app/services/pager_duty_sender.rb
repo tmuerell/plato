@@ -2,14 +2,24 @@ require 'net/http'
 require 'uri'
 
 class PagerDutySender
-  def self.send_ticket_notification(ticket, notification_config)
-    message = format("Notification for ticket '%s'", ticket.title)
-    create_incident(notification_config.pager_duty_service_key,
-                    message)
+  def self.handle_ticket_notification(ticket, notification_config)
+    if ticket.previously_new_record?
+      if !notification_config.filter? || notification_config.filter == :create
+        message = format('New ticket: %<identifier>s %<title>s',
+                         identifier: ticket.identifier, title: ticket.title)
+        create_incident(notification_config.pager_duty_service_key,
+                        message)
+      end
+    elsif notification_config.filter == :sla
+      message = format('SLA breach detected for ticket %<identifier>s %<title>s',
+                       identifier: ticket.identifier, title: ticket.title)
+      create_incident(notification_config.pager_duty_service_key,
+                      message)
+    end
   end
 
   def self.create_incident(service_key, message)
-    raise "PLATO_PAGER_DUTY_TOKEN is unset" unless ENV.include?('PLATO_PAGER_DUTY_TOKEN')
+    raise 'PLATO_PAGER_DUTY_TOKEN is unset' unless ENV.include?('PLATO_PAGER_DUTY_TOKEN')
 
     @pager_duty_token ||= ENV['PLATO_PAGER_DUTY_TOKEN']
 
