@@ -19,9 +19,18 @@ class ZulipSender
 
     request = Net::HTTP::Post.new(uri.request_uri)
     request.basic_auth(username, password)
-    request.body = JSON.generate({ type: 'stream', to:, topic:, content: })
-    response = http.request(request)
+    request.body = JSON.generate(
+      {
+        type: 'stream',
+        to:,
+        topic:,
+        content:
+      }
+    )
     puts request.body
+
+    response = http.request(request)
+    puts response.body
 
     raise response.message if response.code != '200'
   end
