@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_17_181627) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_18_223144) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -114,6 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_181627) do
     t.string "to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "duration"
     t.index ["ticket_id"], name: "index_ticket_transitions_on_ticket_id"
   end
 
@@ -144,7 +145,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_181627) do
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
-    t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
   create_table "user_project_roles", force: :cascade do |t|
@@ -205,10 +205,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_181627) do
   add_foreign_key "ticket_transitions", "tickets"
   add_foreign_key "ticket_user_relationships", "tickets"
   add_foreign_key "ticket_user_relationships", "users"
-  add_foreign_key "tickets", "customer_projects"
-  add_foreign_key "tickets", "projects"
-  add_foreign_key "tickets", "users", column: "assignee_id"
-  add_foreign_key "tickets", "users", column: "creator_id"
+  add_foreign_key "tickets", "customer_projects", primary_key: "id"
+  add_foreign_key "tickets", "projects", primary_key: "id"
+  add_foreign_key "tickets", "users", column: "assignee_id", primary_key: "id"
+  add_foreign_key "tickets", "users", column: "creator_id", primary_key: "id"
   add_foreign_key "user_project_roles", "projects"
   add_foreign_key "user_project_roles", "users"
   add_foreign_key "users", "projects", column: "current_project_id"
