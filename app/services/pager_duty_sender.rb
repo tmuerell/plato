@@ -25,15 +25,15 @@ class PagerDutySender
 
     # https://developer.pagerduty.com/docs/ZG9jOjExMDI5NTY0-incident-creation-api
     # https://developer.pagerduty.com/api-reference/a7d81b0e9200f-create-an-incident
-    uri = URI.parse('https://api.pagerduty.com/incidents')
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    request = Net::HTTP::Post.new(uri.request_uri)
-    request['Accept'] = 'application/vnd.pagerduty+json;version=2'
-    request['Content-Type'] = 'application/json'
-    request['Authorization'] = format('Token token=%s', @pager_duty_token)
-    request.body = JSON.generate(
-      {
+    response = RestClient::Request.new(
+      method: :post,
+      url: 'https://api.pagerduty.com/incidents',
+      headers: {
+        accept: 'application/vnd.pagerduty+json;version=2',
+        'Content-Type': 'application/json',
+        'Authorization': format('Token token=%s', @pager_duty_token)
+      },
+      payload:{
         incident: {
           type: 'incident',
           title: message,
@@ -43,12 +43,8 @@ class PagerDutySender
           }
         }
       }
-    )
-    puts request.body
+    ).execute
 
-    response = http.request(request)
-    puts response.body
-
-    raise response.message if response.code != '200'
+    raise format('HTTP code %d', response.code) if response.code != '201'
   end
 end

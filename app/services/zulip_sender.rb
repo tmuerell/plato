@@ -1,5 +1,4 @@
-require 'net/http'
-require 'uri'
+require 'rest-client'
 
 class ZulipSender
   def self.handle_ticket_notification(ticket, notification_config)
@@ -22,25 +21,19 @@ class ZulipSender
   end
 
   def self.send_message(url, username, password, to, topic, content)
-    uri = URI.parse(format('%s/api/v1/messages', url))
-
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    request = Net::HTTP::Post.new(uri.request_uri)
-    request.basic_auth(username, password)
-    request.body = JSON.generate(
-      {
+    response = RestClient::Request.new(
+      method: :post,
+      url: format('%s/api/v1/messages', url),
+      user: username,
+      password:,
+      payload: {
         type: 'stream',
         to:,
         topic:,
         content:
       }
-    )
-    puts request.body
+    ).execute
 
-    response = http.request(request)
-    puts response.body
-
-    raise response.message if response.code != '200'
+    raise format('HTTP code %d', response.code) if response.code != '200'
   end
 end
