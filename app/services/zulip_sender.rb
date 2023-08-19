@@ -1,8 +1,9 @@
 require 'rest-client'
 
 class ZulipSender
-  def self.handle_ticket_notification(ticket, notification_config)
-    if ticket.previously_new_record?
+  def self.handle_ticket_notification(ticket, notification_config, action)
+    case action
+    when :created
       if notification_config.is_for_action?(:created)
         ac = ActionController::Base.new
         message = ac.render_to_string(template: '/tickets_zulip/created',
@@ -15,13 +16,15 @@ class ZulipSender
                      notification_config.zulip_topic,
                      message)
       end
-    elsif notification_config.is_for_action?(:sla_breached)
-      ac = ActionController::Base.new
-      message = ac.render_to_string(template: '/tickets_zulip/sla_breached',
-                                    layout: false,
-                                    locals: { ticket: })
-      create_incident(notification_config.pager_duty_service_key,
-                      message)
+    when :sla_breached
+      if notification_config.is_for_action?(:sla_breached)
+        ac = ActionController::Base.new
+        message = ac.render_to_string(template: '/tickets_zulip/sla_breached',
+                                      layout: false,
+                                      locals: { ticket: })
+        create_incident(notification_config.pager_duty_service_key,
+                        message)
+      end
     end
   end
 

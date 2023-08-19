@@ -37,7 +37,7 @@ class TicketsMailer < ApplicationMailer
   #
   #   en.tickets_mailer.commented.subject
   #
-  def assigned(ticket, user)
+  def assignee_changed(ticket, user)
     @ticket = ticket
 
     mail to: user.email

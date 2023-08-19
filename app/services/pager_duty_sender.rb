@@ -2,19 +2,22 @@ require 'net/http'
 require 'uri'
 
 class PagerDutySender
-  def self.handle_ticket_notification(ticket, notification_config)
-    if ticket.previously_new_record?
+  def self.handle_ticket_notification(ticket, notification_config, action)
+    case action
+    when :created
       if notification_config.is_for_action?(:created)
         message = format('New ticket: %<identifier>s %<title>s',
                          identifier: ticket.identifier, title: ticket.title)
         create_incident(notification_config.pager_duty_service_key,
                         message)
       end
-    elsif notification_config.is_for_action?(:sla_breached)
-      message = format('SLA breach detected for ticket %<identifier>s %<title>s',
-                       identifier: ticket.identifier, title: ticket.title)
-      create_incident(notification_config.pager_duty_service_key,
-                      message)
+    when :sla_breached
+      if notification_config.is_for_action?(:sla_breached)
+        message = format('SLA breach detected for ticket %<identifier>s %<title>s',
+                         identifier: ticket.identifier, title: ticket.title)
+        create_incident(notification_config.pager_duty_service_key,
+                        message)
+      end
     end
   end
 

@@ -8,14 +8,14 @@ class NotificationConfig < ApplicationRecord
   validates_presence_of :delivery_type
   validate :params_match_delivery_type
 
-  def handle_ticket(ticket)
+  def handle_ticket(ticket, action)
     case delivery_type
     when 'email'
-      logger.debug 'Sending email'
+      EmailSender.handle_ticket_notification(ticket, self, action)
     when 'pager_duty'
-      PagerDutySender.handle_ticket_notification(ticket, self)
+      PagerDutySender.handle_ticket_notification(ticket, self, action)
     when 'zulip'
-      ZulipSender.handle_ticket_notification(ticket, self)
+      ZulipSender.handle_ticket_notification(ticket, self, action)
     end
   end
 
