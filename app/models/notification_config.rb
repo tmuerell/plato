@@ -9,8 +9,6 @@ class NotificationConfig < ApplicationRecord
   validate :params_match_delivery_type
 
   def handle_ticket(ticket)
-    return unless filter_match?(ticket)
-
     case delivery_type
     when 'email'
       logger.debug 'Sending email'
@@ -21,11 +19,25 @@ class NotificationConfig < ApplicationRecord
     end
   end
 
-  def filter_match?(_ticket)
-    return true unless filter.present?
+  def is_for_action?(action)
+    if filter.present?
+      actions = filter.split(',').map(&:strip).map(&:to_sym)
+    else
+      actions = []
+    end
 
-    # TODO
-    true
+    case action
+    when :created
+      actions.empty? || actions.include?(:created)
+    when :edited
+      actions.include?(:edited)
+    when :sla_breached
+      actions.include?(:sla_breached)
+    when :status_changed
+      actions.include?(:status_changed)
+    else
+      raise "unhandled action '%s'" % [action]
+    end
   end
 
   def params_match_delivery_type
