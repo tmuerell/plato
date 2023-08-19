@@ -22,9 +22,12 @@ class ZulipSender
         message = ac.render_to_string(template: '/tickets_zulip/sla_breached',
                                       layout: false,
                                       locals: { ticket: })
-        create_incident(notification_config.pager_duty_service_key,
-                        message)
-      end
+        send_message(notification_config.zulip_url,
+                   notification_config.zulip_username,
+                   notification_config.zulip_password,
+                   notification_config.zulip_stream,
+                   notification_config.zulip_topic,
+                   message)end
     end
   end
 
