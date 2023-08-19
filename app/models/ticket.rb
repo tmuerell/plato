@@ -34,7 +34,7 @@ class Ticket < ApplicationRecord
   def sla_status
     return :ok unless self.last_transition_at
     sla = project.sla_for(self.status)
-    minutes = (Time.now - self.last_transition_at)/60
+    minutes = (Time.now - self.last_transition_at) / 60
 
     puts minutes
     puts sla
@@ -113,11 +113,13 @@ class Ticket < ApplicationRecord
   end
 
   def update_transition_after
-    if saved_change_to_status
-      TicketTransition.create!(ticket: self,
-                               from: self.status_before_last_save,
-                               to: self.status,
-                               duration: Time.now - self.last_transition_at_before_last_save)
+    unless self.previously_new_record?
+      if saved_change_to_status
+        TicketTransition.create!(ticket: self,
+                                 from: self.status_before_last_save,
+                                 to: self.status,
+                                 duration: Time.now - self.last_transition_at_before_last_save)
+      end
     end
   end
 end
