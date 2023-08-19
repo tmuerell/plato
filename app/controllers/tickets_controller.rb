@@ -88,6 +88,20 @@ class TicketsController < ApplicationController
     redirect_to @ticket
   end
 
+  def watch
+    r = TicketUserRelationship.create(ticket: @ticket, user: current_user, relationship: :watch)
+    r.save!
+
+    redirect_to @ticket
+  end
+
+  def unwatch
+    r = TicketUserRelationship.find_by(ticket: @ticket, user: current_user, relationship: :watch)
+    r.destroy
+
+    redirect_to @ticket
+  end
+
   # DELETE /tickets/1 or /tickets/1.json
   def destroy
     @ticket.destroy

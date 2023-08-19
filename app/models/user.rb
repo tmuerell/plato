@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   before_create :set_default_user_groups
 
+  has_many :ticket_user_relationships
+
   if ENV['PLATO_OPENID_CONNECT_ENABLE'] == 'true'
     devise :omniauthable, omniauth_providers: [ENV['PLATO_OPENID_CONNECT_NAME'].to_sym]
 

@@ -4,5 +4,5 @@ class TicketUserRelationship < ApplicationRecord
   belongs_to :ticket
   belongs_to :user
 
-  enumerize :relationship, in: [:approval]
+  enumerize :relationship, in: [:approval, :watch]
 end

@@ -47,6 +47,9 @@ en:
   new_comment: "New comment"
   linked_tickets: "Linked Tickets"
   link_ticket: "Link ticket"
+  watch: "Watch"
+  unwatch: "Unwatch"
+  watchers: "Watchers"
 
   tickets_mailer:
     created:

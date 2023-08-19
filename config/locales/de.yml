@@ -87,6 +87,9 @@ de:
   new_comment: "Neuer Kommentar"
   linked_tickets: "Verlinkte Tickets"
   link_ticket: "Ticket verlinken"
+  watch: "Beobachten"
+  unwatch: "Beobachtung aufheben"
+  watchers: "Beobachter"
 
   tickets_mailer:
     created:
