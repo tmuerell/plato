@@ -48,6 +48,6 @@ class PagerDutySender
       }
     ).execute
 
-    raise format('HTTP code %d', response.code) if response.code != '201'
+    raise format('HTTP code %d', response.code) if response.code != 201
   end
 end

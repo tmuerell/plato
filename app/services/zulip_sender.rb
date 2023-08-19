@@ -42,6 +42,6 @@ class ZulipSender
       }
     ).execute
 
-    raise format('HTTP code %d', response.code) if response.code != '200'
+    raise format('HTTP code %d', response.code) if response.code != 200
   end
 end
