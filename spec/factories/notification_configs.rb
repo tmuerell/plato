@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :notification_config do
-    type { "" }
-    project_id { 1 }
+    delivery_type { "" }
+    association :project
   end
 end
