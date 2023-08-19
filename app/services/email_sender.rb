@@ -7,11 +7,11 @@ class EmailSender
         TicketsMailer.created(ticket, ticket.assignee.email).deliver
       end
     when :edited
-      TicketsMailer.edited(self, self.watchers).deliver
+      TicketsMailer.edited(ticket, ticket.watchers).deliver
     when :assignee_changed
       TicketsMailer.assigned(ticket, ticket.assignee).deliver
     when :status_changed
-      TicketsMailer.status_changed(self, self.watchers).deliver
+      TicketsMailer.status_changed(ticket, ticket.watchers).deliver
     end
   end
 
