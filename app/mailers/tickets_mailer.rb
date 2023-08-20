@@ -18,7 +18,7 @@ class TicketsMailer < ApplicationMailer
   def edited(ticket, watchers)
     @ticket = ticket
 
-    mail to: watchers.map(&:email)
+    mail to: watchers.map(&:email) unless watchers.empty?
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -51,7 +51,7 @@ class TicketsMailer < ApplicationMailer
   def status_changed(ticket, watchers)
     @ticket = ticket
 
-    mail to: watchers.map(&:email)
+    mail to: watchers.map(&:email) unless watchers.empty?
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

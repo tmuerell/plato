@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_025119) do
+
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_051712) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -119,6 +120,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_025119) do
     t.datetime "updated_at", null: false
     t.boolean "is_board", default: false, null: false
     t.boolean "is_area"
+    t.datetime "archived_at"
     t.integer "tag_group_id"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"

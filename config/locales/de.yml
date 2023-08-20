@@ -87,6 +87,7 @@ de:
   create_ticket: "Neues Ticket"
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
+  remove_assignee: "Zuweisung aufheben"
   move_to_board: "📋 %{board_name}"
   approve: "Freigeben"
   approved_by: "Freigeben von"
