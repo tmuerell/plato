@@ -72,6 +72,7 @@
           <strong>Assignee:</strong>
           <% if ticket.assignee.present? %>
             <%= ticket.assignee.name %>
+            <%= link_to '❌', unassign_ticket_path(@ticket), 'data-turbo-method' => :post, title: t('remove_assignee') %>
           <% else %>
             None
           <% end %>

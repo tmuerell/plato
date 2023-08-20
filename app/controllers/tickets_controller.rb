@@ -88,6 +88,12 @@ class TicketsController < ApplicationController
     redirect_to @ticket
   end
 
+  def unassign
+    @ticket.assignee = nil
+    @ticket.save
+    redirect_to @ticket
+  end
+
   def watch
     r = TicketUserRelationship.create(ticket: @ticket, user: current_user, relationship: :watch)
     r.save!
