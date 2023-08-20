@@ -1,0 +1,24 @@
+
+<%= simple_form_for(@notification_config) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :delivery_type %>
+    <%= f.association :project %>
+    <%= f.input :filter %>
+    <%= f.input :email_recepient_to %>
+    <%= f.input :email_recepient_bcc %>
+    <%= f.input :email_subject %>
+    <%= f.input :pager_duty_service_key %>
+    <%= f.input :zulip_url %>
+    <%= f.input :zulip_username %>
+    <%= f.input :zulip_password, as: :string %>
+    <%= f.input :zulip_stream %>
+    <%= f.input :zulip_topic %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
