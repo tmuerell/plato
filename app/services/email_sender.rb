@@ -9,7 +9,8 @@ class EmailSender
     when :edited
       TicketsMailer.edited(ticket, ticket.watchers).deliver
     when :assignee_changed
-      TicketsMailer.assigned(ticket, ticket.assignee).deliver
+      # TODO: send to last assignee if removed.  (Blocked by #24)
+      TicketsMailer.assignee_changed(ticket, ticket.assignee).deliver if ticket.assignee.present?
     when :status_changed
       TicketsMailer.status_changed(ticket, ticket.watchers).deliver
     end
