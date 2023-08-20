@@ -17,10 +17,10 @@
     <tr>
       <td><%= link_to tag.name, tag %></td>
       <td>
-        <% if tag.is_board %>✅<% end %>
+        <% if tag.board? %>✅<% end %>
       </td>
       <td>
-        <% if tag.is_area %>✅<% end %>
+        <% if tag.area? %>✅<% end %>
       </td>
       <td><%= tag.project.name %></td>
       <td><%= tag.tag_group.name if tag.tag_group.present? %></td>

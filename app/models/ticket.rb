@@ -32,16 +32,18 @@ class Ticket < ApplicationRecord
   end
 
   def needs_approval?
+    return false unless project.approval?
+
     Ticket.left_outer_joins(:tags)
           .joins('LEFT OUTER JOIN "ticket_user_relationships" ON "ticket_user_relationships"."ticket_id" = "tickets"."id" AND "ticket_user_relationships"."relationship" = \'approval\'')
-          .where('tags.name IN (?)', Tag.approval_tag_names)
+          .where('tags.name IN (?)', project.approval_tags.map(&:name))
           .where('tickets.id = ? AND ticket_user_relationships.id IS NULL', id)
           .exists?
   end
 
   def valid_transitions(_user)
     state = project.workflow["states"][self.status]
-    (state["transitions"] || []).map { |k,_| k}
+    (state["transitions"] || []).map { |k, _| k }
   end
 
   def approved?
@@ -49,19 +51,29 @@ class Ticket < ApplicationRecord
   end
 
   def flagged?
-    self.tags.select { |t| t.name == 'Flag'}.first
+    self.tags.select { |t| t.name == 'Flag' }.first
   end
 
   def inbox?
-    !Ticket.joins(:tags).where('tickets.id = ? AND (tags.is_board = true OR tags.is_area = true)', id).exists?
+    !Ticket.joins(tags: :tag_group)
+           .where('tickets.id = ? AND tag_groups.name in (?)',
+                  id,
+                  [TagGroup::AREA_NAME, TagGroup::BOARD_NAME])
+           .exists?
   end
 
   def watched?(user)
-    Ticket.joins(:ticket_user_relationships).where('tickets.id = ? AND ticket_user_relationships.user_id = ? AND ticket_user_relationships.relationship = ?', id, user.id, :watch).exists?
+    Ticket.joins(:ticket_user_relationships)
+          .where('tickets.id = ? AND ticket_user_relationships.user_id = ? AND ticket_user_relationships.relationship = ?',
+                 id,
+                 user.id,
+                 :watch)
+          .exists?
   end
 
   def watchers
-    User.joins(:ticket_user_relationships).where('ticket_user_relationships.ticket_id = ? AND ticket_user_relationships.relationship = ?', id, :watch)
+    User.joins(:ticket_user_relationships)
+        .where('ticket_user_relationships.ticket_id = ? AND ticket_user_relationships.relationship = ?', id, :watch)
   end
 
   private

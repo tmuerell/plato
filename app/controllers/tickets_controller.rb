@@ -14,15 +14,19 @@ class TicketsController < ApplicationController
       @tickets = @tickets.where(project: current_project)
     end
     @tickets = @tickets.where(status: :new).select(&:inbox?)
-    @boards = Tag.where(is_board: true)
-    @areas = Tag.where(is_area: true)
+    @boards = current_project.board_tags
+    @areas = current_project.area_tags
   end
 
   def backlog
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
-    @tickets = @tickets.where("EXISTS ( select 1 from taggings ts join tags t on ts.tag_id = t.id and ts.taggable_id = tickets.id and t.is_area = true)")
+    @tickets = @tickets.where("EXISTS (
+      select 1
+        from taggings ts
+        join tags t on ts.tag_id = t.id and ts.taggable_id = tickets.id
+        join tag_groups tg ON t.tag_group_id = tg.id AND tg.name = ?)", TagGroup::AREA_NAME)
   end
 
   # GET /tickets/1 or /tickets/1.json

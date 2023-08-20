@@ -10,11 +10,56 @@ class Project < ApplicationRecord
 
   def init_state
     return unless workflow.present? || workflow["states"].present?
-    workflow["states"].each { |k,v| v["initial_state"].present? && v["initital_state"] }.first[0]
+
+    workflow["states"].each { |_k, v| v["initial_state"].present? && v["initital_state"] }.first[0]
   end
 
   def states
     workflow["states"].keys
+  end
+
+  # FIXME: change to property in DB and remove method
+  def approval?
+    approval_tags.exists?
+  end
+
+  def approval_tags
+    Tag.where(project_id: id)
+       .joins(:tag_group)
+       .where('tag_groups.name = ?', TagGroup::APPROVAL_NAME)
+  end
+
+  # FIXME: change to property in DB and remove method
+  def area?
+    area_tags.exists?
+  end
+
+  def area_tags
+    Tag.where(project_id: id)
+       .joins(:tag_group)
+       .where('tag_groups.name = ?', TagGroup::AREA_NAME)
+  end
+
+  # FIXME: change to property in DB and remove method
+  def boards?
+    board_tags.exists?
+  end
+
+  def board_tags
+    Tag.where(project_id: id)
+       .joins(:tag_group)
+       .where('tag_groups.name = ?', TagGroup::BOARD_NAME)
+  end
+
+  # FIXME: change to property in DB and remove method
+  def severity?
+    severity_tags.exists?
+  end
+
+  def severity_tags
+    Tag.where(project_id: id)
+       .joins(:tag_group)
+       .where('tag_groups.name = ?', TagGroup::SEVERITY_NAME)
   end
 
   protected
@@ -41,5 +86,4 @@ class Project < ApplicationRecord
       errors.add :workflow, "Init state not found in workflow"
     end
   end
-
 end
