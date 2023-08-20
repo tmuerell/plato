@@ -5,24 +5,22 @@ class PagerDutySender
   def self.handle_ticket_notification(ticket, notification_config, action)
     case action
     when :created
-      if notification_config.is_for_action?(:created)
-        message = format('New ticket: %<identifier>s %<title>s',
-                         identifier: ticket.identifier, title: ticket.title)
+      if notification_config.for_action?(:created)
+        title = "New ticket: #{ticket.identifier} #{ticket.title}"
         create_incident(notification_config.pager_duty_service_key,
-                        message)
+                        title)
       end
     when :sla_breached
-      if notification_config.is_for_action?(:sla_breached)
-        message = format('SLA breach detected for ticket %<identifier>s %<title>s',
-                         identifier: ticket.identifier, title: ticket.title)
+      if notification_config.for_action?(:sla_breached)
+        title = "SLA breach detected for ticket #{ticket.identifier} #{ticket.title}"
         create_incident(notification_config.pager_duty_service_key,
-                        message)
+                        title)
       end
     end
   end
 
-  def self.create_incident(service_key, message)
-    raise 'PLATO_PAGER_DUTY_TOKEN is unset' unless ENV.include?('PLATO_PAGER_DUTY_TOKEN')
+  def self.create_incident(service_key, title)
+    raise 'PLATO_PAGER_DUTY_TOKEN is not set' unless ENV.include?('PLATO_PAGER_DUTY_TOKEN')
 
     @pager_duty_token ||= ENV['PLATO_PAGER_DUTY_TOKEN']
 
@@ -34,17 +32,17 @@ class PagerDutySender
       headers: {
         accept: 'application/vnd.pagerduty+json;version=2',
         'Content-Type': 'application/json',
-        'Authorization': format('Token token=%s', @pager_duty_token)
+        'Authorization': "Token token=#{@pager_duty_token}",
       },
-      payload:{
+      payload: {
         incident: {
           type: 'incident',
-          title: message,
+          title: title,
           service: {
             id: service_key,
-            type: 'service_reference'
-          }
-        }
+            type: 'service_reference',
+          },
+        },
       }
     ).execute
 

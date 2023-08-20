@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   include ActionView::RecordIdentifier
+  include TicketsHelper
 
   belongs_to :ticket
   belongs_to :creator, class_name: "User"
@@ -9,9 +10,6 @@ class Comment < ApplicationRecord
   after_create :send_notifications, if: lambda { ENV.fetch("PLATO_NOTIFICATIONS_ENABLED", "true") == "true" }
 
   def send_notifications
-    TicketsMailer.commented(self.ticket, self.ticket.creator).deliver
-    if self.ticket.assignee.present? && self.ticket.assignee != self.ticket.creator
-      TicketsMailer.commented(self.ticket, self.ticket.assignee).deliver
-    end
+    handle_notifications(ticket, :commented)
   end
 end

@@ -21,4 +21,12 @@ module TicketsHelper
       content_tag(:span, ticket.status, class: 'badge bg-secondary')
     end
   end
+
+  def handle_notifications(ticket, action)
+    EmailSender.handle_default_notifications(ticket, action)
+
+    NotificationConfig.where(project: ticket.project).all.each do |nc|
+      nc.handle_ticket(self, action)
+    end
+  end
 end

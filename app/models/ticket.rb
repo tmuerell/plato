@@ -1,5 +1,6 @@
 class Ticket < ApplicationRecord
   extend Enumerize
+  include TicketsHelper
 
   has_paper_trail
 
@@ -71,13 +72,7 @@ class Ticket < ApplicationRecord
   end
 
   def send_notifications
-    action = notification_action
-
-    EmailSender.handle_default_notifications(self, action)
-
-    NotificationConfig.where(project:).all.each do |nc|
-      nc.handle_ticket(self, action)
-    end
+    handle_notifications(self, notification_action)
   end
 
   def notification_action
