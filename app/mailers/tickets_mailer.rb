@@ -7,7 +7,7 @@ class TicketsMailer < ApplicationMailer
   def created(ticket, to, bcc = [])
     @ticket = ticket
 
-    mail to:, bcc:
+    mail to: to, bcc: bcc
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -15,10 +15,10 @@ class TicketsMailer < ApplicationMailer
   #
   #   en.tickets_mailer.edited.subject
   #
-  def edited(ticket, watchers)
+  def edited(ticket, to, bcc = [])
     @ticket = ticket
 
-    mail to: watchers.map(&:email) unless watchers.empty?
+    mail to: to, bcc: bcc
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -26,10 +26,10 @@ class TicketsMailer < ApplicationMailer
   #
   #   en.tickets_mailer.commented.subject
   #
-  def commented(ticket, user)
+  def commented(ticket, to, bcc = [])
     @ticket = ticket
 
-    mail to: user.email
+    mail to: to, bcc: bcc
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -37,10 +37,10 @@ class TicketsMailer < ApplicationMailer
   #
   #   en.tickets_mailer.commented.subject
   #
-  def assignee_changed(ticket, user)
+  def assignee_changed(ticket, to, bcc = [])
     @ticket = ticket
 
-    mail to: user.email
+    mail to: to, bcc: bcc
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -48,10 +48,10 @@ class TicketsMailer < ApplicationMailer
   #
   #   en.tickets_mailer.status_changed.subject
   #
-  def status_changed(ticket, watchers)
+  def status_changed(ticket, to, bcc = [])
     @ticket = ticket
 
-    mail to: watchers.map(&:email) unless watchers.empty?
+    mail to: to, bcc: bcc
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -62,6 +62,6 @@ class TicketsMailer < ApplicationMailer
   def sla_breached(ticket, to, bcc = [])
     @ticket = ticket
 
-    mail to:, bcc:
+    mail to: to, bcc: bcc
   end
 end

@@ -4,7 +4,7 @@ class ZulipSender
   def self.handle_ticket_notification(ticket, notification_config, action)
     case action
     when :created
-      if notification_config.is_for_action?(:created)
+      if notification_config.for_action?(:created)
         ac = ActionController::Base.new
         message = ac.render_to_string(template: '/tickets_zulip/created',
                                       layout: false,
@@ -17,34 +17,35 @@ class ZulipSender
                      message)
       end
     when :sla_breached
-      if notification_config.is_for_action?(:sla_breached)
+      if notification_config.for_action?(:sla_breached)
         ac = ActionController::Base.new
         message = ac.render_to_string(template: '/tickets_zulip/sla_breached',
                                       layout: false,
-                                      locals: { ticket: })
+                                      locals: { ticket: ticket })
         send_message(notification_config.zulip_url,
                    notification_config.zulip_username,
                    notification_config.zulip_password,
                    notification_config.zulip_stream,
                    notification_config.zulip_topic,
-                   message)end
+                   message)
+      end
     end
   end
 
   def self.send_message(url, username, password, to, topic, content)
     response = RestClient::Request.new(
       method: :post,
-      url: format('%s/api/v1/messages', url),
+      url: "#{url}/api/v1/messages",
       user: username,
-      password:,
+      password: password,
       payload: {
         type: 'stream',
-        to:,
-        topic:,
-        content:
+        to: to,
+        topic: topic,
+        content: content,
       }
     ).execute
 
-    raise format('HTTP code %d', response.code) if response.code != 200
+    raise "HTTP code #{response.code}" if response.code != 200
   end
 end
