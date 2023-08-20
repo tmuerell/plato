@@ -5,8 +5,10 @@ RSpec.feature "Inbox Handling", type: :feature do
     @project = create(:project)
     @user1 = create(:user, roles: [ "Admin" ], current_project: @project)
     @customer_project = create(:customer_project, project: @project)
-    @critical_board = create(:tag, name: 'Critical', is_board: true)
-    @area_tag = create(:tag, name: 'Backlog', is_area: true)
+    @area_tag_group = create(:tag_group, name: 'Area')
+    @board_tag_group = create(:tag_group, name: 'Board')
+    @critical_board = create(:tag, tag_group: @board_tag_group, name: 'Critical', project: @project)
+    @area_tag = create(:tag, tag_group: @area_tag_group, name: 'Backlog', project: @project)
     @ticket = create(:ticket, title: 'Ganz wichtig', priority: :high, customer_project: @customer_project, status: :new, project: @project)
   end
 

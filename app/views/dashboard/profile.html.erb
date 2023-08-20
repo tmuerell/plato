@@ -40,10 +40,10 @@
       <td>
         <% for tag in ticket.tags %>
           <span class="badge rounded-pill bg-secondary">
-          <% if tag.is_board %>
+          <% if tag.board? %>
             📋 
             <%= link_to tag.name, board_path(tag) %>
-          <% elsif tag.is_area %>
+          <% elsif tag.area? %>
             📗
             <%= link_to tag.name, tag_path(tag) %>
           <% else %>

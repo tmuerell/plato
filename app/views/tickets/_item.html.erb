@@ -8,7 +8,7 @@
     <%= ticket.title %>
   </div>
   <div class="col-2">
-    <% for t in ticket.tags.select(&:is_area) %>
+    <% for t in ticket.tags.select(&:area?) %>
       <%= render_tag(t) %>
     <% end %>
   </div>

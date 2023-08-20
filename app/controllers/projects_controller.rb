@@ -23,6 +23,8 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.workflow = JSON.parse(@project.workflow) if @project.workflow.is_a?(String)
 
+    create_default_tags
+
     respond_to do |format|
       if @project.save
         format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
@@ -66,13 +68,41 @@ class ProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_project
+    @project = Project.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def project_params
+    params.require(:project).permit(:name, :shortname, :workflow)
+  end
+
+  def create_default_tags
+    if @project.approval?
+      approval = TagGroup.find_by!(name: TagGroup::APPROVAL_NAME_NAME)
+
+      TagGroup::APPROVAL_DEFAULT_TAG_NAMES.each do |tag_name|
+        create_tag_with_tag_group tag_name, @project, approval
+      end
     end
 
-    # Only allow a list of trusted parameters through.
-    def project_params
-      params.require(:project).permit(:name, :shortname, :workflow)
+    if @project.severities?
+      severity = TagGroup.find_by!(name: TagGroup::SEVERITY_NAME)
+
+      TagGroup::SEVERITY_DEFAULT_TAG_NAMES.each do |tag_name|
+        create_tag_with_tag_group tag_name, @project, severity
+      end
     end
+  end
+
+  def create_tag_with_tag_group(name, project, tag_group)
+    t = Tag.new
+    t.tag_group = tag_group
+    t.name = name
+    t.project = project
+    critical.save!
+    critical
+  end
 end
