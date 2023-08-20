@@ -20,6 +20,7 @@ class Ticket < ApplicationRecord
   before_create :set_sequential_no
 
   validates_presence_of :title, :priority
+  validate :max_one_tag_per_tag_group
 
   enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
@@ -88,6 +89,20 @@ class Ticket < ApplicationRecord
       :status_changed
     else
       :edited
+    end
+  end
+
+  def max_one_tag_per_tag_group
+    used = {}
+    tags.each do |tag|
+      next unless tag.tag_group.present?
+
+      used[tag.tag_group.name] = [] unless used.key? tag.tag_group.name
+      used[tag.tag_group.name] << tag.name
+    end
+
+    used.each_key do |tag_group|
+      errors.add(:tags, "must only have one tag in tag group #{tag_group}") if used[tag_group].count > 1
     end
   end
 end

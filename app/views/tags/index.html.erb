@@ -6,7 +6,8 @@
     <th>Name</th>
     <th>Board</th>
     <th>Area</th>
-    <th>Project</th>
+    <th><%= t('project') %></th>
+    <th><%= t('tag_group') %></th>
     <th>Color</th>
   </tr>
   </thead>
@@ -22,6 +23,7 @@
         <% if tag.is_area %>✅<% end %>
       </td>
       <td><%= tag.project.name %></td>
+      <td><%= tag.tag_group.name if tag.tag_group.present? %></td>
       <td><%= tag.color %></td>
     </tr>
   <% end %>
