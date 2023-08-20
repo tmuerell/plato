@@ -1,6 +1,48 @@
-AllCops:
-  TargetRubyVersion: 3.1
+# https://docs.rubocop.org/rubocop/cops_metrics.html#metricsabcsize
+Metrics/AbcSize:
+  Enabled: true
+  # default: 20
+  Max: 17
 
+# https://docs.rubocop.org/rubocop/cops_style.html#styletrailingcommainhashliteral
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  # default: 7
+  Max: 10
+
+# https://docs.rubocop.org/rubocop/cops_metrics.html#metricsmethodlength
+Metrics/MethodLength:
+  Enabled: true
+  # default: 10
+  Max: 50
+
+# https://docs.rubocop.org/rubocop/cops_style.html#styleemptymethod
+Style/EmptyMethod:
+  Enabled: false
+
+# https://docs.rubocop.org/rubocop/cops_style.html#stylefrozenstringliteralcomment
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# https://docs.rubocop.org/rubocop/cops_style.html#styledocumentation
+Style/Documentation:
+  Enabled: false
+
+# https://www.rubydoc.info/gems/rubocop/RuboCop/Cop/Style/HashSyntax
 Style/HashSyntax:
   Enabled: true
+  # default: always
   EnforcedShorthandSyntax: never
+
+# https://docs.rubocop.org/rubocop/cops_style.html#styleredundantself
+Style/RedundantSelf:
+  Enabled: false
+
+# https://docs.rubocop.org/rubocop/cops_style.html#stylestringliterals
+Style/StringLiterals:
+  Enabled: false
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  # default: no_comma
+  EnforcedStyleForMultiline: comma
