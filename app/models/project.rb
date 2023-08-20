@@ -18,20 +18,10 @@ class Project < ApplicationRecord
     workflow["states"].keys
   end
 
-  # FIXME: change to property in DB and remove method
-  def approval?
-    approval_tags.exists?
-  end
-
   def approval_tags
     Tag.where(project_id: id)
        .joins(:tag_group)
        .where('tag_groups.name = ?', TagGroup::APPROVAL_NAME)
-  end
-
-  # FIXME: change to property in DB and remove method
-  def area?
-    area_tags.exists?
   end
 
   def area_tags
@@ -40,20 +30,10 @@ class Project < ApplicationRecord
        .where('tag_groups.name = ?', TagGroup::AREA_NAME)
   end
 
-  # FIXME: change to property in DB and remove method
-  def boards?
-    board_tags.exists?
-  end
-
   def board_tags
     Tag.where(project_id: id)
        .joins(:tag_group)
        .where('tag_groups.name = ?', TagGroup::BOARD_NAME)
-  end
-
-  # FIXME: change to property in DB and remove method
-  def severity?
-    severity_tags.exists?
   end
 
   def severity_tags

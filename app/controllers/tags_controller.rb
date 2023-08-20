@@ -66,8 +66,6 @@ class TagsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def tag_params
-    # FIXME: remove is_board, is_area
-    # params.require(:tag).permit(:name, :project_id, :tag_group_id, :color)
-    params.require(:tag).permit(:name, :project_id, :tag_group_id, :is_board, :is_area, :color)
+    params.require(:tag).permit(:name, :project_id, :tag_group_id, :color)
   end
 end

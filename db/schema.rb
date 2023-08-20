@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_051712) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_151830) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -92,6 +91,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_051712) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "workflow"
+    t.boolean "approval", default: false
+    t.boolean "area", default: false
+    t.boolean "board", default: false
+    t.boolean "severity", default: false
+    t.boolean "approvals", default: false
+    t.boolean "areas", default: false
+    t.boolean "boards", default: false
+    t.boolean "severities", default: false
     t.index ["shortname"], name: "index_projects_on_shortname", unique: true
   end
 
@@ -118,10 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_051712) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_board", default: false, null: false
-    t.boolean "is_area"
-    t.datetime "archived_at"
     t.integer "tag_group_id"
+    t.datetime "archived_at"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"
   end
