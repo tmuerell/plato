@@ -76,7 +76,7 @@ class ProjectsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def project_params
-    params.require(:project).permit(:name, :shortname, :workflow)
+    params.require(:project).permit(:name, :shortname, :workflow, :approvals, :areas, :boards, :severities)
   end
 
   def create_default_tags
