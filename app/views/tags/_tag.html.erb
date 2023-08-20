@@ -7,6 +7,11 @@
   </p>
 
   <p>
+    <strong><%= t('tag_group') %>:</strong>
+    <%= tag.tag_group.name if tag.tag_group.present? %>
+  </p>
+
+  <p>
     <strong>Board:</strong>
     <%= tag.is_board %>
   </p>

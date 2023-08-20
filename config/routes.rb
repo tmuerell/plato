@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tag_groups
   resources :notification_configs
   if ENV['PLATO_OPENID_CONNECT_ENABLE'] == 'true'
     devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
