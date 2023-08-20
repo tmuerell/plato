@@ -1,9 +1,8 @@
 class TagGroupsController < ApplicationController
-  before_action :set_tag_group, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /tag_groups or /tag_groups.json
   def index
-    @tag_groups = TagGroup.all
   end
 
   # GET /tag_groups/1 or /tag_groups/1.json
