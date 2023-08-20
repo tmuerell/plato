@@ -40,6 +40,7 @@ en:
   create_ticket: "New ticket"
   edit: "Edit"
   assign_to_me: "Assign to me"
+  remove_assignee: "Remove assignee"
   move_to_board: "📋 %{board_name}"
   approve: "Approve"
   approved_by: "Approved by"
