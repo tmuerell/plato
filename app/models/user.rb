@@ -42,7 +42,7 @@ class User < ApplicationRecord
     end
   end
 
-  def is_admin?
+  def admin?
     (self.roles || []).include?("Admin")
   end
 
