@@ -91,10 +91,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_151830) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "workflow"
-    t.boolean "approval", default: false
-    t.boolean "area", default: false
-    t.boolean "board", default: false
-    t.boolean "severity", default: false
     t.boolean "approvals", default: false
     t.boolean "areas", default: false
     t.boolean "boards", default: false
@@ -125,8 +121,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_151830) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "tag_group_id"
     t.datetime "archived_at"
+    t.integer "tag_group_id"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"
   end

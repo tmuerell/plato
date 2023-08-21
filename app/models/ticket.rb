@@ -32,7 +32,7 @@ class Ticket < ApplicationRecord
   end
 
   def needs_approval?
-    return false unless project.approval?
+    return false unless project.approvals?
 
     Ticket.left_outer_joins(:tags)
           .joins('LEFT OUTER JOIN "ticket_user_relationships" ON "ticket_user_relationships"."ticket_id" = "tickets"."id" AND "ticket_user_relationships"."relationship" = \'approval\'')
