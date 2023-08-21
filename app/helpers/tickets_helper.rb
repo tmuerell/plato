@@ -23,7 +23,7 @@ module TicketsHelper
   end
 
   def handle_notifications(ticket, action)
-    EmailSender.handle_default_notifications(ticket, action)
+    EmailSender.handle_ticket_watcher_notifications(ticket, action)
 
     NotificationConfig.where(project: ticket.project).all.each do |nc|
       nc.handle_ticket(self, action)
