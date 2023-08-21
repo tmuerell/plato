@@ -15,7 +15,7 @@ class DefineSpecialTagsViaTagGroups < ActiveRecord::Migration[7.0]
       tag.save
 
       project = tag.project
-      project.approval = true
+      project.approvals = true
       project.save
     end
 
@@ -25,7 +25,7 @@ class DefineSpecialTagsViaTagGroups < ActiveRecord::Migration[7.0]
       tag.save
 
       project = tag.project
-      project.area = true
+      project.areas = true
       project.save
     end
 
@@ -35,7 +35,7 @@ class DefineSpecialTagsViaTagGroups < ActiveRecord::Migration[7.0]
       tag.save
 
       project = tag.project
-      project.board = true
+      project.boards = true
       project.save
     end
 
