@@ -23,7 +23,7 @@
       <td><%= status_label(ticket) %></td>
       <td>
         <%= priority_label(ticket) %>
-        <%= sla_label(ticket) %>
+        <%= sla_label(ticket.sla_status) %>
       </td>
       <td>
         <% if ticket.assignee.present? %>

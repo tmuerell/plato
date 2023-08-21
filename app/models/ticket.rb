@@ -17,6 +17,7 @@ class Ticket < ApplicationRecord
   has_many :children, through: :child_relationships
   has_many :parent_relationships, foreign_key: :child_id, class_name: "TicketTicketRelationship", dependent: :destroy
   has_many :parents, through: :parent_relationships
+  has_many :ticket_transitions
 
   before_save :update_transition_before
   before_create :set_sequential_no
@@ -36,29 +37,9 @@ class Ticket < ApplicationRecord
   def sla_status
     return :ok unless self.last_transition_at
     sla = project.sla_for(self.status)
-    minutes = (Time.now - self.last_transition_at) / 60
+    seconds = (Time.now - self.last_transition_at)
 
-    puts minutes
-    puts sla
-
-    return :ok unless sla.present?
-    if sla.count == 1
-      if minutes > sla[0].to_i
-        :warning
-      else
-        :ok
-      end
-    elsif sla.count > 1
-      if minutes > sla[1].to_i
-        :error
-      elsif minutes > sla[0].to_i
-        :warning
-      else
-        :ok
-      end
-    else
-      :ok
-    end
+    project.calculate_sla_status(self.status, seconds)
   end
 
   def needs_approval?

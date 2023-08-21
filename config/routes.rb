@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   resources :comments
   resources :boards
   resources :tickets do
+    member do
+      get :transitions
+    end
     collection do
       get :inbox
       get :backlog

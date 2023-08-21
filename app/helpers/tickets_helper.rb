@@ -9,11 +9,13 @@ module TicketsHelper
     end
   end
 
-  def sla_label(ticket)
-    if ticket.sla_status == :error
-      content_tag(:span, "SLA breached", class: 'badge bg-danger')
-    elsif ticket.sla_status == :warning
+  def sla_label(sla_status)
+    if sla_status == :error
+      content_tag(:span, "SLA Breached", class: 'badge bg-danger')
+    elsif sla_status == :warning
       content_tag(:span, "SLA Warning", class: 'badge bg-warning')
+    elsif sla_status == :ok
+      content_tag(:span, "SLA OK", class: 'badge bg-success')
     end
   end
 

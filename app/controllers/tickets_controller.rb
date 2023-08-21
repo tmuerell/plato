@@ -18,6 +18,9 @@ class TicketsController < ApplicationController
     @areas = current_project.area_tags
   end
 
+  def transitions
+  end
+
   def backlog
     if current_project
       @tickets = @tickets.where(project: current_project)
