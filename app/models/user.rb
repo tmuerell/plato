@@ -42,6 +42,10 @@ class User < ApplicationRecord
     end
   end
 
+  def admin?
+    (self.roles || []).include?("Admin")
+  end
+
   private
 
   def set_default_user_groups

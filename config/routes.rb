@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   else
     devise_for :users
   end
+  resources :users
   resources :user_project_roles
   resources :comments
   resources :boards
