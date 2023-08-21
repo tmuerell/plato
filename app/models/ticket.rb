@@ -34,6 +34,10 @@ class Ticket < ApplicationRecord
     "%s:%06x" % [project.shortname, sequential_id]
   end
 
+  def identifier=(identifier)
+    super(identifier)
+  end
+
   def sla_status
     return :ok unless self.last_transition_at
     sla = project.sla_for(self.status)
@@ -87,13 +91,23 @@ class Ticket < ApplicationRecord
         .where('ticket_user_relationships.ticket_id = ? AND ticket_user_relationships.relationship = ?', id, :watch)
   end
 
+  def self.search(query, project, ability)
+    by_identifier = Ticket.accessible_by(ability).find_by(identifier: query)
+    return [by_identifier] if by_identifier
+
+    query = Ticket.sanitize_sql_like(query)
+    Ticket.where('tickets.project_id = ? AND lower(tickets.title) LIKE ?',
+                 project.id,
+                 "%#{query}%".downcase)
+  end
+
   private
 
   def set_sequential_no
     self.status = self.project.init_state
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
     self.last_transition_at = Time.now
-    self.identifier = "%s:%06x" % [project.shortname, sequential_id]
+    self.identifier = identifier
   end
 
   def send_notifications

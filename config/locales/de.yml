@@ -98,6 +98,7 @@ de:
   watch: "Beobachten"
   unwatch: "Beobachtung aufheben"
   watchers: "Beobachter"
+  search: "Suche"
 
   tickets_mailer:
     created:
