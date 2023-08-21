@@ -93,6 +93,7 @@ class Ticket < ApplicationRecord
     self.status = self.project.init_state
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
     self.last_transition_at = Time.now
+    self.identifier = "%s:%06x" % [project.shortname, sequential_id]
   end
 
   def send_notifications
