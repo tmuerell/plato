@@ -60,7 +60,7 @@
         </div>
         <p>
           <strong>Kunden-Projekt:</strong>
-          <%= ticket.customer_project.name %>
+          <%= link_to ticket.customer_project.name, customer_project_path(ticket.customer_project) %>
         </p>
 
         <p>
@@ -94,29 +94,39 @@
           <% end %>
         <% end %>
 
-        <div class="watchers">
-          <h5>
-            <%= t('watchers') %>
-          </h5>
-          <ul>
-            <% for watcher in @ticket.watchers %>
-              <li>
-                <%= gravatar_icon watcher %>
-                <%= watcher.name %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+        <% if @ticket.watchers.any? %>
+          <div class="watchers foldable-list"
+               data-controller="tickets"
+               data-action="click->tickets#toggleWatchers"
+               data-tickets-target="watchers">
+            <h5><%= t('watchers') %></h5>
+            <ul>
+              <% for watcher in @ticket.watchers %>
+                <li>
+                  <%= gravatar_icon watcher %>
+                  <%= watcher.name %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-        <h5><%= t('linked_tickets') %></h5>
-        <ul>
-          <% for r in @ticket.child_relationships %>
-            <li><%= link_to r.child.identifier, r.child %> <%= r.child.title %> (this <%= r.relationship %>)</li>
-          <% end %>
-          <% for r in @ticket.parent_relationships %>
-            <li><%= link_to r.parent.identifier, r.parent %> <%= r.parent.title %> (<%= r.relationship %>)</li>
-          <% end %>
-        </ul>
+        <% if @ticket.child_relationships.any? || @ticket.parent_relationships.any? %>
+          <div class="linked-tickets foldable-list"
+               data-controller="tickets"
+               data-action="click->tickets#toggleLinkedTickets"
+               data-tickets-target="linkedTickets">
+            <h5><%= t('linked_tickets') %></h5>
+            <ul>
+              <% for r in @ticket.child_relationships %>
+                <li><%= link_to r.child.identifier, r.child %> <%= r.child.title %> (this <%= r.relationship %>)</li>
+              <% end %>
+              <% for r in @ticket.parent_relationships %>
+                <li><%= link_to r.parent.identifier, r.parent %> <%= r.parent.title %> (<%= r.relationship %>)</li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

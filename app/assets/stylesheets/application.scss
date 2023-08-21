@@ -77,3 +77,21 @@ p.login-links {
 .ticket-flag {
   background-color: #fefeaa;
 }
+
+.foldable-list {
+  h5 {
+    cursor: pointer;
+  }
+  h5::after {
+    content: " -";
+  }
+}
+
+.foldable-list.folded {
+  h5::after {
+    content: " +";
+  }
+  ul {
+    display: none;
+  }
+}
