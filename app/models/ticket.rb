@@ -153,26 +153,7 @@ class Ticket < ApplicationRecord
   end
 
   def update_transition_after
-    unless self.previously_new_record?
-      if saved_change_to_status
-        TicketTransition.create!(ticket: self,
-                                 from: self.status_before_last_save,
-                                 to: self.status,
-                                 duration: Time.now - self.last_transition_at_before_last_save)
-      end
-    end
-  end
-
-  protected
-
-  def update_transition_before
-    if will_save_change_to_status?
-      self.last_transition_at = Time.now
-    end
-  end
-
-  def update_transition_after
-    unless self.previously_new_record?
+    unless self.previously_new_record? || !self.last_transition_at_before_last_save
       if saved_change_to_status
         TicketTransition.create!(ticket: self,
                                  from: self.status_before_last_save,
