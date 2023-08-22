@@ -102,7 +102,7 @@ class ProjectsController < ApplicationController
     t.tag_group = tag_group
     t.name = name
     t.project = project
-    critical.save!
-    critical
+    t.save!
+    t
   end
 end
