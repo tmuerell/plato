@@ -19,11 +19,20 @@
              draggable="true"
              data-action="dragstart->boards#dragstart dragend->boards#dragend"
              data-uri="<%= ticket_url(ti) %>"
+             data-ticket-identifier="<%= ti.identifier %>"
         >
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
-                <h6 class="card-title"><%= link_to ti.identifier, ti %></h6>
+                <h6 class="card-title">
+                  <%= link_to ti.identifier, ti %>
+                  <%= content_tag :span,
+                                  '📋',
+                                  title: 'Copy to clipboard',
+                                  class: 'copy-to-clipboard',
+                                  data: { controller: 'tickets',
+                                          action: 'click->tickets#copyToClipboard' }  %>
+                </h6>
                 <h6 class="card-subtitle mb-2 text-muted"><%= ti.title %></h6>
               </div>
               <div>

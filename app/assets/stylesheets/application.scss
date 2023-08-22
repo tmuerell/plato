@@ -42,6 +42,10 @@ footer {
   clip-path: circle();
 }
 
+.copy-to-clipboard {
+    cursor: pointer;
+}
+
 .kanban-board {
   .kanban-col {
     background-color: #eeeeee;

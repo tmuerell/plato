@@ -1,8 +1,16 @@
-<div id="<%= dom_id ticket %>">
+<div id="<%= dom_id ticket %>" data-ticket-identifier="<%= ticket.identifier %>">
   <div class="row">
     <div class="col-md-9">
       <div class="m-2">
-        <span class="fs-6 text-muted"><%= ticket.identifier %></span>
+        <span class="fs-6 text-muted">
+          <%= ticket.identifier %>
+          <%= content_tag :span,
+                          '📋',
+                          title: 'Copy to clipboard',
+                          class: 'copy-to-clipboard',
+                          data: { controller: 'tickets',
+                                  action: 'click->tickets#copyToClipboard' }  %>
+        </span>
         <h4><%= ticket.title %></h4>
 
         <% if ticket.content.present? %>
