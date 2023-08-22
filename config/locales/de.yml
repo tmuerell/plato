@@ -88,7 +88,6 @@ de:
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"
   remove_assignee: "Zuweisung aufheben"
-  move_to_board: "📋 %{board_name}"
   approve: "Freigeben"
   approved_by: "Freigeben von"
   comments: "Kommentare"
@@ -106,7 +105,6 @@ de:
       subject: A ticket was commented on
     assigned:
       subject: A ticket was assigned to you
-  move_to_area: "📗 %{area_name}"
 
   helpers:
     submit:

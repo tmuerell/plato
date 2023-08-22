@@ -1,13 +1,17 @@
 module TagsHelper
   def render_tag(tag)
     content_tag(:span, class: 'badge rounded-pill bg-secondary') do
-      if tag.board?
-        link_to("📋 #{truncate(tag.name)}", tag)
-      elsif tag.area?
-        link_to("📗 #{truncate(tag.name)}", tag)
-      else
-        link_to tag.name, tag
-      end
+      link_to(emojified(tag), tag)
+    end
+  end
+
+  def emojified(tag)
+    if tag.board?
+      "📋 #{truncate(tag.name)}"
+    elsif tag.area?
+      "📗 #{truncate(tag.name)}"
+    else
+      tag.name
     end
   end
 end

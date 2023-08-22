@@ -41,7 +41,6 @@ en:
   edit: "Edit"
   assign_to_me: "Assign to me"
   remove_assignee: "Remove assignee"
-  move_to_board: "📋 %{board_name}"
   approve: "Approve"
   approved_by: "Approved by"
   comments: "Comments"
@@ -59,6 +58,5 @@ en:
       subject: A ticket was commented on
     assigned:
       subject: A ticket was assigned to you
-  move_to_area: "📗 %{area_name}"
   logout: "Log out"
   show_transitions: "Show transitions"
