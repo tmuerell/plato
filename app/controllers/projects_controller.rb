@@ -81,7 +81,7 @@ class ProjectsController < ApplicationController
 
   def create_default_tags
     if @project.approvals
-      approval = TagGroup.find_by!(name: TagGroup::APPROVAL_NAME_NAME)
+      approval = TagGroup.find_or_create_by!(name: TagGroup::APPROVAL_NAME)
 
       TagGroup::APPROVAL_DEFAULT_TAG_NAMES.each do |tag_name|
         create_tag_with_tag_group tag_name, @project, approval
@@ -89,7 +89,7 @@ class ProjectsController < ApplicationController
     end
 
     if @project.severities
-      severity = TagGroup.find_by!(name: TagGroup::SEVERITY_NAME)
+      severity = TagGroup.find_or_create_by!(name: TagGroup::SEVERITY_NAME)
 
       TagGroup::SEVERITY_DEFAULT_TAG_NAMES.each do |tag_name|
         create_tag_with_tag_group tag_name, @project, severity
