@@ -4,13 +4,8 @@
   <div class="col-1">
     <%= link_to ticket.identifier, ticket %>
   </div>
-  <div class="col-7">
+  <div class="col-9">
     <%= ticket.title %>
-  </div>
-  <div class="col-2">
-    <% for t in ticket.tags.select(&:area?) %>
-      <%= render_tag(t) %>
-    <% end %>
   </div>
   <div class="col-2">
     <%= status_label(ticket) %>

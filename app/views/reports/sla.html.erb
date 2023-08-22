@@ -1,0 +1,28 @@
+<h3>SLA Report</h3>
+
+<table class="table table-sm table-striped">
+  <thead>
+  <tr>
+    <th>From</th>
+    <th>To</th>
+    <th>Duration</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+<% @tickets.each do |ticket| %>
+  <tr>
+    <th colspan="4"><%= ticket.identifier %></th>
+  </tr>
+
+  <% ticket.ticket_transitions.each do |transition| %>
+    <tr>
+      <td><%= transition.from %></td>
+      <td><%= transition.to %></td>
+      <td><%= transition.duration %></td>
+      <td><%= sla_label(ticket.project.calculate_sla_status(transition.from, transition.duration)) %></td>
+    </tr>
+  <% end %>
+<% end %>
+  </tbody>
+</table>

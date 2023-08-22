@@ -1,0 +1,25 @@
+<h3>Ticket transitions for <%= @ticket.identifier %></h3>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>When</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Duration</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @ticket.ticket_transitions.each do |transition| %>
+    <tr>
+      <td><%=l transition.created_at %></td>
+      <td><%= transition.from %></td>
+      <td><%= transition.to %></td>
+      <td><%= ActiveSupport::Duration.build(transition.duration).inspect %></td>
+      <td><%= sla_label(transition.ticket.project.calculate_sla_status(transition.from, transition.duration)) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= link_to(t('actions.back'), @ticket) %>

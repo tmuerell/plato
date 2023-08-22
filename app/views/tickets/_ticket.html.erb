@@ -1,8 +1,16 @@
-<div id="<%= dom_id ticket %>">
+<div id="<%= dom_id ticket %>" data-ticket-identifier="<%= ticket.identifier %>">
   <div class="row">
     <div class="col-md-9">
       <div class="m-2">
-        <span class="fs-6 text-muted"><%= ticket.identifier %></span>
+        <span class="fs-6 text-muted">
+          <%= ticket.identifier %>
+          <%= content_tag :span,
+                          '📋',
+                          title: 'Copy to clipboard',
+                          class: 'copy-to-clipboard',
+                          data: { controller: 'tickets',
+                                  action: 'click->tickets#copyToClipboard' }  %>
+        </span>
         <h4><%= ticket.title %></h4>
 
         <% if ticket.content.present? %>
@@ -29,6 +37,7 @@
         <p>
           <%= status_label(ticket) %>
           <%= priority_label(ticket) %>
+          <%= sla_label(ticket.sla_status) %>
         </p>
 
         <p>
@@ -56,6 +65,7 @@
               <%= link_to t('unwatch'), unwatch_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
             <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
+            <%= link_to t('show_transitions'), transitions_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
           <% end %>
         </div>
         <p>

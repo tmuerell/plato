@@ -18,6 +18,9 @@ class TicketsController < ApplicationController
     @areas = current_project.area_tags
   end
 
+  def transitions
+  end
+
   def backlog
     if current_project
       @tickets = @tickets.where(project: current_project)
@@ -62,6 +65,10 @@ class TicketsController < ApplicationController
 
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
+    unless @ticket.valid_transitions(current_user).include? ticket_params[:status]
+      raise "InvalidTransition(#{ticket_params[:status]})"
+    end
+
     respond_to do |format|
       if @ticket.update(ticket_params)
         format.html {
