@@ -1,13 +1,25 @@
 <h2><%= @board.name %> Board</h2>
 
-<div class="row">
+<div class="row kanban-board"
+     data-boards-target="board"
+     data-controller="boards"
+>
   <% for s in current_project.states %>
-    <div class="col kanban-col">
+    <div class="col kanban-col"
+         data-status="<%= s %>"
+         data-valid-transitions="<%= @tickets.where(status: s).first&.valid_transitions(current_user) %>"
+         data-boards-target="boardColumn"
+         >
       <div class="header">
         <%= s %>
       </div>
       <% for ti in @tickets.where(status: s) %>
-        <div class="card my-1<%= if ti.flagged?; " ticket-flag"; end %>">
+        <div id="<%= dom_id ti %>"
+             class="card my-1<%= if ti.flagged?; " ticket-flag"; end %>"
+             draggable="true"
+             data-action="dragstart->boards#dragstart dragend->boards#dragend"
+             data-uri="<%= ticket_url(ti) %>"
+        >
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
@@ -24,14 +36,6 @@
               <span class="text-muted"><%= ti.assignee.name %></span>
             <% end %>
           </div>
-          <% vts = ti.valid_transitions(current_user) %>
-          <% if vts.count > 0 %>
-            <div class="card-footer">
-              <% for vt in vts %>
-                <%= link_to t("transition.#{ti.status}.#{vt}"), ticket_url(ti, { ticket: { status: vt } }), 'data-turbo-method' => :patch %>
-              <% end %>
-            </div>
-          <% end %>
         </div>
       <% end %>
 

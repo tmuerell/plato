@@ -62,6 +62,10 @@ class TicketsController < ApplicationController
 
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
+    unless @ticket.valid_transitions(current_user).include? ticket_params[:status]
+      raise "InvalidTransition(#{ticket_params[:status]})"
+    end
+
     respond_to do |format|
       if @ticket.update(ticket_params)
         format.html {

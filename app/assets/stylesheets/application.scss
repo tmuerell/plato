@@ -42,12 +42,27 @@ footer {
   clip-path: circle();
 }
 
-.kanban-col {
-  background-color: #eeeeee;
-  .header {
-    text-align: center;
-    padding: 2px;
-    background-color: #ccc;
+.kanban-board {
+  .kanban-col {
+    background-color: #eeeeee;
+
+    .header {
+      text-align: center;
+      padding: 2px;
+      background-color: #ccc;
+    }
+
+    .card {
+      cursor: move;
+    }
+  }
+
+  .droppable {
+    opacity: 1;
+  }
+
+  .undroppable {
+    opacity: 0.4;
   }
 }
 
