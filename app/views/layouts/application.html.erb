@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-100">
 <head>
   <title>Plato - Easy tasks</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,7 +10,7 @@
   <%= javascript_importmap_tags %>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 mb-1">
     <div class="container-fluid">
@@ -69,7 +69,7 @@
     </div>
   </nav>
 </header>
-<main>
+<main class="flex-shrink-0">
   <div class="container-fluid">
     <% flash.each do |type, msg| %>
       <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
@@ -80,7 +80,7 @@
     <%= yield %>
   </div>
 </main>
-<footer>
+<footer class="footer mt-auto py-3 bg-body-tertiary">
   <div class="container-fluid">
     Logged in as: <%= current_user.firstname %> <%= current_user.lastname %> <%= link_to t('logout'), destroy_user_session_path, 'data-turbo-method' => :delete %> |
     <%= link_to "Projects", projects_url %>
