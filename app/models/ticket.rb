@@ -17,8 +17,11 @@ class Ticket < ApplicationRecord
   has_many :children, through: :child_relationships
   has_many :parent_relationships, foreign_key: :child_id, class_name: "TicketTicketRelationship", dependent: :destroy
   has_many :parents, through: :parent_relationships
+  has_many :ticket_transitions
 
+  before_save :update_transition_before
   before_create :set_sequential_no
+  after_save :update_transition_after
 
   validates_presence_of :title, :priority
   validate :max_one_tag_per_tag_group
@@ -29,6 +32,14 @@ class Ticket < ApplicationRecord
 
   def identifier
     "%s:%06x" % [project.shortname, sequential_id]
+  end
+
+  def sla_status
+    return :ok unless self.last_transition_at
+    sla = project.sla_for(self.status)
+    seconds = (Time.now - self.last_transition_at)
+
+    project.calculate_sla_status(self.status, seconds)
   end
 
   def needs_approval?
@@ -81,6 +92,7 @@ class Ticket < ApplicationRecord
   def set_sequential_no
     self.status = self.project.init_state
     self.sequential_id = (Ticket.maximum(:sequential_id) || 1) + 1
+    self.last_transition_at = Time.now
   end
 
   def send_notifications
@@ -110,6 +122,25 @@ class Ticket < ApplicationRecord
 
     used.each_key do |tag_group|
       errors.add(:tags, "must only have one tag in tag group #{tag_group}") if used[tag_group].count > 1
+    end
+  end
+
+  protected
+
+  def update_transition_before
+    if will_save_change_to_status?
+      self.last_transition_at = Time.now
+    end
+  end
+
+  def update_transition_after
+    unless self.previously_new_record? || !self.last_transition_at_before_last_save
+      if saved_change_to_status
+        TicketTransition.create!(ticket: self,
+                                 from: self.status_before_last_save,
+                                 to: self.status,
+                                 duration: Time.now - self.last_transition_at_before_last_save)
+      end
     end
   end
 end

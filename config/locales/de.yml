@@ -114,3 +114,4 @@ de:
       submit: "%{model} speichern"
       update: "%{model} speichern"
   logout: "Abmelden"
+  show_transitions: "Übergänge anzeigen"

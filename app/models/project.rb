@@ -8,6 +8,36 @@ class Project < ApplicationRecord
 
   validate :validate_workflow
 
+  def sla_for(status)
+    return unless workflow.present? || workflow["states"].present?
+    return unless workflow["states"][status]["sla"].present?
+    workflow["states"][status]["sla"]
+  end
+
+  def calculate_sla_status(status, duration_in_seconds)
+    sla = sla_for(status)
+    minutes = duration_in_seconds / 60
+
+    return :none unless sla.present? && sla.count > 0
+    if sla.count == 1
+      if minutes > sla[0].to_i
+        :warning
+      else
+        :ok
+      end
+    elsif sla.count > 1
+      if minutes > sla[1].to_i
+        :error
+      elsif minutes > sla[0].to_i
+        :warning
+      else
+        :ok
+      end
+    else
+      :none
+    end
+  end
+
   def init_state
     return unless workflow.present? || workflow["states"].present?
 

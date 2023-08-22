@@ -29,6 +29,7 @@
         <p>
           <%= status_label(ticket) %>
           <%= priority_label(ticket) %>
+          <%= sla_label(ticket.sla_status) %>
         </p>
 
         <p>
@@ -56,6 +57,7 @@
               <%= link_to t('unwatch'), unwatch_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
             <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
+            <%= link_to t('show_transitions'), transitions_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
           <% end %>
         </div>
         <p>

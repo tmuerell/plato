@@ -32,6 +32,11 @@
           <li class="nav-item">
             <%= link_to 'Backlog', backlog_tickets_path, class: 'nav-link' %>
           </li>
+          <% if current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to 'SLA Report', sla_report_path, class: 'nav-link' %>
+            </li>
+          <% end %>
         </ul>
         <div class="ms-auto d-flex">
           <% if current_user.admin? %>
@@ -60,7 +65,7 @@
           <% end %>
           <% if can?(:create, Ticket) %>
             <div class="pr-4">
-            <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
+              <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
             </div>
           <% end %>
           <%= link_to gravatar_icon(current_user, ['mx-2']), profile_url %>

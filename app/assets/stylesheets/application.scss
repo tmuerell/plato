@@ -51,6 +51,20 @@ footer {
   }
 }
 
+.sla-warning {
+  border-left: 3px solid orange;
+  .card-body {
+    background-color: #ffeecf;
+  }
+}
+
+.sla-error {
+  border-left: 3px solid red;
+  .card-body {
+    background-color: #fcd8d8;
+  }
+}
+
 
 p.login-links {
   font-size: 80%;
