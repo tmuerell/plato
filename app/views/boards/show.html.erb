@@ -15,7 +15,7 @@
       </div>
       <% for ti in @tickets.where(status: s) %>
         <div id="<%= dom_id ti %>"
-             class="card my-1<%= if ti.flagged?; " ticket-flag"; end %>"
+             class="card my-1<%= if ti.flagged?; " ticket-flag"; end %><%= " sla-#{ti.sla_status}"%>"
              draggable="true"
              data-action="dragstart->boards#dragstart dragend->boards#dragend"
              data-uri="<%= ticket_url(ti) %>"
