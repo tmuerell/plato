@@ -4,6 +4,8 @@ export default class extends Controller {
   static targets = [ "watchers", "linkedTickets" ]
 
   connect() {
+    this.watchersTarget.classList.add("folded");
+    this.linkedTicketsTarget.classList.add("folded");
   }
 
   toggleWatchers() {

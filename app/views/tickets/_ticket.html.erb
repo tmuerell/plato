@@ -108,7 +108,7 @@
         <% end %>
 
         <% if @ticket.watchers.any? %>
-          <div class="watchers foldable-list"
+          <div class="watchers foldable-list folded"
                data-controller="tickets"
                data-action="click->tickets#toggleWatchers"
                data-tickets-target="watchers">
@@ -125,7 +125,7 @@
         <% end %>
 
         <% if @ticket.child_relationships.any? || @ticket.parent_relationships.any? %>
-          <div class="linked-tickets foldable-list"
+          <div class="linked-tickets foldable-list folded"
                data-controller="tickets"
                data-action="click->tickets#toggleLinkedTickets"
                data-tickets-target="linkedTickets">

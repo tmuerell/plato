@@ -109,17 +109,16 @@ p.login-links {
 }
 
 .foldable-list {
-  h5 {
-    cursor: pointer;
-  }
   h5::after {
-    content: " -";
+    cursor: pointer;
+    content: "-";
+    margin-left: 0.1em;
   }
 }
 
 .foldable-list.folded {
   h5::after {
-    content: " +";
+    content: "+";
   }
   ul {
     display: none;
