@@ -1,4 +1,7 @@
-<div id="<%= dom_id ticket %>" data-ticket-identifier="<%= ticket.identifier %>">
+<div id="<%= dom_id ticket %>"
+     data-ticket-identifier="<%= ticket.identifier %>"
+     data-edit-action="<%= edit_ticket_path(@ticket) %>"
+>
   <div class="row">
     <div class="col-md-9">
       <div class="m-2">

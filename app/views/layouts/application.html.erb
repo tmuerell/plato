@@ -54,7 +54,7 @@
         </ul>
         <div class="ms-auto d-flex">
           <form class="navbar-nav me-auto mb-2 mb-lg-0 form-inline" action="<%= search_path %>" method="get">
-            <input class="form-control mr-sm-2" name="query" type="search" placeholder="<%= t('search') %>" aria-label="Search">
+            <input id="global-search-input" class="form-control mr-sm-2" name="query" type="search" placeholder="<%= t('search') %>" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><%= t('search') %></button>
           </form>
           <% if current_user.admin? %>
