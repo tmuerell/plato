@@ -60,7 +60,6 @@ class NotificationConfig < ApplicationRecord
   def validate_email_params
     errors.add(:email_recepient_to, "must be set for delivery_type 'email'") unless email_recepient_to.present?
     errors.add(:email_recepient_bcc, "must be set for delivery_type 'email'") unless email_recepient_bcc.present?
-    errors.add(:email_subject, "must be set for delivery_type 'email'") unless email_subject.present?
   end
 
   def validate_pager_duty_params
