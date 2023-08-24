@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def check_current_project
+    return unless current_user
     unless current_project || request.path =~ /^\/projects/
       redirect_to projects_path, notice: "You need to select a project first"
     end
