@@ -39,3 +39,4 @@
 deployment-*.yml
 .env
 /node_modules
+/Justfile

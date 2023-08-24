@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_project
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_paper_trail_whodunnit
+  before_action :check_current_project
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
@@ -26,6 +27,12 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def check_current_project
+    unless current_project || request.path =~ /^\/projects/
+      redirect_to projects_path, notice: "You need to select a project first"
+    end
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:firstname, :lastname])
