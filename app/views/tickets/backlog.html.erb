@@ -1,7 +1,7 @@
 <% for tag in current_project.board_tags %>
   <% tickets = Ticket.accessible_by(current_ability).with_tag(tag).where(status: [:new, :in_progress, :blocked]) %>
   <% if tickets.count > 0 %>
-    <h4 class="mt-3"><%= link_to "📋 #{tag.name}", board_path(tag) %></h4>
+    <h4 class="mt-3"><%= link_to_tag tag %></h4>
     <% tickets.each do |ticket| %>
       <%= render 'item', ticket: ticket %>
     <% end %>
@@ -11,7 +11,7 @@
 <% for tag in current_project.area_tags %>
   <% tickets = Ticket.accessible_by(current_ability).with_tag(tag) %>
   <% if tickets.count > 0 %>
-    <h4 class="mt-3"><%= link_to "📗 #{tag.name}", tag_path(tag) %></h4>
+    <h4 class="mt-3"><%= link_to_tag tag %></h4>
     <% tickets.each do |ticket| %>
       <%= render 'item', ticket: ticket %>
     <% end %>

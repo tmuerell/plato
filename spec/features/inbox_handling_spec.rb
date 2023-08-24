@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature "Inbox Handling", type: :feature do
   before :each do
-    @project = create(:project)
+    @project = create(:project, areas: true)
     @other_project = create(:project)
     @user1 = create(:user, roles: [ "Admin" ], current_project: @project)
     @customer_project = create(:customer_project, project: @project)
