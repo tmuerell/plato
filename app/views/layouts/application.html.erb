@@ -86,6 +86,30 @@
               <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
             </div>
           <% end %>
+          <% if can? :read, Project %>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <% if current_project %>
+                    <%= current_project.shortname %>
+                  <% else %>
+                    Products
+                  <% end %>
+                </a>
+                <ul class="dropdown-menu">
+                  <% for project in Project.accessible_by(current_ability).order('name') %>
+                    <li>
+                      <%= link_to "#{project.shortname} - #{project.name}",
+                                  select_project_path(project),
+                                  class: "dropdown-item",
+                                  'data-turbo-method' => :post
+                          %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+            </ul>
+          <% end %>
           <%= link_to gravatar_icon(current_user, ['mx-2']), profile_url %>
         </div>
       </div>
