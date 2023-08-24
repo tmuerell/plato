@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_153629) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_164132) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -73,7 +73,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_153629) do
     t.string "filter"
     t.string "email_recepient_to"
     t.string "email_recepient_bcc"
-    t.string "email_subject"
     t.string "pager_duty_service_key"
     t.string "zulip_url"
     t.string "zulip_username"
