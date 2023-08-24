@@ -97,3 +97,4 @@ gem 'mjml-rails'
 gem "aws-sdk-s3", require: false
 gem "gravtastic"
 gem 'rest-client'
+gem 'exception_notification'

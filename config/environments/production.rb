@@ -103,4 +103,13 @@ Rails.application.configure do
     enable_starttls: ENV.fetch('PLATO_SMTP_ENABLE_STARTTLS', false),
     enable_starttls_auto: ENV.fetch('PLATO_SMTP_ENABLE_STARTTLS_AUTO', true),
   }
+
+  config.middleware.use ExceptionNotification::Rack,
+                        :email => {
+                          :email_prefix => "[plato] ",
+                          :sender_address => ENV.fetch('PLATO_MAIL_SENDER') { "example@example.com" },
+                          :exception_recipients => ENV.fetch('PLATO_EXCEPTION_RECIPIENTS') { nil }
+                        }
+
+  config.action_mailer.default_url_options = { :host => ENV.fetch('PLATO_URL') { "plato.example.com" } }
 end
