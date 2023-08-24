@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_151830) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_153629) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -171,9 +171,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_151830) do
     t.integer "assignee_id"
     t.string "external_id"
     t.datetime "last_transition_at"
+    t.text "identifier", null: false
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
+    t.index ["identifier"], name: "index_tickets_on_identifier"
     t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 

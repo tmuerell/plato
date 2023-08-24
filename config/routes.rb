@@ -41,7 +41,9 @@ Rails.application.routes.draw do
 
   get 'dashboard/index', to: 'dashboard#index'
   get 'dashboard/profile', to: 'dashboard#profile', as: :profile
-  
+
+  get 'search', to: 'search#search', as: :search
+
   ### APIs
   get 'import/ticket/:ref', to: 'import#ticket'
   post 'import/ticket', to: 'import#ticket_update'
