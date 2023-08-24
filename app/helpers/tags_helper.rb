@@ -1,11 +1,15 @@
 module TagsHelper
   def render_tag(tag)
     content_tag(:span, class: 'badge rounded-pill bg-secondary') do
-      if tag.board?
-        link_to(emojified(tag), board_path(tag))
-      else
-        link_to(emojified(tag), tag)
-      end
+      link_to_tag(tag)
+    end
+  end
+
+  def link_to_tag(tag, html_options = nil, &block)
+    if tag.board?
+      link_to(emojified(tag), board_path(tag), html_options, &block)
+    else
+      link_to(emojified(tag), tag, html_options, &block)
     end
   end
 
