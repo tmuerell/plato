@@ -29,4 +29,8 @@ class Tag < ApplicationRecord
 
     project.severity_tags.map(&:name).include? self.name
   end
+
+  def value?
+    value_type.present?
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_164132) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_25_213422) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -110,6 +110,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_164132) do
     t.integer "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "value"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
     t.index ["user_id"], name: "index_taggings_on_user_id"
   end
@@ -122,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_164132) do
     t.datetime "updated_at", null: false
     t.datetime "archived_at"
     t.integer "tag_group_id"
+    t.string "value_type"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"
   end

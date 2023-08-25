@@ -106,6 +106,24 @@ class Ticket < ApplicationRecord
                  "%#{query}%".downcase)
   end
 
+  def set_value(tag, value)
+    t = Tagging.new
+    t.tag_id = tag.id
+    t.taggable_id = id
+    t.taggable_type = 'Ticket'
+    t.value = value
+    t.save
+  end
+
+  def value(tag)
+    Tagging.find_by(tag: tag, taggable_id: id, taggable_type: "Ticket")&.value
+  end
+
+  def values
+    Tagging.joins(:tag)
+           .where('taggings.taggable_type = ? AND taggings.taggable_id = ? AND tags.value_type IS NOT NULL', 'Ticket', 1)
+  end
+
   private
 
   def set_sequential_no

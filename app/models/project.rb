@@ -72,6 +72,10 @@ class Project < ApplicationRecord
        .where('tag_groups.name = ?', TagGroup::SEVERITY_NAME)
   end
 
+  def value_tags
+    Tag.where('tags.project_id = ? AND tags.value_type IS NOT NULL', id)
+  end
+
   protected
 
   def validate_workflow

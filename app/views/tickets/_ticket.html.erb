@@ -133,6 +133,15 @@
             </ul>
           </div>
         <% end %>
+
+        <p>
+          <strong>Values:</strong>
+        </p>
+        <ul>
+        <% for tagging in @ticket.values %>
+          <li><%= "#{tagging.tag.name}: #{tagging.value}" %></li>
+        <% end %>
+        </ul>
       </div>
     </div>
   </div>
