@@ -61,6 +61,11 @@ class Ticket < ApplicationRecord
     (state["transitions"] || []).map { |k, _| k }
   end
 
+  def end_state?(_user)
+    state = project.workflow["states"][self.status]
+    (state["transitions"] || []).empty?
+  end
+
   def approved?
     ticket_user_relationships.any? { |r| r.relationship == :approval }
   end
