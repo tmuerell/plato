@@ -6,6 +6,8 @@ import "bootstrap"
 import {HighlightJS} from "highlight.js"
 import Choices from "choices.js"
 
+import "keybindings"
+
 document.addEventListener('turbo:load', (event) => {
     const highlightedItems = document.querySelectorAll(".js-choice");
     highlightedItems.forEach(function (userItem) {

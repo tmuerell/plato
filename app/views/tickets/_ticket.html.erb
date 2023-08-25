@@ -1,4 +1,7 @@
-<div id="<%= dom_id ticket %>" data-ticket-identifier="<%= ticket.identifier %>">
+<div id="<%= dom_id ticket %>"
+     data-ticket-identifier="<%= ticket.identifier %>"
+     data-edit-action="<%= edit_ticket_path(@ticket) %>"
+>
   <div class="row">
     <div class="col-md-9">
       <div class="m-2">
@@ -105,7 +108,7 @@
         <% end %>
 
         <% if @ticket.watchers.any? %>
-          <div class="watchers foldable-list"
+          <div class="watchers foldable-list folded"
                data-controller="tickets"
                data-action="click->tickets#toggleWatchers"
                data-tickets-target="watchers">
@@ -122,7 +125,7 @@
         <% end %>
 
         <% if @ticket.child_relationships.any? || @ticket.parent_relationships.any? %>
-          <div class="linked-tickets foldable-list"
+          <div class="linked-tickets foldable-list folded"
                data-controller="tickets"
                data-action="click->tickets#toggleLinkedTickets"
                data-tickets-target="linkedTickets">
