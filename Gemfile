@@ -80,6 +80,16 @@ group :test do
   gem "webdrivers"
 end
 
+# Prometheus metrics
+gem 'yabeda-rails'
+gem 'yabeda-prometheus'
+gem 'yabeda-puma-plugin'
+
+# Opentelemetry
+gem 'opentelemetry-sdk'
+gem 'opentelemetry-exporter-otlp'
+gem 'opentelemetry-instrumentation-all'
+
 gem 'simple_form'
 gem 'bootstrap'
 gem 'enumerize'
