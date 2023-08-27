@@ -114,3 +114,6 @@ de:
       update: "%{model} speichern"
   logout: "Abmelden"
   show_transitions: "Übergänge anzeigen"
+  dashboard:
+    index:
+      my_tickets: "Meine Tickets"

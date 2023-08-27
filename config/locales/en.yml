@@ -60,3 +60,6 @@ en:
       subject: A ticket was assigned to you
   logout: "Log out"
   show_transitions: "Show transitions"
+  dashboard:
+    index:
+      my_tickets: "My tickets"

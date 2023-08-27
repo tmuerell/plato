@@ -30,20 +30,22 @@
             <li class="nav-item">
               <%= link_to 'Tickets', tickets_url, class: 'nav-link' %>
             </li>
-            <li class="nav-item">
-              <%= link_to 'Backlog', backlog_tickets_path, class: 'nav-link' %>
-            </li>
-            <% if current_project.board_tags.any? %>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Boards
-                </a>
-                <ul class="dropdown-menu">
-                  <% for board in current_project.board_tags %>
-                    <li><%= link_to board.name, board_path(board), class: "dropdown-item" %></li>
-                  <% end %>
-                </ul>
+            <% if project_role?(current_project, [:user]) %>
+              <li class="nav-item">
+                <%= link_to 'Backlog', backlog_tickets_path, class: 'nav-link' %>
               </li>
+              <% if current_project.board_tags.any? %>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Boards
+                  </a>
+                  <ul class="dropdown-menu">
+                    <% for board in current_project.board_tags %>
+                      <li><%= link_to board.name, board_path(board), class: "dropdown-item" %></li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %>
             <% end %>
             <% if current_user.admin? %>
               <li class="nav-item">
@@ -55,7 +57,7 @@
         <div class="ms-auto d-flex">
           <form class="navbar-nav me-auto mb-2 mb-lg-0 form-inline" action="<%= search_path %>" method="get">
             <input id="global-search-input" class="form-control mr-sm-2" name="query" type="search" placeholder="<%= t('search') %>" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><%= t('search') %></button>
+            <button class="btn btn-outline-success my-2 my-sm-0 d-none" type="submit"><%= t('search') %></button>
           </form>
           <% if current_user.admin? %>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -64,26 +66,32 @@
                   Admin
                 </a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to "Users", users_url, class: "dropdown-item" %></li>
                   <li><%= link_to "Notification Config", notification_configs_url, class: "dropdown-item" %></li>
+                  <li><%= link_to "Project roles", user_project_roles_path, class: "dropdown-item" %></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><%= link_to "Users", users_url, class: "dropdown-item" %></li>
                 </ul>
               </li>
             </ul>
           <% end %>
 
           <% if current_project.present? %>
-            <% if current_project.tickets.where(status: :new).count > 0 %>
-              <div class="pr-4">
-                <%= link_to inbox_tickets_url, class: 'btn btn-primary btn-sm' do %>
-                  Inbox
-                  <span class="badge bg-secondary"><%= current_project.tickets.where(status: :new).select(&:inbox?).count %></span>
-                <% end %>
-              </div>
+            <% if project_role?(current_project, [:user]) %>
+              <% if current_project.tickets.where(status: :new).count > 0 %>
+                <div class="pr-4 navbar-nav">
+                  <%= link_to inbox_tickets_url, class: 'btn btn-primary' do %>
+                    Inbox
+                    <span class="badge bg-secondary"><%= current_project.tickets.where(status: :new).select(&:inbox?).count %></span>
+                  <% end %>
+                </div>
+              <% end %>
             <% end %>
           <% end %>
           <% if can?(:create, Ticket) %>
-            <div class="pr-4">
-              <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-sm btn-outline-success' %>
+            <div class="pr-4 navbar-nav mx-2">
+              <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-outline-success' %>
             </div>
           <% end %>
           <% if can? :read, Project %>
@@ -103,14 +111,16 @@
                                   select_project_path(project),
                                   class: "dropdown-item",
                                   'data-turbo-method' => :post
-                          %>
+                      %>
                     </li>
                   <% end %>
                 </ul>
               </li>
             </ul>
           <% end %>
-          <%= link_to gravatar_icon(current_user, ['mx-2']), profile_url %>
+          <div class="navbar-nav">
+            <%= link_to gravatar_icon(current_user, ['mx-2']), profile_url, class: 'my-auto' %>
+          </div>
         </div>
       </div>
     </div>
