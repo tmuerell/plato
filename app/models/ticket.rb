@@ -24,7 +24,7 @@ class Ticket < ApplicationRecord
   after_save :update_transition_after
 
   validates_presence_of :title, :priority
-  validate :max_one_tag_per_tag_group
+  validate :correct_number_of_tags_per_tag_group
 
   enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
@@ -187,17 +187,23 @@ class Ticket < ApplicationRecord
     end
   end
 
-  def max_one_tag_per_tag_group
+  def correct_number_of_tags_per_tag_group
     used = {}
     tags.each do |tag|
       next unless tag.tag_group.present?
 
-      used[tag.tag_group.name] = [] unless used.key? tag.tag_group.name
-      used[tag.tag_group.name] << tag.name
+      used[tag.tag_group] = [] unless used.key? tag.tag_group.name
+      used[tag.tag_group] << tag.name
     end
 
     used.each_key do |tag_group|
-      errors.add(:tags, "must only have one tag in tag group #{tag_group}") if used[tag_group].count > 1
+      if tag_group.min_count.present? && used[tag_group].count < tag_group.min_count
+        errors.add(:tags, "must at least have #{tag_group.min_count} tag(s) in tag group #{tag_group.name}")
+      end
+
+      if tag_group.max_count.present? && used[tag_group].count > tag_group.max_count
+        errors.add(:tags, "must at most have #{tag_group.max_count} tag(s) in tag group #{tag_group.name}")
+      end
     end
   end
 
