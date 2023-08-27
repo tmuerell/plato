@@ -114,3 +114,9 @@ de:
       update: "%{model} speichern"
   logout: "Abmelden"
   show_transitions: "Übergänge anzeigen"
+  dashboard:
+    index:
+      my_tickets: "Meine Tickets"
+  projects:
+    index:
+      no_projects: "Sie haben keine Berechtigungen auf Projekte. Bitte lassen Sie sich entsprechende Rechte zuweisen."

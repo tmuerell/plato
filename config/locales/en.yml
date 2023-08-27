@@ -60,3 +60,9 @@ en:
       subject: A ticket was assigned to you
   logout: "Log out"
   show_transitions: "Show transitions"
+  dashboard:
+    index:
+      my_tickets: "My tickets"
+  projects:
+    index:
+      no_projects: "You don't have access to a project. Please have some access granted first."

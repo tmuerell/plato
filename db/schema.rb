@@ -120,8 +120,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_164132) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "tag_group_id"
     t.datetime "archived_at"
+    t.integer "tag_group_id"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"
   end
@@ -175,7 +175,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_164132) do
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
     t.index ["identifier"], name: "index_tickets_on_identifier"
-    t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
   create_table "user_project_roles", force: :cascade do |t|
