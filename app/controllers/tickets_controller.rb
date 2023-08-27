@@ -13,7 +13,7 @@ class TicketsController < ApplicationController
     if current_project
       @tickets = @tickets.where(project: current_project)
     end
-    @tickets = @tickets.where(status: :new).select(&:inbox?)
+    @tickets = @tickets.where(status: current_project.init_state).select(&:inbox?)
     @boards = current_project.board_tags
     @areas = current_project.area_tags
   end
