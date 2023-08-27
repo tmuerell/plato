@@ -17,7 +17,7 @@
   <% @tickets.each do |ticket| %>
     <tr>
       <td>
-        <%= link_to ticket.identifier, ticket %>
+        <%= linked_ticket_identifier ticket %>
         <%= if ticket.flagged?; "🚩"; end %>
       </td>
       <td><%= ticket.title %></td>

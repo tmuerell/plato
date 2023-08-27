@@ -31,7 +31,7 @@
   <% @tickets.each do |ticket| %>
     <tr>
       <td>
-        <%= link_to ticket.identifier, ticket %>
+        <%= linked_ticket_identifier ticket %>
         <%= if ticket.flagged?; "🚩"; end %>
       </td>
       <td><%= ticket.title %></td>
@@ -41,7 +41,7 @@
         <% for tag in ticket.tags %>
           <span class="badge rounded-pill bg-secondary">
           <% if tag.board? %>
-            📋 
+            📋
             <%= link_to tag.name, board_path(tag) %>
           <% elsif tag.area? %>
             📗

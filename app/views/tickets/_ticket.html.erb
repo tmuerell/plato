@@ -1,18 +1,11 @@
 <div id="<%= dom_id ticket %>"
-     data-ticket-identifier="<%= ticket.identifier %>"
      data-edit-action="<%= edit_ticket_path(@ticket) %>"
 >
   <div class="row">
     <div class="col-md-9">
       <div class="m-2">
         <span class="fs-6 text-muted">
-          <%= ticket.identifier %>
-          <%= content_tag :span,
-                          '📋',
-                          title: 'Copy to clipboard',
-                          class: 'copy-to-clipboard',
-                          data: { controller: 'tickets',
-                                  action: 'click->tickets#copyToClipboard' }  %>
+          <%= linked_ticket_identifier ticket %>
         </span>
         <h4><%= ticket.title %></h4>
 
