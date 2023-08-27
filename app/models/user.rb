@@ -34,6 +34,10 @@ class User < ApplicationRecord
   serialize :roles, JSON
   gravtastic
 
+  def to_s
+    name
+  end
+
   def name
     if firstname.present? || lastname.present?
       "#{firstname} #{lastname}"

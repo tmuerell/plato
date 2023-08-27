@@ -116,7 +116,20 @@ class Ticket < ApplicationRecord
   end
 
   def value(tag)
-    Tagging.find_by(tag: tag, taggable_id: id, taggable_type: "Ticket")&.value
+    tagging = Tagging.find_by(tag: tag, taggable_id: id, taggable_type: "Ticket")
+
+    return nil unless tagging.present?
+
+    case tagging.tag.value_type.to_sym
+    when :string
+      tagging.value
+    when :date
+      DateTime.parse tagging.value
+    when :user
+      User.find(tagging.value.to_i)
+    else
+      tagging.value
+    end
   end
 
   def values
