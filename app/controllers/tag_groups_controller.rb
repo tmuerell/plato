@@ -68,6 +68,6 @@ class TagGroupsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tag_group_params
-      params.require(:tag_group).permit(:name, :project_id)
+      params.require(:tag_group).permit(:name, :project_id, :min_count, :max_count)
     end
 end
