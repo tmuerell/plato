@@ -19,7 +19,7 @@
     <tr>
       <td><%= transition.from %></td>
       <td><%= transition.to %></td>
-      <td><%= transition.duration %></td>
+      <td><%= ActiveSupport::Duration.build(transition.duration).inspect %></td>
       <td><%= sla_label(ticket.project.calculate_sla_status(transition.from, transition.duration)) %></td>
     </tr>
   <% end %>
