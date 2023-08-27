@@ -77,12 +77,7 @@ class Ticket < ApplicationRecord
 
       approval_ok = approved? if data.key?("needs_approval") && data["needs_approval"]
 
-      required_values_ok = data["required_values"].all? do |required_value|
-        tag = Tag.find_by(project_id: project.id, name: required_value)
-        raise "InvalidRequiredValue('#{required_value}')" if tag.nil?
-
-        value(tag).present?
-      end
+      required_values_ok = data["required_values"].all? { |required_value| value(required_value).present? }
 
       if approval_ok && required_values_ok
         transitions << next_state
@@ -137,7 +132,10 @@ class Ticket < ApplicationRecord
                  "%#{query}%".downcase)
   end
 
-  def set_value(tag, value)
+  def set_value(name, value)
+    tag = Tag.find_by(project_id: project.id, name: name)
+    raise "InvalidRequiredValue('#{name}')" if tag.nil?
+
     t = Tagging.new
     t.tag_id = tag.id
     t.taggable_id = id
@@ -146,7 +144,10 @@ class Ticket < ApplicationRecord
     t.save
   end
 
-  def value(tag)
+  def value(name)
+    tag = Tag.find_by(project_id: project.id, name: name)
+    raise "InvalidRequiredValue('#{name}')" if tag.nil?
+
     tagging = Tagging.find_by(tag: tag, taggable_id: id, taggable_type: "Ticket")
 
     return nil unless tagging.present?
@@ -165,7 +166,7 @@ class Ticket < ApplicationRecord
 
   def values
     Tagging.joins(:tag)
-           .where('taggings.taggable_type = ? AND taggings.taggable_id = ? AND tags.value_type IS NOT NULL', 'Ticket', 1)
+           .where('taggings.taggable_type = ? AND taggings.taggable_id = ? AND tags.value_type IS NOT NULL AND tags.project_id = ?', 'Ticket', id, project.id)
   end
 
   private

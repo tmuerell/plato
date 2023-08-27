@@ -141,7 +141,7 @@
             <dl>
             <% for tagging in @ticket.values %>
               <dt><%= tagging.tag.name %></dt>
-              <dd><%= @ticket.value tagging.tag %></dt>
+              <dd><%= @ticket.value tagging.tag.name %></dt>
             <% end %>
             </dl>
           </div>
