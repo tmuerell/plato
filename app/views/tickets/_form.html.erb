@@ -7,7 +7,7 @@
     <%= f.input :title, as: :string %>
     <%= f.input :content, input_html: { rows: 10 } %>
     <%= f.input :priority %>
-    <%= f.association :tags, input_html: { class: 'js-choice' } %>
+    <%= f.association :tags, collection: Tag.where(project: current_project), input_html: { class: 'js-choice' } %>
     <%= f.association :customer_project, input_html: { class: 'js-choice' } %>
   </div>
 
