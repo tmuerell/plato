@@ -33,6 +33,18 @@ module TicketsHelper
     end
   end
 
+  def linked_ticket_identifier(ticket)
+    content_tag :span, ticket.identifier, 'data-ticket-identifier': ticket.identifier do
+      link_to(ticket.identifier, ticket) +
+        content_tag(:span,
+                    '📋',
+                    title: 'Copy to clipboard',
+                    class: 'copy-to-clipboard',
+                    data: { controller: 'tickets',
+                            action: 'click->tickets#copyToClipboard' })
+    end
+  end
+
   def handle_notifications(ticket, action)
     EmailSender.handle_ticket_watcher_notifications(ticket, action)
 
