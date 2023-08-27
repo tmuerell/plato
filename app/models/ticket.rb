@@ -58,7 +58,32 @@ class Ticket < ApplicationRecord
 
   def valid_transitions(_user)
     state = project.workflow["states"][self.status]
-    (state["transitions"] || []).map { |k, _| k }
+    transitions = []
+
+    state.fetch("transitions", []).each do |next_state, data|
+      puts next_state
+      puts data
+      unless data.present?
+        transitions << next_state
+        next
+      end
+
+      unless data.key?("required_values")
+        transitions << next_state
+        next
+      end
+
+      if data["required_values"].all? do |required_value|
+           tag = Tag.find_by(project_id: project.id, name: required_value)
+           raise "InvalidRequiredValue('#{required_value}')" if tag.nil?
+
+           value(tag).present?
+         end
+        transitions << next_state
+      end
+    end
+
+    transitions
   end
 
   def end_state?(_user)
