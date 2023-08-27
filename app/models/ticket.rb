@@ -68,17 +68,23 @@ class Ticket < ApplicationRecord
         next
       end
 
-      unless data.key?("required_values")
+      unless data.key?("required_values") || data.key?("needs_approval")
         transitions << next_state
         next
       end
 
-      if data["required_values"].all? do |required_value|
-           tag = Tag.find_by(project_id: project.id, name: required_value)
-           raise "InvalidRequiredValue('#{required_value}')" if tag.nil?
+      approval_ok = true
 
-           value(tag).present?
-         end
+      approval_ok = approved? if data.key?("needs_approval") && data["needs_approval"]
+
+      required_values_ok = data["required_values"].all? do |required_value|
+        tag = Tag.find_by(project_id: project.id, name: required_value)
+        raise "InvalidRequiredValue('#{required_value}')" if tag.nil?
+
+        value(tag).present?
+      end
+
+      if approval_ok && required_values_ok
         transitions << next_state
       end
     end
