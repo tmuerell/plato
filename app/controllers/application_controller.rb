@@ -30,9 +30,10 @@ class ApplicationController < ActionController::Base
 
   def check_current_project
     return unless current_user
-    unless current_project || request.path =~ /^\/projects/
-      redirect_to projects_path, notice: "You need to select a project first"
-    end
+
+    return if current_project || is_a?(ProjectsController) || devise_controller?
+
+    redirect_to projects_path, notice: "You need to select a project first"
   end
 
   def configure_permitted_parameters

@@ -2,6 +2,11 @@
 
 <div class="container">
   <div class="row">
+    <% if @projects.count == 0 %>
+      <div class="col-6">
+        <%= t '.no_projects' %>
+      </div>
+    <% end %>
     <% @projects.each do |project| %>
       <div class="col-sm-6 p-3">
         <div class="card">

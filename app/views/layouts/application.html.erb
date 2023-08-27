@@ -88,11 +88,11 @@
                 </div>
               <% end %>
             <% end %>
-          <% end %>
-          <% if can?(:create, Ticket) %>
-            <div class="pr-4 navbar-nav mx-2">
-              <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-outline-success' %>
-            </div>
+            <% if project_role?(current_project, [:reporter, :user]) %>
+              <div class="pr-4 navbar-nav mx-2">
+                <%= link_to t('create_ticket'), new_ticket_url, class: 'btn btn-outline-success' %>
+              </div>
+            <% end %>
           <% end %>
           <% if can? :read, Project %>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
