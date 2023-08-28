@@ -95,7 +95,7 @@ class Ticket < ApplicationRecord
 
   def inbox?
     !Ticket.joins(tags: :tag_group)
-           .where('tickets.id = ? AND tag_groups.name in (?)',
+           .where('tickets.id = ? AND tickets.project_id = tag_groups.project_id AND tag_groups.name in (?)',
                   id,
                   [TagGroup::AREA_NAME, TagGroup::BOARD_NAME])
            .exists?

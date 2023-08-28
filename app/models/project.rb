@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :customer_projects
   has_many :tags
   has_many :tickets
+  has_many :tag_groups
 
   serialize :workflow, JSON
 
@@ -58,28 +59,44 @@ class Project < ApplicationRecord
     workflow["states"].keys
   end
 
+  # def approvals?
+  #   TagGroup.find_by(project_id: id, name: TagGroup::APPROVAL_NAME).exists?
+  # end
+
   def approval_tags
     Tag.where(project_id: id)
        .joins(:tag_group)
-       .where('tag_groups.name = ?', TagGroup::APPROVAL_NAME)
+       .where('tag_groups.project_id = ? AND tag_groups.name = ?', id, TagGroup::APPROVAL_NAME)
   end
+
+  # def areas?
+  #   TagGroup.find_by(project_id: id, name: TagGroup::AREA_NAME).exists?
+  # end
 
   def area_tags
     Tag.where(project_id: id)
        .joins(:tag_group)
-       .where('tag_groups.name = ?', TagGroup::AREA_NAME)
+       .where('tag_groups.project_id = ? AND tag_groups.name = ?', id, TagGroup::AREA_NAME)
   end
+
+  # def boards?
+  #   TagGroup.find_by(project_id: id, name: TagGroup::BOARD_NAME).exists?
+  # end
 
   def board_tags
     Tag.where(project_id: id)
        .joins(:tag_group)
-       .where('tag_groups.name = ?', TagGroup::BOARD_NAME)
+       .where('tag_groups.project_id = ? AND tag_groups.name = ?', id, TagGroup::BOARD_NAME)
   end
+
+  # def severities?
+  #   TagGroup.find_by(project_id: id, name: TagGroup::SEVERITY_NAME).exists?
+  # end
 
   def severity_tags
     Tag.where(project_id: id)
        .joins(:tag_group)
-       .where('tag_groups.name = ?', TagGroup::SEVERITY_NAME)
+       .where('tag_groups.project_id = ? AND tag_groups.name = ?', id, TagGroup::SEVERITY_NAME)
   end
 
   def value_tags

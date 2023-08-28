@@ -1,5 +1,6 @@
 class TagGroup < ApplicationRecord
   has_many :tags
+  belongs_to :project
 
   APPROVAL_NAME = 'Approval'.freeze
   APPROVAL_DEFAULT_TAG_NAMES = %w[NeedsApproval].freeze

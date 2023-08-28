@@ -20,12 +20,12 @@ class ImportController < ApplicationController
   def tag
     authorize! :import, Ticket
 
-    @@board_tag_group ||= TagGroup.find_by!(name: TagGroup::BOARD_NAME)
-    @@area_tag_group ||= TagGroup.find_by!(name: TagGroup::BOARD_NAME)
+    board_tag_group ||= TagGroup.find_by!(project_id: params[:project_id], name: TagGroup::BOARD_NAME)
+    area_tag_group ||= TagGroup.find_by!(project_id: params[:project_id], name: TagGroup::BOARD_NAME)
 
     t = Tag.find_or_create_by(name: params[:name], project_id: params[:project_id]) do |tag|
-      tag.tag_group = @@board_tag_group if params[:is_board]
-      tag.tag_group = @@area_tag_group if params[:is_area]
+      tag.tag_group = board_tag_group if params[:is_board]
+      tag.tag_group = area_tag_group if params[:is_area]
     end
     respond_with(t)
   end
