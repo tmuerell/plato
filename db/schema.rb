@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_25_213422) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_28_175351) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -111,8 +111,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_213422) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "value"
+    t.decimal "number_value"
+    t.date "date_value"
+    t.integer "user_value_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
     t.index ["user_id"], name: "index_taggings_on_user_id"
+    t.index ["user_value_id"], name: "index_taggings_on_user_value_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -121,8 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_213422) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "archived_at"
     t.integer "tag_group_id"
+    t.datetime "archived_at"
     t.string "value_type"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"
@@ -177,6 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_213422) do
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
     t.index ["identifier"], name: "index_tickets_on_identifier"
+    t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
   create_table "user_project_roles", force: :cascade do |t|
@@ -232,6 +237,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_25_213422) do
   add_foreign_key "notification_configs", "projects"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users"
+  add_foreign_key "taggings", "users", column: "user_value_id"
   add_foreign_key "tags", "projects"
   add_foreign_key "ticket_ticket_relationships", "tickets", column: "child_id"
   add_foreign_key "ticket_ticket_relationships", "tickets", column: "parent_id"

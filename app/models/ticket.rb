@@ -149,9 +149,9 @@ class Ticket < ApplicationRecord
     when :string
       tagging.value
     when :date
-      DateTime.parse tagging.value
+      tagging.date_value
     when :user
-      User.find(tagging.value.to_i)
+      tagging.user_value
     else
       tagging.value
     end
