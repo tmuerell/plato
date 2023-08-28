@@ -7,6 +7,20 @@ export default class extends Controller {
   connect() {
   }
 
+  clickCard(e) {
+    let clickedCard = e.target.closest(".card");
+    console.log(clickedCard);
+    if (clickedCard.classList.contains("selected")) {
+      return;
+    }
+
+    document.querySelectorAll(".kanban-col .selected").forEach(card => {
+      card.classList.remove("selected");
+    });
+
+    clickedCard.classList.add("selected");
+  }
+
   dragstart(e) {
     e.dataTransfer.dropEffect = "move";
     e.dataTransfer.setData("text/plain", e.target.id);

@@ -9,7 +9,9 @@
 <% end %>
 
 <% @tickets.each do |ticket| %>
-  <div class="card">
+  <div class="card selectable"
+       data-uri="<%= ticket_url(ticket) %>"
+  >
     <div class="card-body">
       <div class="row">
         <div class="col-md-9">

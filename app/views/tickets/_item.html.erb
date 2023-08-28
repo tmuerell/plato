@@ -1,6 +1,8 @@
 <div class="row border-bottom<%= if ticket.flagged?;
                                    " ticket-flag";
-                                 end %>">
+                                 end %> selectable"
+     data-uri="<%= ticket_url(ticket) %>"
+>
   <div class="col-1">
     <%= linked_ticket_identifier ticket %>
   </div>

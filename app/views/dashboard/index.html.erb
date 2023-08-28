@@ -54,7 +54,9 @@
         </thead>
         <tbody>
         <% for ticket in current_project.tickets.where(creator: current_user) %>
-          <tr>
+          <tr class="selectable"
+              data-uri="<%= ticket_url(ticket) %>"
+          >
             <td><%= link_to ticket.identifier, ticket %></td>
             <td><%= status_label(ticket) %></td>
           </tr>
