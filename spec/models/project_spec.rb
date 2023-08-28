@@ -56,4 +56,26 @@ RSpec.describe Project, type: :model do
 
     expect(project).to be_invalid
   end
+
+  it "correctly determines the end states" do
+    project = build(:project, workflow: {
+      states: {
+        "new": {
+          initial: true,
+          transitions: {
+            "in_progress": {}
+          }
+        },
+        "in_progress": {
+          transitions: {
+            "done": {}
+          }
+        },
+        "done": {}
+      }
+    })
+
+    expect(project.end_states).to eq(["done"])
+  end
+
 end

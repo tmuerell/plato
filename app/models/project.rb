@@ -44,6 +44,16 @@ class Project < ApplicationRecord
     workflow["states"].each { |_k, v| v["initial_state"].present? && v["initital_state"] }.first[0]
   end
 
+  def end_states
+    return [] unless workflow.present? || workflow["states"].present?
+
+    workflow["states"].filter_map do |k, v|
+      if v["transitions"].nil? || v["transitions"].empty?
+        k
+      end
+    end
+  end
+
   def states
     workflow["states"].keys
   end

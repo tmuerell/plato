@@ -61,8 +61,6 @@ class Ticket < ApplicationRecord
     transitions = []
 
     state.fetch("transitions", []).each do |next_state, data|
-      puts next_state
-      puts data
       unless data.present?
         transitions << next_state
         next
@@ -85,11 +83,6 @@ class Ticket < ApplicationRecord
     end
 
     transitions
-  end
-
-  def end_state?(_user)
-    state = project.workflow["states"][self.status]
-    (state["transitions"] || []).empty?
   end
 
   def approved?
