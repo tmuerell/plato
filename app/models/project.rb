@@ -59,9 +59,9 @@ class Project < ApplicationRecord
     workflow["states"].keys
   end
 
-  # def approvals?
-  #   TagGroup.find_by(project_id: id, name: TagGroup::APPROVAL_NAME).exists?
-  # end
+  def approvals?
+    TagGroup.find_by(project_id: id, name: TagGroup::APPROVAL_NAME)
+  end
 
   def approval_tags
     Tag.where(project_id: id)
