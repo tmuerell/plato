@@ -59,6 +59,34 @@ class Project < ApplicationRecord
     workflow["states"].keys
   end
 
+  def required_values_for_transition(status, next_status=nil)
+    state = workflow["states"][status]
+
+    return state["required_values"] || nil if next_status.nil?
+
+    transitions = state.fetch("transitions", {})
+    data = transitions[next_status]
+
+    return [] unless data.present?
+
+    return [] unless data.key?("required_values")
+
+    return data["required_values"]
+  end
+
+  def needs_approval_for_transition?(status, next_status=nil)
+    return false if next_status.nil?
+
+    state = workflow["states"][status]
+
+    transitions = state.fetch("transitions", {})
+    data = transitions[next_status]
+
+    return false unless data.present?
+
+    return data["needs_approval"] || false
+  end
+
   def approvals?
     TagGroup.find_by(project_id: id, name: TagGroup::APPROVAL_NAME)
   end
