@@ -9,7 +9,9 @@
 <% end %>
 
 <% @tickets.each do |ticket| %>
-  <div class="card">
+  <div class="card selectable"
+       data-uri="<%= ticket_url(ticket) %>"
+  >
     <div class="card-body">
       <div class="row">
         <div class="col-md-9">
@@ -19,10 +21,10 @@
         </div>
         <div class="col-md-3">
           <% @areas.each do |area| %>
-            <%= link_to emojified(area), tag_ticket_path(ticket, tag_id: area.id), 'data-turbo-method' => :post %><br/>
+            ➡️ <%= link_to emojified(area), tag_ticket_path(ticket, tag_id: area.id), 'data-turbo-method' => :post %><br/>
           <% end %>
           <% @boards.each do |board| %>
-            <%= link_to emojified(board), tag_ticket_path(ticket, tag_id: board.id), 'data-turbo-method' => :post %><br/>
+            ➡️ <%= link_to emojified(board), tag_ticket_path(ticket, tag_id: board.id), 'data-turbo-method' => :post %><br/>
           <% end %>
         </div>
       </div>

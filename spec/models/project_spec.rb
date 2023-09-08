@@ -56,4 +56,84 @@ RSpec.describe Project, type: :model do
 
     expect(project).to be_invalid
   end
+
+  it "correctly determines the end states" do
+    project = build(:project, workflow: {
+      states: {
+        "new": {
+          initial: true,
+          transitions: {
+            "in_progress": {}
+          }
+        },
+        "in_progress": {
+          transitions: {
+            "done": {}
+          }
+        },
+        "done": {}
+      }
+    })
+
+    expect(project.end_states).to eq(["done"])
+  end
+
+  it "correctly determines the required values" do
+    project = build(:project, workflow: {
+      states: {
+        "new": {
+          initial: true,
+          required_values: [
+            "foo"
+          ],
+          transitions: {
+            "in_progress": {
+              "required_values": [
+                "bar"
+              ]
+            }
+          }
+        },
+        "in_progress": {
+          transitions: {
+            "done": {}
+          }
+        },
+        "done": {}
+      }
+    })
+
+    expect(project.required_values_for_transition("new")).to eq(["foo"])
+    expect(project.required_values_for_transition("new", "in_progress")).to eq(["bar"])
+  end
+
+  it "correctly determines if approval is needed for transition" do
+    project = build(:project, workflow: {
+      states: {
+        "new": {
+          initial: true,
+          required_values: [
+            "foo"
+          ],
+          transitions: {
+            "in_progress": {
+              "required_values": [
+                "bar"
+              ],
+              "needs_approval": true
+            }
+          }
+        },
+        "in_progress": {
+          transitions: {
+            "done": {}
+          }
+        },
+        "done": {}
+      }
+    })
+
+    expect(project.needs_approval_for_transition?("new")).to eq(false)
+    expect(project.needs_approval_for_transition?("new", "in_progress")).to eq(true)
+  end
 end

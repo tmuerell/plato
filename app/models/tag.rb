@@ -7,26 +7,22 @@ class Tag < ApplicationRecord
   scope :archived, -> { unscope(where: 'archived_at').where.not(archived_at: nil) }
 
   def approval?
-    return false unless project.approvals?
-
-    project.approval_tags.map(&:name).include? self.name
+    project.approval_tags.map(&:id).include? self.id
   end
 
   def area?
-    return false unless project.areas?
-
-    project.area_tags.map(&:name).include? self.name
+    project.area_tags.map(&:id).include? self.id
   end
 
   def board?
-    return false unless project.boards?
-
-    project.board_tags.map(&:name).include? self.name
+    project.board_tags.map(&:id).include? self.id
   end
 
   def severity?
-    return false unless project.severities?
+    project.severity_tags.map(&:id).include? self.id
+  end
 
-    project.severity_tags.map(&:name).include? self.name
+  def value?
+    value_type.present?
   end
 end

@@ -140,8 +140,8 @@
 <footer class="footer mt-auto py-3 bg-body-tertiary">
   <div class="container-fluid">
     Logged in as: <%= current_user.firstname %> <%= current_user.lastname %> <%= link_to t('logout'), destroy_user_session_path, 'data-turbo-method' => :delete %> |
-    <%= link_to "Projects", projects_url %>
     <%= link_to "Tags", tags_url %>
+    <%= link_to "Tag Groups", tag_groups_url %>
     <%= link_to "Customer Projects", customer_projects_url %>
     |
     Current project:

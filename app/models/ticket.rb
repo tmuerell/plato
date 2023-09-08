@@ -24,7 +24,7 @@ class Ticket < ApplicationRecord
   after_save :update_transition_after
 
   validates_presence_of :title, :priority
-  validate :max_one_tag_per_tag_group
+  validate :correct_number_of_tags_per_tag_group
 
   enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
@@ -58,12 +58,31 @@ class Ticket < ApplicationRecord
 
   def valid_transitions(_user)
     state = project.workflow["states"][self.status]
-    (state["transitions"] || []).map { |k, _| k }
-  end
+    transitions = []
 
-  def end_state?(_user)
-    state = project.workflow["states"][self.status]
-    (state["transitions"] || []).empty?
+    state.fetch("transitions", []).each do |next_state, data|
+      unless data.present?
+        transitions << next_state
+        next
+      end
+
+      unless data.key?("required_values") || data.key?("needs_approval")
+        transitions << next_state
+        next
+      end
+
+      approval_ok = true
+
+      approval_ok = approved? if data.key?("needs_approval") && data["needs_approval"]
+
+      required_values_ok = data["required_values"].all? { |required_value| value(required_value).present? }
+
+      if approval_ok && required_values_ok
+        transitions << next_state
+      end
+    end
+
+    transitions
   end
 
   def approved?
@@ -76,7 +95,7 @@ class Ticket < ApplicationRecord
 
   def inbox?
     !Ticket.joins(tags: :tag_group)
-           .where('tickets.id = ? AND tag_groups.name in (?)',
+           .where('tickets.id = ? AND tickets.project_id = tag_groups.project_id AND tag_groups.name in (?)',
                   id,
                   [TagGroup::AREA_NAME, TagGroup::BOARD_NAME])
            .exists?
@@ -106,6 +125,43 @@ class Ticket < ApplicationRecord
                  "%#{query}%".downcase)
   end
 
+  def set_value(name, value)
+    tag = Tag.find_by(project_id: project.id, name: name)
+    raise "InvalidRequiredValue('#{name}')" if tag.nil?
+
+    t = Tagging.new
+    t.tag_id = tag.id
+    t.taggable_id = id
+    t.taggable_type = 'Ticket'
+    t.value = value
+    t.save
+  end
+
+  def value(name)
+    tag = Tag.find_by(project_id: project.id, name: name)
+    raise "InvalidRequiredValue('#{name}')" if tag.nil?
+
+    tagging = Tagging.find_by(tag: tag, taggable_id: id, taggable_type: "Ticket")
+
+    return nil unless tagging.present?
+
+    case tagging.tag.value_type.to_sym
+    when :string
+      tagging.value
+    when :date
+      tagging.date_value
+    when :user
+      tagging.user_value
+    else
+      tagging.value
+    end
+  end
+
+  def values
+    Tagging.joins(:tag)
+           .where('taggings.taggable_type = ? AND taggings.taggable_id = ? AND tags.value_type IS NOT NULL AND tags.project_id = ?', 'Ticket', id, project.id)
+  end
+
   private
 
   def set_sequential_no
@@ -131,17 +187,27 @@ class Ticket < ApplicationRecord
     end
   end
 
-  def max_one_tag_per_tag_group
+  def correct_number_of_tags_per_tag_group
     used = {}
     tags.each do |tag|
       next unless tag.tag_group.present?
 
-      used[tag.tag_group.name] = [] unless used.key? tag.tag_group.name
-      used[tag.tag_group.name] << tag.name
+      used[tag.tag_group] = [] unless used.key? tag.tag_group.name
+      used[tag.tag_group] << tag.name
+    end
+
+    TagGroup.where(project_id: project_id).each do |tag_group|
+      used[tag_group] = [] unless used.key? tag_group
     end
 
     used.each_key do |tag_group|
-      errors.add(:tags, "must only have one tag in tag group #{tag_group}") if used[tag_group].count > 1
+      if tag_group.min_count.present? && used[tag_group].count < tag_group.min_count
+        errors.add(:tags, "must at least have #{tag_group.min_count} tag(s) in tag group #{tag_group.name}")
+      end
+
+      if tag_group.max_count.present? && used[tag_group].count > tag_group.max_count
+        errors.add(:tags, "must at most have #{tag_group.max_count} tag(s) in tag group #{tag_group.name}")
+      end
     end
   end
 

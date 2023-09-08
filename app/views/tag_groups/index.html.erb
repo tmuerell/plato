@@ -1,21 +1,21 @@
 <h3>Tag Groups</h3>
 
-<table>
+<table class="table table-striped table-sm">
   <thead>
   <tr>
-          <th>Name</th>
-        <th colspan="3"></th>
+    <th>Name</th>
+    <th colspan="3"></th>
   </tr>
   </thead>
 
   <tbody>
   <% @tag_groups.each do |tag_group| %>
-  <tr>
-          <td><%= tag_group.name %></td>
-        <td><%= link_to 'Show', tag_group %></td>
-    <td><%= link_to 'Edit', edit_tag_group_path(tag_group) %></td>
-    <td><%= link_to 'Destroy', tag_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <tr>
+      <td><%= tag_group.name %></td>
+      <td><%= link_to 'Show', tag_group %></td>
+      <td><%= link_to 'Edit', edit_tag_group_path(tag_group) %></td>
+      <td><%= link_to 'Destroy', tag_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
   <% end %>
   </tbody>
 </table>

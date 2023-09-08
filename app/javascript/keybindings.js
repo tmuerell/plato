@@ -3,6 +3,11 @@ import "mousetrap"
 const staticKeybindings = {
   "/": (e) => { document.getElementById('global-search-input').focus(); e.preventDefault(); },
   "e": handleEditAction,
+  'j': handleNextSelectable,
+  'down': handleNextSelectable,
+  'k': handlePreviousSelectable,
+  'up': handlePreviousSelectable,
+  'enter': handleEnter,
   'n t': () => window.location.replace('/tickets/new'),
   'g d': () => window.location.replace('/'),
   'g i': () => window.location.replace('/tickets/inbox'),
@@ -70,5 +75,51 @@ function handleEditAction() {
   let elements = document.querySelectorAll("[data-edit-action");
   if (elements.length == 1) {
     window.location.replace(elements[0].dataset["editAction"]);
+  }
+}
+
+function handleNextSelectable() {
+  var element = document.querySelector(".selectable.selected");
+
+  if (element === null) {
+    element = document.querySelector(".selectable");
+    element.classList.toggle("selected");
+    return;
+  }
+
+  let selectables = Array.from(document.querySelectorAll(".selectable"));
+  let nextIndex = (selectables.indexOf(element) + 1) % selectables.length;
+  let next = selectables[nextIndex]
+  element.classList.toggle("selected");
+  next.classList.toggle("selected");
+}
+
+function handlePreviousSelectable() {
+  var element = document.querySelector(".selectable.selected");
+  if (element === null) {
+    return null;
+  }
+
+  let selectables = Array.from(document.querySelectorAll(".selectable"));
+
+  let index = selectables.indexOf(element);
+  let nextIndex = index == 0 ? selectables.length -1 : (index - 1) % selectables.length;
+
+  let next = selectables[nextIndex]
+  element.classList.toggle("selected");
+  next.classList.toggle("selected");
+}
+
+function handleEnter() {
+  var element = document.querySelector(".selectable.selected");
+
+  if (element === null) {
+    return;
+  }
+
+  var url = element.dataset["uri"];
+
+  if (url !== undefined) {
+    window.location.replace(url);
   }
 }

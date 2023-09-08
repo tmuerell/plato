@@ -43,18 +43,6 @@
             <tr>
               <td><%= project.name %></td>
               <td><%= project.shortname %></td>
-              <td>
-                <% if project.approvals? %>✅
-                <% end %></td>
-              <td>
-                <% if project.areas? %>✅
-                <% end %></td>
-              <td>
-                <% if project.boards? %>✅
-                <% end %></td>
-              <td>
-                <% if project.severities? %>✅
-                <% end %></td>
               <td><%= link_to 'Make Active', select_project_path(project), 'data-turbo-method' => :post %></td>
               <td><%= link_to 'Show', project %></td>
               <td><%= link_to 'Edit', edit_project_path(project) %></td>

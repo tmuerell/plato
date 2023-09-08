@@ -133,6 +133,19 @@
             </ul>
           </div>
         <% end %>
+
+        <% if @ticket.values.any? %>
+          <div class="foldable"
+          >
+            <h5>Values</h5>
+            <dl>
+            <% for tagging in @ticket.values %>
+              <dt><%= tagging.tag.name %></dt>
+              <dd><%= @ticket.value tagging.tag.name %></dt>
+            <% end %>
+            </dl>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

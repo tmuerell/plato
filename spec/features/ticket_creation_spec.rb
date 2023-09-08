@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.feature "TicketCreations", type: :feature do
   before :each do
     @project = create(:project)
-    @user1 = create(:user, roles: [ "Admin" ], current_project: @project)
+    @user1 = create(:user, roles: [ "User" ], current_project: @project)
+    create(:user_project_role, user: @user1, project: @project, role: 'user')
     @customer_project = create(:customer_project)
   end
 
