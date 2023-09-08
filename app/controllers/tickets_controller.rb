@@ -52,6 +52,13 @@ class TicketsController < ApplicationController
     @ticket.creator = current_user
     @ticket.project = current_project
 
+    if params.key? :tags
+      for tag_id in params[:tags]
+        tag = Tag.find_by!(id: tag_id)
+        @ticket.tags << tag
+      end
+    end
+
     respond_to do |format|
       if @ticket.save
         format.html { redirect_to ticket_url(@ticket), notice: "Ticket was successfully created." }

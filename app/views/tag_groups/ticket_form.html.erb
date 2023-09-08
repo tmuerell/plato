@@ -1,8 +1,11 @@
 <%= turbo_frame_tag @tag_group do %>
-
-  <% @tag_group.tags.each do |tag| %>
-  <div class="from-group">
-    <input type="radio" name="tags[]" value="<%= @tag_group.id %>" id="tag_<%= tag.id %>" /> <label for="tag_<%= tag.id %>"><%= tag.name %></label>
+  <div class="form-group">
+    <label class="radio required"><%= @tag_group.name %></label>
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="display: block;">
+      <% @tag_group.tags.each do |tag| %>
+          <input type="radio" class="btn-check" name="tags[]" value="<%= tag.id %>" id="tag_<%= tag.id %>" />
+          <label class="btn btn-outline-primary" for="tag_<%= tag.id %>"><%= tag.name %></label>
+      <% end %>
+    </div>
   </div>
-  <% end %>
 <% end %>
