@@ -1,23 +1,26 @@
 <div class="row">
   <div class="col-3">&nbsp;</div>
   <div class="col-6">
-    <h3><%=t '.title' %></h3>
+    <h3><%= t '.title' %></h3>
 
     <%= simple_form_for(@ticket) do |f| %>
       <%= f.error_notification %>
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
       <div class="form-inputs">
-        <%= f.association :customer_project, input_html: { class: 'js-choice'} %>
+        <%= f.association :customer_project, input_html: { class: 'js-choice' } %>
         <%= f.input :title, as: :string %>
         <%= f.input :content, input_html: { rows: 10 } %>
-        <%= f.input :priority, input_html: { class: 'js-choice'} %>
+        <%= f.input :priority, input_html: { class: 'js-choice' } %>
       </div>
 
-      <div class="mb-3">
-        <label for="formFile" class="form-label"><%=t '.attach_files' %></label>
-        <%= f.file_field :files, multiple: true, class: 'form-control' %>
-      </div>
+      <% current_project.tag_groups.each do |tag_group| %>
+
+
+        <%= turbo_frame_tag(tag_group) do %>
+          <%= link_to "I want to add a tag from #{tag_group.name}", ticket_form_tag_group_path(tag_group) %>
+        <% end %>
+      <% end %>
 
       <div class="form-actions">
         <%= f.button :submit %>

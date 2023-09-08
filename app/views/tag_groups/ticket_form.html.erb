@@ -1,0 +1,8 @@
+<%= turbo_frame_tag @tag_group do %>
+
+  <% @tag_group.tags.each do |tag| %>
+  <div class="from-group">
+    <input type="radio" name="tags[]" value="<%= @tag_group.id %>" id="tag_<%= tag.id %>" /> <label for="tag_<%= tag.id %>"><%= tag.name %></label>
+  </div>
+  <% end %>
+<% end %>

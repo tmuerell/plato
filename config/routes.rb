@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     devise_for :users
   end
   get 'reports/sla', as: :sla_report
-  resources :tag_groups
+  resources :tag_groups do
+    member do
+      get :ticket_form
+    end
+  end
   resources :notification_configs
   resources :users
   resources :user_project_roles

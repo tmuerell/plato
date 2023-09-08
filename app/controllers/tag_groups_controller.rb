@@ -9,6 +9,10 @@ class TagGroupsController < ApplicationController
   def show
   end
 
+  def ticket_form
+
+  end
+
   # GET /tag_groups/new
   def new
     @tag_group = TagGroup.new
@@ -64,6 +68,6 @@ class TagGroupsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tag_group_params
-      params.require(:tag_group).permit(:name)
+      params.require(:tag_group).permit(:name, :project_id)
     end
 end
