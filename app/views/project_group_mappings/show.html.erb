@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @project_group_mapping %>
+
+<div>
+  <%= link_to "Edit this project group mapping", edit_project_group_mapping_path(@project_group_mapping) %> |
+  <%= link_to "Back to project group mappings", project_group_mappings_path %>
+
+  <%= button_to "Destroy this project group mapping", @project_group_mapping, method: :delete %>
+</div>

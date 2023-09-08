@@ -24,7 +24,13 @@ class User < ApplicationRecord
       user.firstname = auth.info.first_name
       user.lastname = auth.info.last_name
       user.roles = auth.extra.raw_info.resource_access.plato.roles
+      user.groups = auth.extra.raw_info["groups"]
       user.save!
+      user.groups.each do |g|
+        ProjectGroupMapping.where(group: g).each do |pgm|
+          UserProjectRole.create!(user: user, role: pgm.role, project: pgm.project)
+        end
+      end
       user
     end
   end
@@ -32,6 +38,7 @@ class User < ApplicationRecord
   belongs_to :current_project, class_name: 'Project', optional: true
   has_many :user_project_roles
   serialize :roles, JSON
+  serialize :groups, JSON
   gravtastic
 
   def to_s
