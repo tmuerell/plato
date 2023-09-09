@@ -56,9 +56,9 @@ class ImportController < ApplicationController
     t = Ticket.find_by_external_id(params[:external_id])
 
     if t
-      t.update(params.permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, :tag_ids => []))
+      t.update(params.permit(:sequential_id, :title, :content, :project_id, :status, :customer_project_id, :creator_id, :assignee_id, :external_id, :tag_ids => []))
     else
-      t = Ticket.create!(params.permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, :tag_ids => []))
+      t = Ticket.create!(params.permit(:sequential_id, :title, :content, :project_id, :status, :customer_project_id, :creator_id, :assignee_id, :external_id, :tag_ids => []))
     end
 
     respond_with(t)

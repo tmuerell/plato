@@ -32,7 +32,6 @@
     <th><%= Ticket.human_attribute_name(:id) %></th>
     <th><%= Ticket.human_attribute_name(:title) %></th>
     <th><%= Ticket.human_attribute_name(:status) %></th>
-    <th><%= Ticket.human_attribute_name(:priority) %></th>
     <th><%= Ticket.human_attribute_name(:tags) %></th>
   </tr>
   </thead>
@@ -48,7 +47,6 @@
       </td>
       <td><%= ticket.title %></td>
       <td><%= status_label(ticket) %></td>
-      <td><%= priority_label(ticket) %></td>
       <td>
         <% for tag in ticket.tags %>
           <span class="badge rounded-pill bg-secondary">

@@ -46,7 +46,6 @@ de:
         title: Titel
         content: Inhalt
         project: Projekt
-        priority: Priorität
         customer_project: Kundenprojekt
 
   enumerize:
@@ -56,9 +55,6 @@ de:
         in_progress: In Bearbeitung
         blocked: Blockiert
         done: Erledigt
-      priority:
-        normal: Normal
-        high: Hoch
 
   actions:
     new: 'Neu'

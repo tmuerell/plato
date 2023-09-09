@@ -23,10 +23,9 @@ class Ticket < ApplicationRecord
   before_create :set_sequential_no
   after_save :update_transition_after
 
-  validates_presence_of :title, :priority
+  validates_presence_of :title
   validate :correct_number_of_tags_per_tag_group
 
-  enumerize :priority, in: [:normal, :high]
   scope :with_tag, lambda { |tag| joins(:tags).where(tags: { id: tag.id }) }
   after_commit :send_notifications, if: lambda { ENV.fetch("PLATO_NOTIFICATIONS_ENABLED", "true") == "true" }
 

@@ -39,7 +39,6 @@ class TicketsController < ApplicationController
   # GET /tickets/new
   def new
     @ticket = Ticket.new
-    @ticket.priority = :normal
   end
 
   # GET /tickets/1/edit
@@ -163,6 +162,6 @@ class TicketsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def ticket_params
-    params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :priority, :customer_project_id, :creator_id, :assignee_id, :external_id, tag_ids: [], files: [])
+    params.require(:ticket).permit(:sequential_id, :title, :content, :project_id, :status, :customer_project_id, :creator_id, :assignee_id, :external_id, tag_ids: [], files: [])
   end
 end

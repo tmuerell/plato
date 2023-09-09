@@ -3,7 +3,6 @@ FactoryBot.define do
     title { "Ticket" }
     content { "" }
     status { :new }
-    priority { :normal }
     association :creator, factory: :user
     association :assignee, factory: :user
     association :project
