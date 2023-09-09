@@ -32,7 +32,6 @@
       <div class="m-2 p-2" style="background-color: #f9f9f9; border-radius: 3px; border: 1px solid #f0f0f0;">
         <p>
           <%= status_label(ticket) %>
-          <%= priority_label(ticket) %>
           <%= sla_label(ticket.sla_status) %>
         </p>
 
@@ -141,7 +140,7 @@
             <dl>
             <% for tagging in @ticket.values %>
               <dt><%= tagging.tag.name %></dt>
-              <dd><%= @ticket.value tagging.tag.name %></dt>
+              <dd><%= @ticket.value tagging.tag.name %></dd>
             <% end %>
             </dl>
           </div>

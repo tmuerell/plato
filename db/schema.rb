@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -84,6 +84,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
     t.index ["project_id"], name: "index_notification_configs_on_project_id"
   end
 
+  create_table "project_group_mappings", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.string "group"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_group_mappings_on_project_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.string "shortname"
@@ -126,8 +135,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "tag_group_id"
     t.datetime "archived_at"
+    t.integer "tag_group_id"
     t.string "value_type"
     t.index ["project_id"], name: "index_tags_on_project_id"
     t.index ["tag_group_id"], name: "index_tags_on_tag_group_id"
@@ -169,7 +178,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
     t.text "content"
     t.integer "project_id", null: false
     t.string "status"
-    t.string "priority"
     t.integer "customer_project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -182,7 +190,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
     t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
     t.index ["identifier"], name: "index_tickets_on_identifier"
-    t.index ["project_id"], name: "index_tickets_on_project_id"
   end
 
   create_table "user_project_roles", force: :cascade do |t|
@@ -214,6 +221,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
     t.string "lastname"
     t.text "roles"
     t.integer "current_project_id"
+    t.text "groups"
     t.index ["current_project_id"], name: "index_users_on_current_project_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -236,6 +244,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_150413) do
   add_foreign_key "comments", "users", column: "creator_id"
   add_foreign_key "customer_projects", "projects"
   add_foreign_key "notification_configs", "projects"
+  add_foreign_key "project_group_mappings", "projects"
   add_foreign_key "tag_groups", "projects"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users"

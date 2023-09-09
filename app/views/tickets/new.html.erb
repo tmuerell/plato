@@ -11,7 +11,6 @@
         <%= f.association :customer_project, input_html: { class: 'js-choice' } %>
         <%= f.input :title, as: :string %>
         <%= f.input :content, input_html: { rows: 10 } %>
-        <%= f.input :priority, input_html: { class: 'js-choice' } %>
       </div>
 
       <% current_project.tag_groups.each do |tag_group| %>
