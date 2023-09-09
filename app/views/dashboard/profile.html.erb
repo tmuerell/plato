@@ -5,13 +5,23 @@
     <h3 class="card-title"><%= current_user.name %></h3>
     <h5 class="card-subtitle text-muted"><%= current_user.email %></h5>
 
-    <p class="mt-3">User groups:</p>
+    <p class="mt-3">User roles:</p>
 
     <ul>
       <% for g in current_user.roles %>
         <li><%= g %></li>
       <% end %>
     </ul>
+
+    <% if current_user.groups.present? %>
+      <p class="mt-3">User groups:</p>
+
+      <ul>
+        <% for g in current_user.groups %>
+          <li><%= g %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
 </div>
 
@@ -32,7 +42,9 @@
     <tr>
       <td>
         <%= linked_ticket_identifier ticket %>
-        <%= if ticket.flagged?; "🚩"; end %>
+        <%= if ticket.flagged?;
+              "🚩";
+            end %>
       </td>
       <td><%= ticket.title %></td>
       <td><%= status_label(ticket) %></td>
@@ -42,10 +54,10 @@
           <span class="badge rounded-pill bg-secondary">
           <% if tag.board? %>
             📋
-            <%= link_to tag.name, board_path(tag) %>
+              <%= link_to tag.name, board_path(tag) %>
           <% elsif tag.area? %>
             📗
-            <%= link_to tag.name, tag_path(tag) %>
+              <%= link_to tag.name, tag_path(tag) %>
           <% else %>
             <%= link_to tag.name, tag_path(tag) %>
           <% end %>
