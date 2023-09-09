@@ -170,7 +170,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_203918) do
     t.text "content"
     t.integer "project_id", null: false
     t.string "status"
-    t.integer "customer_project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "creator_id", null: false
@@ -180,7 +179,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_203918) do
     t.text "identifier", null: false
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
-    t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
     t.index ["identifier"], name: "index_tickets_on_identifier"
   end
 
@@ -246,7 +244,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_203918) do
   add_foreign_key "ticket_transitions", "tickets"
   add_foreign_key "ticket_user_relationships", "tickets"
   add_foreign_key "ticket_user_relationships", "users"
-  add_foreign_key "tickets", "customer_projects"
   add_foreign_key "tickets", "projects"
   add_foreign_key "tickets", "users", column: "assignee_id"
   add_foreign_key "tickets", "users", column: "creator_id"
