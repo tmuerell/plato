@@ -6,13 +6,12 @@ RSpec.feature "Inbox Handling", type: :feature do
     @other_project = create(:project)
     @user1 = create(:user, roles: [ "User" ], current_project: @project)
     create(:user_project_role, user: @user1, project: @project, role: 'user')
-    @customer_project = create(:customer_project, project: @project)
     @area_tag_group = create(:tag_group, name: 'Area', project: @project)
     @board_tag_group = create(:tag_group, name: 'Board', project: @project)
     @critical_board = create(:tag, tag_group: @board_tag_group, name: 'Critical', project: @project)
     @area_tag = create(:tag, tag_group: @area_tag_group, name: 'Backlog', project: @project)
     @area_tag2 = create(:tag, tag_group: @area_tag_group, name: 'Area 51', project: @other_project)
-    @ticket = create(:ticket, title: 'Ganz wichtig', customer_project: @customer_project, status: :new, project: @project)
+    @ticket = create(:ticket, title: 'Ganz wichtig', status: :new, project: @project)
   end
 
   it "allows me to create a ticket" do

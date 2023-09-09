@@ -4,22 +4,6 @@
 <% if project_role?(current_project, :user) %>
   <div class="col-lg-4 col-6">
     <div class="m-2">
-      <table class="table table-condensed table-striped">
-        <thead>
-        <tr>
-          <th>Kundenprojekt</th>
-          <th>Anzahl Tickets</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for cp in current_project.customer_projects.accessible_by(current_ability) %>
-          <tr>
-            <td><%= link_to cp.name, customer_project_path(cp) %></td>
-            <td><%= cp.tickets.count %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
     </div>
   </div>
     <div class="col-lg-4 col-6">

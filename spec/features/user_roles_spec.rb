@@ -6,8 +6,7 @@ RSpec.feature "User roles", type: :feature do
     @project2 = create(:project, name: "Area 51")
     @user1 = create(:user, roles: [ "User" ], current_project: @project1)
     @user2 = create(:user)
-    @customer_project = create(:customer_project, project: @project1)
-    @ticket1 = create(:ticket, project: @project1, title: 'Ticket stinknormal', customer_project: @customer_project)
+    @ticket1 = create(:ticket, project: @project1, title: 'Ticket stinknormal')
     @ticket2 = create(:ticket, project: @project2, title: 'Ticket Area 51', creator: @user2)
     create(:user_project_role, user: @user1, project: @project1, role: :user)
   end
