@@ -1,9 +1,11 @@
+<h3><%=t '.comment_by' %> <%= @comment.creator.name %></h3>
 
 <%= render @comment %>
 
-<div>
-  <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
-  <%= link_to "Back to ticket", @comment.ticket %>
+<%= link_to "Back to ticket", @comment.ticket, class: 'btn btn-secondary' %>
 
-  <%= button_to "Destroy this comment", @comment, method: :delete %>
+
+<div>
+  <%= link_to "Edit this comment", edit_comment_path(@comment) if can?(:update, @comment) %> |
+  <%= link_to "Destroy this comment", @comment, 'data-turbo-method': :delete %>
 </div>

@@ -86,7 +86,9 @@ de:
   remove_assignee: "Zuweisung aufheben"
   approve: "Freigeben"
   approved_by: "Freigeben von"
-  comments: "Kommentare"
+  comments:
+    show:
+      comment_by: "Kommentar von"
   new_comment: "Neuer Kommentar"
   linked_tickets: "Verlinkte Tickets"
   link_ticket: "Ticket verlinken"
