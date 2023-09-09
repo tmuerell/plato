@@ -78,6 +78,7 @@ de:
     new:
       title: "Neues Ticket"
       attach_files: "Dateien anhängen"
+      want_to_specify: "Ich möchte %{name} angeben."
     form:
       attach_files: "Dateien anhängen"
   create_ticket: "Neues Ticket"
@@ -87,6 +88,7 @@ de:
   approve: "Freigeben"
   approved_by: "Freigeben von"
   comments:
+    title: Kommentare
     show:
       comment_by: "Kommentar von"
   new_comment: "Neuer Kommentar"

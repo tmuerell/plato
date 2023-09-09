@@ -30,11 +30,13 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  search: Search
   hello: "Hello world"
   tickets:
     new:
       title: "New ticket"
       attach_files: "Attach files"
+      want_to_specify: "I want to specify %{name}."
     form:
       attach_files: "Attach files"
   create_ticket: "New ticket"
@@ -44,6 +46,7 @@ en:
   approve: "Approve"
   approved_by: "Approved by"
   comments:
+    title: "Comments"
     show:
       comment_by: "Comment by"
   new_comment: "New comment"
