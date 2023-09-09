@@ -43,7 +43,9 @@ en:
   remove_assignee: "Remove assignee"
   approve: "Approve"
   approved_by: "Approved by"
-  comments: "Comments"
+  comments:
+    show:
+      comment_by: "Comment by"
   new_comment: "New comment"
   linked_tickets: "Linked Tickets"
   link_ticket: "Link ticket"
