@@ -17,8 +17,8 @@ class TagGroup < ApplicationRecord
   NAMES = [APPROVAL_NAME, AREA_NAME, BOARD_NAME, SEVERITY_NAME].freeze
 
   def counts_valid
-    return if min_count.nil? || max_count.nil?
-
-    errors.add(:min_count, "min_count has to be smaller than max_count") if min_count > max_count
+    #  return if min_count.nil? || max_count.nil?
+    #
+    #errors.add(:min_count, "min_count has to be smaller than max_count") if min_count > max_count
   end
 end
