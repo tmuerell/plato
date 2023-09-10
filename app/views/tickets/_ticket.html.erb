@@ -17,7 +17,7 @@
 
         <hr/>
 
-        <h5><%= t('comments') %></h5>
+        <h5><%= t('comments.title') %></h5>
         <%= turbo_stream_from dom_id(ticket, :comments) %>
         <%= turbo_frame_tag dom_id(ticket, :comments) do %>
           <%= render @ticket.comments %>

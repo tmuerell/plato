@@ -3,6 +3,7 @@
 <table class="table table-striped table-sm">
   <thead>
   <tr>
+    <th>Project</th>
     <th>Name</th>
     <th colspan="3"></th>
   </tr>
@@ -11,6 +12,7 @@
   <tbody>
   <% @tag_groups.each do |tag_group| %>
     <tr>
+      <td><%= tag_group.project.name %></td>
       <td><%= tag_group.name %></td>
       <td><%= link_to 'Show', tag_group %></td>
       <td><%= link_to 'Edit', edit_tag_group_path(tag_group) %></td>

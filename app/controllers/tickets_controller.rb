@@ -52,9 +52,11 @@ class TicketsController < ApplicationController
     @ticket.project = current_project
 
     if params.key? :tags
-      for tag_id in params[:tags]
-        tag = Tag.find_by!(id: tag_id)
-        @ticket.tags << tag
+      params[:tags].each do |k, v|
+        v.each do |tag_id|
+          tag = Tag.find(tag_id)
+          @ticket.tags << tag
+        end
       end
     end
 
@@ -72,7 +74,7 @@ class TicketsController < ApplicationController
   # PATCH/PUT /tickets/1 or /tickets/1.json
   def update
     unless ticket_params[:status].nil? ||
-           @ticket.valid_transitions(current_user).include?(ticket_params[:status])
+      @ticket.valid_transitions(current_user).include?(ticket_params[:status])
       raise "InvalidTransition(#{ticket_params[:status]})"
     end
 

@@ -11,32 +11,23 @@
         <%= f.association :customer_project, input_html: { class: 'js-choice' } %>
         <%= f.input :title, as: :string %>
         <%= f.input :content, input_html: { rows: 10 } %>
-      </div>
 
-      <% current_project.tag_groups.each do |tag_group| %>
-        <% if tag_group.min_count.nil? || tag_group.min_count == 0 %>
-          <%= turbo_frame_tag(tag_group) do %>
-            <div>
-              <%= link_to "I want to add a tag from #{tag_group.name}", ticket_form_tag_group_path(tag_group) %>
-            </div>
-          <% end %>
-        <% elsif tag_group.min_count == 1 %>
-          <%# TODO: move this to a partial %>
-          <%= turbo_frame_tag tag_group do %>
-            <div class="form-group">
-              <label class="radio required"><%= tag_group.name %></label>
-              <div class="btn-group" role="group" aria-label="Basic radio toggle button group" style="display: block;">
-                <% tag_group.tags.each do |tag| %>
-                    <input type="radio" class="btn-check" name="tags[]" value="<%= tag.id %>" id="tag_<%= tag.id %>" />
-                    <label class="btn btn-outline-primary" for="tag_<%= tag.id %>"><%= tag.name %></label>
-                <% end %>
-              </div>
-            </div>
+        <% current_project.tag_groups.each do |tag_group| %>
+          <% if tag_group.min_count.nil? || tag_group.min_count == 0 %>
+            <% if tag_group.tags.count > 0 %>
+              <%= turbo_frame_tag(tag_group) do %>
+                <div>
+                  <%= link_to t('.want_to_specify', name: tag_group.name), ticket_form_tag_group_path(tag_group) %>
+                </div>
+              <% end %>
+            <% end %>
+          <% elsif tag_group.min_count == 1 %>
+            <%= render 'tag_groups/ticket_form', tag_group: tag_group %>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
 
-      <div class="form-actions">
+      <div class="form-actions my-3">
         <%= f.button :submit %>
       </div>
     <% end %>
