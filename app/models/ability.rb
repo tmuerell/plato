@@ -23,7 +23,6 @@ class Ability
     can [:create], Ticket
     can [:update, :tag], Ticket, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user, 'reporter', :reporter]}}
     can :manage, Tag, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin]}}
-    can :manage, CustomerProject, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin]}}
 
     can :ticket_form, TagGroup
 

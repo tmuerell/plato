@@ -34,7 +34,6 @@ Rails.application.routes.draw do
       get :link
     end
   end
-  resources :customer_projects
   resources :tags
   resources :projects do
     member do

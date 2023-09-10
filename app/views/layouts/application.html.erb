@@ -127,7 +127,7 @@
     </div>
   </nav>
 </header>
-<main class="flex-shrink-0">
+<main class="flex-shrink-0 pt-3">
   <div class="container-fluid">
     <% flash.each do |type, msg| %>
       <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
@@ -143,7 +143,6 @@
     Logged in as: <%= current_user.firstname %> <%= current_user.lastname %> <%= link_to t('logout'), destroy_user_session_path, 'data-turbo-method' => :delete %> |
     <%= link_to "Tags", tags_url %>
     <%= link_to "Tag Groups", tag_groups_url %>
-    <%= link_to "Customer Projects", customer_projects_url %>
     |
     Current project:
     <% if current_project.present? %>

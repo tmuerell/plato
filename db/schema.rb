@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_09_203918) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -57,14 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
     t.integer "creator_id", null: false
     t.index ["creator_id"], name: "index_comments_on_creator_id"
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
-  end
-
-  create_table "customer_projects", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "project_id", null: false
-    t.index ["project_id"], name: "index_customer_projects_on_project_id"
   end
 
   create_table "notification_configs", force: :cascade do |t|
@@ -178,7 +170,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
     t.text "content"
     t.integer "project_id", null: false
     t.string "status"
-    t.integer "customer_project_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "creator_id", null: false
@@ -188,7 +179,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
     t.text "identifier", null: false
     t.index ["assignee_id"], name: "index_tickets_on_assignee_id"
     t.index ["creator_id"], name: "index_tickets_on_creator_id"
-    t.index ["customer_project_id"], name: "index_tickets_on_customer_project_id"
     t.index ["identifier"], name: "index_tickets_on_identifier"
   end
 
@@ -242,7 +232,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
   add_foreign_key "api_tokens", "users"
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users", column: "creator_id"
-  add_foreign_key "customer_projects", "projects"
   add_foreign_key "notification_configs", "projects"
   add_foreign_key "project_group_mappings", "projects"
   add_foreign_key "tag_groups", "projects"
@@ -255,7 +244,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_09_045013) do
   add_foreign_key "ticket_transitions", "tickets"
   add_foreign_key "ticket_user_relationships", "tickets"
   add_foreign_key "ticket_user_relationships", "users"
-  add_foreign_key "tickets", "customer_projects"
   add_foreign_key "tickets", "projects"
   add_foreign_key "tickets", "users", column: "assignee_id"
   add_foreign_key "tickets", "users", column: "creator_id"
