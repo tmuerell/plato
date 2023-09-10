@@ -1,7 +1,7 @@
 class AddMinAndMaxToTagGroup < ActiveRecord::Migration[7.0]
   def change
-    add_column :tag_groups, :min_count, :number, null: true
-    add_column :tag_groups, :max_count, :number, null: true
+    add_column :tag_groups, :min_count, :integer, null: true
+    add_column :tag_groups, :max_count, :integer, null: true
 
     TagGroup.where(name: TagGroup::BOARD_NAME).each do |board|
       # TODO: needs support in ticket create form
