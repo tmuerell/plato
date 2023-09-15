@@ -1,53 +1,70 @@
-<h3>Dashboard</h3>
+<h3><%= current_project.name %></h3>
 
 <div class="row">
-<% if project_role?(current_project, :user) %>
   <div class="col-lg-4 col-6">
-    <div class="m-2">
-    </div>
-  </div>
-    <div class="col-lg-4 col-6">
-    <div class="p-2 m-2" style="">
-      <h5>Boards</h5>
-      <div class="row">
-        <% for t in current_project.board_tags %>
-          <div class="col-md-6">
-            <div class="card">
-              <img src="https://picsum.photos/id/<%= t.id%64+1 %>/200/100" class="card-img-top">
+    <div class="m-2 card">
+      <div class="card-body">
+        <h5><%= t('.my_tickets') %></h5>
 
-              <div class="card-body">
-                <h5 class="card-title"><%= link_to t.name, board_path(t) %></h5>
-                <%= link_to "Show board", board_path(t), class: 'btn btn-primary stretched-link' %>
-              </div>
-            </div>
-          </div>
+        <% if current_project.tickets.where(creator: current_user).count > 0 %>
+          <table class="table table-condensed table-striped">
+            <thead>
+            <tr>
+              <th>Ticket</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for ticket in current_project.tickets.where(creator: current_user) %>
+              <tr class="selectable"
+                  data-uri="<%= ticket_url(ticket) %>"
+              >
+                <td><%= link_to ticket.identifier, ticket %></td>
+                <td><%= status_label(ticket) %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <%= t '.no_tickets_yet' %>
         <% end %>
       </div>
     </div>
   </div>
-<% end %>
   <div class="col-lg-4 col-6">
-    <div class="m-2">
-      <h3><%= t('.my_tickets') %></h3>
-      <table class="table table-condensed table-striped">
-        <thead>
-        <tr>
-          <th>Ticket</th>
-          <th>Status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% for ticket in current_project.tickets.where(creator: current_user) %>
-          <tr class="selectable"
-              data-uri="<%= ticket_url(ticket) %>"
-          >
-            <td><%= link_to ticket.identifier, ticket %></td>
-            <td><%= status_label(ticket) %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
+    <div class="m-2 card">
+      <div class="card-body">
+        <h5 class="card-title"><%=t '.create_new_request' %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%=t '.create_new_request_text' %></h6>
+
+        <%= link_to "New ticket", new_ticket_path, class: 'btn btn-primary stretched-link' %>
+      </div>
     </div>
   </div>
+
+  <% if project_role?(current_project, :user) %>
+    <div class="col-lg-4 col-6">
+      <% if current_project.board_tags.count > 0 %>
+        <div class="p-2 m-2" style="">
+          <h5>Boards</h5>
+          <div class="row">
+            <% for t in current_project.board_tags %>
+              <div class="col-md-6">
+                <div class="card">
+                  <img src="https://picsum.photos/id/<%= t.id % 64 + 1 %>/200/100" class="card-img-top">
+
+                  <div class="card-body">
+                    <h5 class="card-title"><%= link_to t.name, board_path(t) %></h5>
+                    <%= link_to "Show board", board_path(t), class: 'btn btn-primary stretched-link' %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
 </div>
 

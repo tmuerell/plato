@@ -19,10 +19,13 @@ class Ability
     end
 
     can %i[read select], Project, user_project_roles: { user_id: user.id, role: ['guest', :guest, 'admin', :admin, 'user', :user, 'reporter', :reporter]}
-    can [:read, :inbox], Ticket, project: { user_project_roles: { user_id: user.id, role: ['guest', :guest, 'admin', :admin, 'user', :user, 'reporter', :reporter]}}
-    can [:create], Ticket
-    can [:update, :tag], Ticket, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user, 'reporter', :reporter]}}
+    can [:read, :inbox, :watch, :unwatch, :transitions], Ticket, project: { user_project_roles: { user_id: user.id, role: ['guest', :guest, 'admin', :admin, 'user', :user, 'reporter', :reporter]}}
+    can [:create, :backlog], Ticket
+    can [:update, :tag, :mine, :link, :unassign], Ticket, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user, 'reporter', :reporter]}}
     can :manage, Tag, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin]}}
+    can :manage, TagGroup, project: { user_project_roles: { user_id: user.id, role: ['admin', :admin]}}
+    can :create, Tag
+    can :create, TagGroup
 
     can :ticket_form, TagGroup
 

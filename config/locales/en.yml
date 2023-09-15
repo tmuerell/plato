@@ -68,6 +68,9 @@ en:
   dashboard:
     index:
       my_tickets: "My tickets"
+      no_tickets_yet: "You didn't create any tickets yet."
+      create_new_request: "Create a new ticket"
+      create_new_request_text: "Here you can create a new support request by specifying the necessary details."
   projects:
     index:
       no_projects: "You don't have access to a project. Please have some access granted first."

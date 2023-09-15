@@ -117,6 +117,9 @@ de:
   dashboard:
     index:
       my_tickets: "Meine Tickets"
+      no_tickets_yet: "Sie haben noch keine Tickets angelegt."
+      create_new_request: "Neue Anfrage erstellen"
+      create_new_request_text: "Hier können Sie eine neue Anfrage erstellen."
   projects:
     index:
       no_projects: "Sie haben keine Berechtigungen auf Projekte. Bitte lassen Sie sich entsprechende Rechte zuweisen."

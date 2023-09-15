@@ -30,7 +30,7 @@
             <li class="nav-item">
               <%= link_to 'Tickets', tickets_url, class: 'nav-link' %>
             </li>
-            <% if project_role?(current_project, [:user]) %>
+            <% if project_role?(current_project, [:user]) && current_project.board_tags.count > 0 %>
               <li class="nav-item">
                 <%= link_to 'Backlog', backlog_tickets_path, class: 'nav-link' %>
               </li>
@@ -141,8 +141,8 @@
 <footer class="footer mt-auto py-3 bg-body-tertiary">
   <div class="container-fluid">
     Logged in as: <%= current_user.firstname %> <%= current_user.lastname %> <%= link_to t('logout'), destroy_user_session_path, 'data-turbo-method' => :delete %> |
-    <%= link_to "Tags", tags_url %>
-    <%= link_to "Tag Groups", tag_groups_url %>
+    <%= link_to "Tags", tags_url if can?(:read, Tag) %>
+    <%= link_to "Tag Groups", tag_groups_url if can?(:read, TagGroup) %>
     |
     Current project:
     <% if current_project.present? %>

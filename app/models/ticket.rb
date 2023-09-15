@@ -32,13 +32,9 @@ class Ticket < ApplicationRecord
     "%s:%06x" % [project.shortname, sequential_id]
   end
 
-  def identifier=(identifier)
-    super(identifier)
-  end
 
   def sla_status
     return :ok unless self.last_transition_at
-    sla = project.sla_for(self.status)
     seconds = (Time.now - self.last_transition_at)
 
     project.calculate_sla_status(self.status, seconds)
