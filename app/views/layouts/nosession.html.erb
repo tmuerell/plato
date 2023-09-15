@@ -10,12 +10,11 @@
   <%= javascript_importmap_tags %>
 </head>
 
-<body>
-<div class="container-fluid">
+<body class="nosession">
+<div class="container">
   <% flash.each do |type, msg| %>
-    <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissable fade show">
+    <div class="alert <%= bootstrap_class_for_flash(type) %> my-2">
       <%= msg %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 </div>
