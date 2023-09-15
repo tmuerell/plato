@@ -1,32 +1,40 @@
 class AddProjectToTagGroup < ActiveRecord::Migration[7.0]
   def up
     approval = TagGroup.find_by(name: TagGroup::APPROVAL_NAME)
-    approval.tags.each do |tag|
-      tag.taggings.each(&:destroy)
-      tag.destroy
+    if approval
+      approval.tags.each do |tag|
+        tag.taggings.each(&:destroy)
+        tag.destroy
+      end
+      approval.destroy
     end
-    approval.destroy
 
     area = TagGroup.find_by(name: TagGroup::AREA_NAME)
-    area.tags.each do |tag|
-      tag.taggings.each(&:destroy)
-      tag.destroy
+    if area
+      area.tags.each do |tag|
+        tag.taggings.each(&:destroy)
+        tag.destroy
+      end
+      area.destroy
     end
-    area.destroy
 
     board = TagGroup.find_by(name: TagGroup::BOARD_NAME)
-    board.tags.each do |tag|
-      tag.taggings.each(&:destroy)
-      tag.destroy
+    if board
+      board.tags.each do |tag|
+        tag.taggings.each(&:destroy)
+        tag.destroy
+      end
+      board.destroy
     end
-    board.destroy
 
     severity = TagGroup.find_by(name: TagGroup::SEVERITY_NAME)
-    severity.tags.each do |tag|
-      tag.taggings.each(&:destroy)
-      tag.destroy
+    if severity
+      severity.tags.each do |tag|
+        tag.taggings.each(&:destroy)
+        tag.destroy
+      end
+      severity.destroy
     end
-    severity.destroy
 
     add_reference :tag_groups, :project, null: false, foreign_key: true, index: true
     add_index :tag_groups, %i[project_id name], unique: true
