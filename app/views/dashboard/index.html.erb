@@ -22,7 +22,7 @@
                   data-uri="<%= ticket_url(ticket) %>"
               >
                 <td><%= link_to ticket.identifier, ticket %></td>
-                <td><%= truncate(ticket.title) %></td>
+                <td><%= truncate(ticket.title, length: 60) %></td>
                 <td><%= status_label(ticket) %></td>
                 <td><%= gravatar_icon(ticket.assignee, [], 20) if ticket.assignee.present? %></td>
               </tr>
@@ -54,7 +54,7 @@
                   data-uri="<%= ticket_url(ticket) %>"
               >
                 <td><%= link_to ticket.identifier, ticket %></td>
-                <td><%= truncate(ticket.title) %></td>
+                <td><%= truncate(ticket.title, length: 60) %></td>
                 <td><%= status_label(ticket) %></td>
                 <td><%= gravatar_icon(ticket.assignee, [], 20) if ticket.assignee.present? %></td>
               </tr>
