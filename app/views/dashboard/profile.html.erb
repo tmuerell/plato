@@ -5,13 +5,15 @@
     <h3 class="card-title"><%= current_user.name %></h3>
     <h5 class="card-subtitle text-muted"><%= current_user.email %></h5>
 
-    <p class="mt-3">User roles:</p>
+    <% if current_user.roles.present? %>
+      <p class="mt-3">User roles:</p>
 
-    <ul>
-      <% for g in current_user.roles %>
-        <li><%= g %></li>
-      <% end %>
-    </ul>
+      <ul>
+        <% for g in current_user.roles %>
+          <li><%= g %></li>
+        <% end %>
+      </ul>
+    <% end %>
 
     <% if current_user.groups.present? %>
       <p class="mt-3">User groups:</p>
@@ -19,6 +21,16 @@
       <ul>
         <% for g in current_user.groups %>
           <li><%= g %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% if current_user.user_project_roles.count > 0 %>
+      <p class="mt-3">User project roles:</p>
+
+      <ul>
+        <% for upr in current_user.user_project_roles %>
+          <li><%= upr.project.name %>: <%= upr.role_text %></li>
         <% end %>
       </ul>
     <% end %>

@@ -7,8 +7,6 @@ class User < ApplicationRecord
 
   before_create :set_default_user_groups
 
-  has_many :ticket_user_relationships
-
   if ENV['PLATO_OPENID_CONNECT_ENABLE'] == 'true'
     devise :omniauthable, omniauth_providers: [ENV['PLATO_OPENID_CONNECT_NAME'].to_sym]
 
@@ -37,6 +35,8 @@ class User < ApplicationRecord
 
   belongs_to :current_project, class_name: 'Project', optional: true
   has_many :user_project_roles
+  has_many :ticket_user_relationships
+
   serialize :roles, JSON
   serialize :groups, JSON
   gravtastic

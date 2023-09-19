@@ -10,8 +10,10 @@
           <table class="table table-condensed table-striped">
             <thead>
             <tr>
-              <th>Ticket</th>
-              <th>Status</th>
+              <th style="width: 8em;">Ticket</th>
+              <th>Title</th>
+              <th style="width: 8em;">Status</th>
+              <th style="width: 1em;"></th>
             </tr>
             </thead>
             <tbody>
@@ -20,13 +22,47 @@
                   data-uri="<%= ticket_url(ticket) %>"
               >
                 <td><%= link_to ticket.identifier, ticket %></td>
+                <td><%= truncate(ticket.title) %></td>
                 <td><%= status_label(ticket) %></td>
+                <td><%= gravatar_icon(ticket.assignee, [], 20) if ticket.assignee.present? %></td>
               </tr>
             <% end %>
             </tbody>
           </table>
         <% else %>
           <%= t '.no_tickets_yet' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="m-2 card">
+      <div class="card-body">
+        <h5><%= t('.open_tickets') %></h5>
+
+        <% if current_project.tickets.where.not(status: current_project.end_states).count > 0 %>
+          <table class="table table-condensed table-striped">
+            <thead>
+            <tr>
+              <th style="width: 8em;">Ticket</th>
+              <th>Title</th>
+              <th style="width: 8em;">Status</th>
+              <th style="width: 1em;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for ticket in current_project.tickets.where.not(status: current_project.end_states).order("created_at DESC").limit(10) %>
+              <tr class="selectable"
+                  data-uri="<%= ticket_url(ticket) %>"
+              >
+                <td><%= link_to ticket.identifier, ticket %></td>
+                <td><%= truncate(ticket.title) %></td>
+                <td><%= status_label(ticket) %></td>
+                <td><%= gravatar_icon(ticket.assignee, [], 20) if ticket.assignee.present? %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <%= t '.no_tickets_to_show' %>
         <% end %>
       </div>
     </div>
