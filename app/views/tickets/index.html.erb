@@ -5,7 +5,7 @@
   <tr>
     <th><%= Ticket.human_attribute_name(:id) %></th>
     <th><%= Ticket.human_attribute_name(:title) %></th>
-    <th><%= Ticket.human_attribute_name(:status) %></th>
+    <th colspan="2"><%= Ticket.human_attribute_name(:status) %></th>
     <th><%= Ticket.human_attribute_name(:assignee) %></th>
     <th><%= Ticket.human_attribute_name(:tags) %></th>
   </tr>
@@ -25,7 +25,7 @@
       </td>
       <td>
         <% if ticket.assignee.present? %>
-          <%= gravatar_icon ticket.assignee %>
+          <%= gravatar_icon ticket.assignee, [], 20 %>
           <%= ticket.assignee.name %>
         <% else %>
           ---

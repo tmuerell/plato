@@ -43,7 +43,9 @@ footer {
 }
 
 .copy-to-clipboard {
-    cursor: pointer;
+  cursor: pointer;
+  font-size: 60%;
+  padding-left: 5px;
 }
 
 .kanban-board {
@@ -72,6 +74,7 @@ footer {
 
 .sla-warning {
   border-left: 3px solid orange;
+
   .card-body {
     background-color: #ffeecf;
   }
@@ -79,6 +82,7 @@ footer {
 
 .sla-error {
   border-left: 3px solid red;
+
   .card-body {
     background-color: #fcd8d8;
   }
@@ -100,8 +104,8 @@ p.login-links {
 }
 
 .badge a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 .ticket-flag {
@@ -120,6 +124,7 @@ p.login-links {
   h5::after {
     content: "+";
   }
+
   ul {
     display: none;
   }
