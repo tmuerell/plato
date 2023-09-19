@@ -22,7 +22,7 @@
         <%= turbo_frame_tag dom_id(ticket, :comments) do %>
           <%= render @ticket.comments %>
           <%= turbo_frame_tag 'new_comment' do %>
-            <%= link_to t('new_comment'), new_comment_path(ticket_id: @ticket) %>
+            <%= link_to t('new_comment'), new_comment_path(ticket_id: @ticket), class: 'btn btn-xs btn-outline-secondary' if can?(:update, @ticket) %>
           <% end %>
         <% end %>
 

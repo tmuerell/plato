@@ -1,11 +1,5 @@
 <h1>New comment</h1>
 
-<%= turbo_frame_tag 'new_comment' do %>
+<%#= turbo_frame_tag 'new_comment' do %>
   <%= render "form", comment: @comment, ticket: request.GET[:ticket_id] %>
-<% end %>
-
-<br>
-
-<div>
-  <%= link_to "Back to comments", comments_path %>
-</div>
+<%# end %>

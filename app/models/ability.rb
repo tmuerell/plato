@@ -29,7 +29,14 @@ class Ability
 
     can :ticket_form, TagGroup
 
+    can :new, Comment
+    can %i[create read], Comment, ticket: { project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user]}} }
+    can %i[read], Comment, ticket: { project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user, 'reporter', :reporter]}} }
+
     can %i[read edit], Ticket, creator_id: user.id
     can %i[create read], Comment, ticket: { creator_id: user.id }
+
+    can %i[read edit], Ticket, assignee_id: user.id
+    can %i[create read], Comment, ticket: { assignee_id: user.id }
   end
 end
