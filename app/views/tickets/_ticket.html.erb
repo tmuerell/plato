@@ -15,7 +15,7 @@
           </p>
         <% end %>
 
-        <hr/>
+        <hr />
 
         <h5><%= t('comments.title') %></h5>
         <%= turbo_stream_from dom_id(ticket, :comments) %>
@@ -41,11 +41,13 @@
           <% end %>
         </p>
 
-        <div class="btn-group btn-group-vertical btn-group-sm" style="width: 100%;">
-          <% if can?(:update, @ticket) %>
+        <% if can?(:update, @ticket) %>
+          <div class="btn-group btn-group-sm py-2">
             <% for vt in @ticket.valid_transitions(current_user) %>
-              <%= link_to t("transition.#{@ticket.status}.#{vt}"), ticket_url(@ticket, { ticket: { status: vt } }), class: 'btn btn-sm btn-outline-primary', 'data-turbo-method' => :patch %>
+              <%= link_to ("→ " + t("transition.#{@ticket.status}.#{vt}")).html_safe, ticket_url(@ticket, { ticket: { status: vt } }), class: 'btn btn-sm btn-outline-primary', 'data-turbo-method' => :patch %>
             <% end %>
+          </div>
+        <div class="btn-group btn-group-vertical btn-group-sm mb-3" style="width: 100%;">
             <%= link_to t('edit'), edit_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
             <% if @ticket.assignee != current_user %>
               <%= link_to t('assign_to_me'), mine_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
@@ -61,8 +63,14 @@
             <% end %>
             <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
             <%= link_to t('show_transitions'), transitions_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
+
+          <% if current_user.admin? %>
+            <%= link_to t('.delete'), @ticket, 'data-turbo-method' => :delete, 'data-turbo-confirm' => 'Are you really sure?', class: 'btn btn-outline-danger' %>
           <% end %>
         </div>
+        <% end %>
+
+        <h5><%=t '.properties' %></h5>
 
         <p>
           <strong>Creator:</strong>
@@ -134,10 +142,10 @@
           >
             <h5>Values</h5>
             <dl>
-            <% for tagging in @ticket.values %>
-              <dt><%= tagging.tag.name %></dt>
-              <dd><%= @ticket.value tagging.tag.name %></dd>
-            <% end %>
+              <% for tagging in @ticket.values %>
+                <dt><%= tagging.tag.name %></dt>
+                <dd><%= @ticket.value tagging.tag.name %></dd>
+              <% end %>
             </dl>
           </div>
         <% end %>

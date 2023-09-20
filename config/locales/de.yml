@@ -81,6 +81,9 @@ de:
       want_to_specify: "Ich möchte %{name} angeben."
     form:
       attach_files: "Dateien anhängen"
+    ticket:
+      delete: "Ticket löschen"
+      properties: "Details"
   create_ticket: "Neues Ticket"
   edit: "Bearbeiten"
   assign_to_me: "Mir zuweisen"

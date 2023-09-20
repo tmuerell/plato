@@ -39,6 +39,9 @@ en:
       want_to_specify: "I want to specify %{name}."
     form:
       attach_files: "Attach files"
+    ticket:
+      delete: "Delete ticket"
+      properties: "Details"
   create_ticket: "New ticket"
   edit: "Edit"
   assign_to_me: "Assign to me"
