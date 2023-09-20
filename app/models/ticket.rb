@@ -7,16 +7,16 @@ class Ticket < ApplicationRecord
   belongs_to :project
   belongs_to :creator, class_name: "User"
   belongs_to :assignee, class_name: "User", optional: true
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :taggings, as: :taggable, dependent: :destroy
   has_many :tags, through: :taggings
-  has_many :ticket_user_relationships
-  has_many_attached :files
+  has_many :ticket_user_relationships, dependent: :destroy
+  has_many_attached :files, dependent: :destroy
   has_many :child_relationships, foreign_key: :parent_id, class_name: "TicketTicketRelationship", dependent: :destroy
   has_many :children, through: :child_relationships
   has_many :parent_relationships, foreign_key: :child_id, class_name: "TicketTicketRelationship", dependent: :destroy
   has_many :parents, through: :parent_relationships
-  has_many :ticket_transitions
+  has_many :ticket_transitions, dependent: :destroy
 
   before_save :update_transition_before
   before_create :set_sequential_no
