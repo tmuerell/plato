@@ -27,7 +27,7 @@ module TicketsHelper
     content_tag :span, ticket.identifier, 'data-ticket-identifier': ticket.identifier do
       link_to(ticket.identifier, ticket) +
         content_tag(:span,
-                    '🔗',
+                    '📋',
                     title: 'Copy to clipboard',
                     class: 'copy-to-clipboard',
                     data: { controller: 'tickets',
