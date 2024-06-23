@@ -61,7 +61,9 @@
             <% if ticket.watched? current_user %>
               <%= link_to t('unwatch'), unwatch_ticket_path(@ticket), class: 'btn btn-outline-secondary', 'data-turbo-method' => :post %>
             <% end %>
+            <% if can?(:link, ticket) %>
             <%= link_to t('link_ticket'), link_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
+            <% end %>
             <%= link_to t('show_transitions'), transitions_ticket_path(@ticket), class: 'btn btn-outline-secondary' %>
 
           <% if current_user.admin? %>
