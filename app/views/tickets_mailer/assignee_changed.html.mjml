@@ -1,1 +1,1 @@
-        <mj-text font-size="20px" color="#e2001a" font-family="helvetica">A ticket was assigned to you.</mj-text>
+        <mj-text font-size="20px" color="#e2001a" font-family="helvetica">Ticket <%= ticket_url(ticket) %> was assigned to you.</mj-text>
