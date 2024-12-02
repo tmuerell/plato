@@ -7,10 +7,11 @@ RSpec.feature "Inbox Handling", type: :feature do
     @user1 = create(:user, roles: [ "User" ], current_project: @project)
     create(:user_project_role, user: @user1, project: @project, role: 'user')
     @area_tag_group = create(:tag_group, name: 'Area', project: @project)
+    @area_tag_group_other = create(:tag_group, name: 'Area', project: @other_project)
     @board_tag_group = create(:tag_group, name: 'Board', project: @project)
     @critical_board = create(:tag, tag_group: @board_tag_group, name: 'Critical', project: @project)
     @area_tag = create(:tag, tag_group: @area_tag_group, name: 'Backlog', project: @project)
-    @area_tag2 = create(:tag, tag_group: @area_tag_group, name: 'Area 51', project: @other_project)
+    @area_tag2 = create(:tag, tag_group: @area_tag_group_other, name: 'Area 51', project: @other_project)
     @ticket = create(:ticket, title: 'Ganz wichtig', status: :new, project: @project)
   end
 
