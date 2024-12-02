@@ -102,6 +102,8 @@ Rails.application.configure do
     authentication: ENV.fetch('PLATO_SMTP_AUTHENTICATION', nil),
     enable_starttls: ENV.fetch('PLATO_SMTP_ENABLE_STARTTLS', false),
     enable_starttls_auto: ENV.fetch('PLATO_SMTP_ENABLE_STARTTLS_AUTO', true),
+    open_timeout: 15,
+    read_timeout: 15,
   }
 
   config.middleware.use ExceptionNotification::Rack,
