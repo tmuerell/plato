@@ -1,1 +1,1 @@
-        <mj-text font-size="20px" color="#e2001a" font-family="helvetica">Ticket <%= ticket_url(@ticket) %>  was commented.</mj-text>
+        <mj-text font-size="20px" color="#1C274C" font-family="helvetica">Ticket <%= ticket_url(@ticket) %>  was commented.</mj-text>
