@@ -141,9 +141,11 @@
 <footer class="footer mt-auto py-3 bg-body-tertiary">
   <div class="container-fluid">
     Logged in as: <%= current_user.firstname %> <%= current_user.lastname %> <%= link_to t('logout'), destroy_user_session_path, 'data-turbo-method' => :delete %> |
-    <%= link_to "Tags", tags_url if can?(:read, Tag) %>
-    <%= link_to "Tag Groups", tag_groups_url if can?(:read, TagGroup) %>
-    |
+    <% if current_user.admin? %>
+      <%= link_to "Tags", tags_url if can?(:create, Tag) %>
+      <%= link_to "Tag Groups", tag_groups_url if can?(:create, TagGroup) %>
+      |
+    <% end %>
     Current project:
     <% if current_project.present? %>
       <%= current_project.name %>
