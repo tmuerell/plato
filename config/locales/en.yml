@@ -79,3 +79,4 @@ en:
   projects:
     index:
       no_projects: "You don't have access to a project. Please have some access granted first."
+  unassign: "Unassign"

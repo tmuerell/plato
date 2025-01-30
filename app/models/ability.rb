@@ -30,7 +30,9 @@ class Ability
     can :ticket_form, TagGroup
 
     can :new, Comment
-    can [:edit, :update], Comment, [ "creator_id = ? AND created_at > ?", user.id, Time.now - 1.hour]
+    can [:edit, :update], Comment, [ "creator_id = ? AND created_at > ?", user.id, Time.now - 1.hour] do |comment|
+      comment.creator.id == user.id && comment.created_at > Time.now - 1.hour
+    end
     can %i[create read], Comment, ticket: { project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user]}} }
     can %i[read], Comment, ticket: { project: { user_project_roles: { user_id: user.id, role: ['admin', :admin, 'user', :user, 'reporter', :reporter]}} }
 
